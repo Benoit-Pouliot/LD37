@@ -1,46 +1,46 @@
 import pygame
-import os
-
-from app.settings import *
 from app.sprites.collisionMask import CollisionMask
-
+from app.tools.animation import Animation
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, image=os.path.join('img', 'enemybob.png')):
+    def __init__(self, x, y):
         super().__init__()
 
         self.name = "enemy"
 
-        # self.image = pygame.transform.scale(pygame.image.load(image), (TILEDIMX, TILEDIMY))
-        self.image = pygame.image.load(image)
+        self.imageEnemy = pygame.Surface((1, 1))
+        self.image = self.imageEnemy
+
+        self.frames = [self.imageEnemy]
+        self.animation = Animation(self, self.frames, 100)
+
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
 
-        self.jumpState = JUMP
-        self.specialState = None
-        self.specialWallSide = None
-        self.shape = None
+        self.mapData = None
 
         self.isPhysicsApplied = False
-        self.isGravityApplied = False
-        self.isFrictionApplied = False
         self.isCollisionApplied = False
-        self.collisionMask = CollisionMask(self.rect.x + 3, self.rect.y, self.rect.width-6, self.rect.height)
+        self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
-        self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
-        self.soundDead.set_volume(1)
+        self.soundDead = None
 
         self.dictProperties = {}
 
-    def setTheMap(self, theMap):
-        pass
+    def setMapData(self, mapData):
+        self.mapData = mapData
 
     def update(self):
-        pass
+        self.animation.update(self)
+        self.updateCollisionMask()
+
+    def updateCollisionMask(self):
+        self.collisionMask.rect.x = self.rect.x
+        self.collisionMask.rect.y = self.rect.y
 
     def isHit(self):
-        self.dead()
+        pass
 
     def dead(self):
         self.kill()

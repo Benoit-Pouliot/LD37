@@ -2,8 +2,10 @@ import pygame
 import os, math
 
 from app.settings import *
+from app.sprites.barricade import Barricade
 from app.sprites.bullet import Bullet
 from app.sprites.collisionMask import CollisionMask
+from app.sprites.inventory import Inventory
 from app.sprites.target import Target
 
 
@@ -61,6 +63,15 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.mapData.allSprites.add(self.target)
 
         self.isAlive = True
+
+        self.currentItem = 0
+
+        if TAG_MARIE == 1:
+            self.currentItem = 1
+
+        self.inventory = Inventory()
+        self.inventory.addItem('gun',self.shootBullet)
+        self.inventory.addItem('barricade',self.createBarricade)
 
         #Link your own sounds here
         #self.soundSpring = pygame.mixer.Sound(os.path.join('music_pcm', 'LvlUpFail.wav'))
@@ -205,9 +216,21 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.mapData.allSprites.add(bullet)
         self.mapData.friendlyBullet.add(bullet)
 
-        if TAG_MARIE ==1:
-            print(bullet.isCollisionApplied)
-        #self.soundBullet.play()
+    def createBarricade(self):
+        if TAG_MARIE == 1:
+            print('You created a barricade.')
+        mousePos = pygame.mouse.get_pos()
+
+        diffx = mousePos[0] + self.mapData.cameraPlayer.view_rect.x - self.rect.centerx
+        diffy = mousePos[1] + self.mapData.cameraPlayer.view_rect.y - self.rect.centery
+
+        barricadePosx = BARRICADE_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
+        barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
+
+        barricade = Barricade(barricadePosx,barricadePosy)
+        self.mapData.camera.add(barricade)
+        self.mapData.allSprites.add(barricade)
+
 
     def onCollision(self, collidedWith, sideOfCollision):
         if collidedWith == SOLID:
@@ -234,6 +257,11 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if collidedWith == SPIKE:
             self.dead()
 
+    def nextItem(self):
+        self.currentItem += 1
+        if self.currentItem >= len(self.inventory.itemList):
+            self.currentItem = 0
+
     def hurt(self):
         if not self.isInvincible:
             self.invincibleOnHit()
@@ -254,9 +282,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 self.updateSpeedDown()
                 self.downPressed = True
             elif event.key == pygame.K_SPACE:
-                pass
-            elif event.key == pygame.K_LCTRL:
-                self.shootBullet()
+                self.nextItem()
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
@@ -267,6 +293,12 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 self.upPressed = False
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 self.downPressed = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
+            self.inventory.itemList[self.currentItem].useItem()
+            if TAG_MARIE == 1 :
+                print("You pressed the left mouse button") # event.pos
+
 
     def updatePressedKeys(self):
         if self.rightPressed:

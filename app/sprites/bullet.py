@@ -8,7 +8,7 @@ from app.scene.platformScreen.collisionPlayerPlatform import *
 
 class Bullet(Enemy):
     def __init__(self, x, y, direction=RIGHT, friendly=True):
-        super().__init__(x, y, os.path.join('img', 'Bullet.png'))
+        super().__init__(x, y)
 
         self.name = "bullet"
 

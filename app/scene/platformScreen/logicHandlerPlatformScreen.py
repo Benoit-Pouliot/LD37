@@ -21,6 +21,7 @@ class LogicHandlerPlatformScreen:
         self.collisionChecker.collisionAllSprites(player, self.mapData, gameData)
         self.handleZoneCollision(player)
         self.mapData.allSprites.update()
+        self.mapData.spritesHUD.update()
         self.handleBullets(self.mapData, player)
         self.gameOverCondition(player)
 

@@ -2,24 +2,19 @@ import pygame
 import os
 
 from app.sprites.enemy.enemy import Enemy
-from app.sprites.bullet import BeerBullet
 from app.tools.animation import Animation
-from app.AI.steeringAI import SteeringAI
-
 from app.settings import *
-import random
 
-
-class EnemyShooter(Enemy):
-    def __init__(self, x, y, theMap=None, direction="Right"):
+class EnemyWalk(Enemy):
+    def __init__(self, x, y):
         super().__init__(x, y)
 
-        self.name = "enemyShooter"
+        self.name = "enemyWalk"
 
         self.imageEnemy = pygame.image.load(os.path.join('img', 'enemybob.png'))
 
         self.frames = [self.imageEnemy]
-        self.animation = Animation(self,self.frames,20)
+        self.animation = Animation(self,self.frames,100)
 
         self.rect = self.imageEnemy.get_rect()
         self.rect.x = x
@@ -27,71 +22,23 @@ class EnemyShooter(Enemy):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 2
-        self.maxSpeedy = 2
 
-        self.mapData = theMap
-
-        self.setDirection(direction)
-
-        self.isGravityApplied = True
+        self.isPhysicsApplied = True
         self.isCollisionApplied = True
 
-        self.imageIterShoot = random.randint(10,70)
-        self.imageWaitNextShoot = 80
-
-        self.dictProperties = {'direction': self.setDirection}
-
-        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
-
-    def setDirection(self, direction):
-        if direction is "Right":
-            self.direction = "Right"
-        else:
-            self.direction = "Left"
-
-    def setTheMap(self, theMap):
-        self.mapData = theMap
+        self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
+        self.soundDead.set_volume(1)
 
     def update(self):
-        super().update()
-        steeringX, steeringY = self.AI.getAction()
-
-        self.imageIterShoot += 1
-        if self.imageIterShoot > self.imageWaitNextShoot:
-
-            if self.direction == "Right":
-                bullet = BeerBullet(self.rect.x + self.rect.width + 1, self.rect.centery, RIGHT, False)
-            elif self.direction == "Left":
-                bullet = BeerBullet(self.rect.x - 1, self.rect.centery, LEFT, False)
-
-            self.mapData.camera.add(bullet)
-            self.mapData.allSprites.add(bullet)
-            self.mapData.enemyBullet.add(bullet)
-
-            self.imageIterShoot = 0
-
-        self.speedx += steeringX
-        self.speedy += steeringY
-
-        self.capSpeed()
 
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
-    def capSpeed(self):
-        if self.speedx > self.maxSpeedx:
-            self.speedx = self.maxSpeedx
-        if self.speedx < -self.maxSpeedx:
-            self.speedx = -self.maxSpeedx
-        if self.speedy > self.maxSpeedy:
-            self.speedy = self.maxSpeedy
-        if self.speedy < -self.maxSpeedy:
-            self.speedy = -self.maxSpeedy
+        super().update()
 
     def dead(self):
         self.soundDead.play()
-        super().dead(self)
+        super().dead()
 
     def onCollision(self, collidedWith, sideOfCollision):
         if collidedWith == SOLID:
