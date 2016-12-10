@@ -19,11 +19,11 @@ class LogicHandlerPlatformScreen:
     def handle(self, player, gameData):
         self.applyFriction(self.mapData.allSprites)
         self.handleZoneCollision(player)
-        self.mapData.allSprites.update()
-        self.mapData.spritesHUD.update()
         self.collisionChecker.collisionAllSprites(player, self.mapData, gameData)
         self.handleBullets(self.mapData, player)
         self.gameOverCondition(player)
+        self.mapData.allSprites.update()
+        self.mapData.spritesHUD.update()
 
     def handleZoneCollision(self, player):
         for obj in self.mapData.tmxData.objects:

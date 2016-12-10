@@ -15,6 +15,8 @@ class CollisionPlayerPlatform:
     def collisionAllSprites(self, player, mapData, gameData):
         for sprite in mapData.allSprites:
             if sprite.isPhysicsApplied == True or sprite.isCollisionApplied == True:
+                if sprite.name == "enemyWalk":
+                    sprite.applyAI()
 
                 self.rightCollision(sprite, mapData)
                 self.leftCollision(sprite, mapData)

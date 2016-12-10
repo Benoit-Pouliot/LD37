@@ -37,13 +37,14 @@ class EnemyWalk(Enemy):
 
         self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
 
-    def update(self):
-        super().update()
+    def applyAI(self):
         steeringX, steeringY = self.AI.getAction()
 
         self.speedx += steeringX
         self.speedy += steeringY
 
+    def update(self):
+        super().update()
         self.capSpeed()
 
         self.rect.x += self.speedx
