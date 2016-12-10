@@ -1,12 +1,10 @@
-from app.sprites.enemy.enemy import Enemy
-from app.sprites.enemy.enemyShooter import EnemyShooter
+from app.sprites.enemy.enemyGenerator import EnemyGenerator
 
 class EnemyFactory:
     def __init__(self):
-        self.dictEnemies = {'enemyBase':    Enemy,
-                            'enemyShooter': EnemyShooter}
+        self.dictEnemies = {'enemyGenerator': EnemyGenerator}
 
-    def create(self, tmxEnemy, theMap=None):
+    def create(self, tmxEnemy, mapData):
 
         enemyName = tmxEnemy.name
         if enemyName in self.dictEnemies:
@@ -16,6 +14,6 @@ class EnemyFactory:
                 if nameProp in enemy.dictProperties:
                     enemy.dictProperties[nameProp](prop)
 
-            enemy.setTheMap(theMap)
+            enemy.setMapData(mapData)
             return enemy
         return None
