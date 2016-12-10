@@ -1,6 +1,7 @@
 from app.settings import *
 from app.tools.circle import Circle
 import pygame
+import copy
 
 class CollisionPlayerPlatform:
     def __init__(self, player, map):
@@ -174,23 +175,29 @@ class CollisionPlayerPlatform:
         sideOfCollision = None
 
         for obstacle in collisionList:
-            if sprite.speedx >0  and sprite.rect.right > obstacle.rect.left:
-                objectSize = obstacle.rect.width
+            if sprite.speedx > 0:
+                limit = obstacle.rect.left
                 sideOfCollision = RIGHT
-            elif sprite.speedx < 0 and sprite.rect.left < obstacle.rect.right:
-                objectSize = obstacle.rect.width
+            elif sprite.speedx < 0:
+                limit = obstacle.rect.right
                 sideOfCollision = LEFT
-            elif sprite.speedy > 0 and sprite.rect.bottom > obstacle.rect.top:
-                objectSize = obstacle.rect.height
+
+            if sideOfCollision == LEFT or sideOfCollision == RIGHT:
+                sprite.onCollision(OBSTACLE, sideOfCollision,limit)
+                if sprite.friendly == False:
+                    obstacle.isHit(sprite.attack)
+
+            if sprite.speedy > 0:
+                limit = obstacle.rect.top
                 sideOfCollision = DOWN
-            elif sprite.speedy < 0 and sprite.rect.top < obstacle.rect.bottom:
-                objectSize = obstacle.rect.height
+            elif sprite.speedy < 0:
+                limit = obstacle.rect.bottom
                 sideOfCollision = UP
 
+            if sideOfCollision == UP or sideOfCollision == DOWN:
+                sprite.onCollision(OBSTACLE, sideOfCollision,limit)
+
             if sideOfCollision is not None:
-
-                sprite.onCollision(OBSTACLE, sideOfCollision,objectSize)
-
                 if sprite.friendly == False:
                     obstacle.isHit(sprite.attack)
 
