@@ -3,7 +3,7 @@ from app.scene.platformScreen.eventHandlerPlatformScreen import EventHandlerPlat
 from app.scene.platformScreen.logicHandlerPlatformScreen import LogicHandlerPlatformScreen
 from app.scene.drawer import Drawer
 from app.settings import *
-from app.sprites.GUI.scoreDisplay import ScoreDisplay
+from app.sprites.GUI.showItem import ShowItem
 from app.sprites.playerPlatform import PlayerPlatform
 from app.scene.musicFactory import MusicFactory
 
@@ -31,9 +31,8 @@ class PlatformScreen:
 
         # Pour fair afficher un score... en construction!
 
-        # self.score = ScoreDisplay()
-        # self.mapData.spritesHUD.add(self.score)
-
+        self.showItem = ShowItem()
+        self.mapData.spritesHUD.add(self.showItem)
 
         MusicFactory(PLATFORM_SCREEN, self.mapData.nameMap)
 
@@ -44,6 +43,7 @@ class PlatformScreen:
         while self.sceneRunning:
             self.eventHandler.eventHandle()
             self.logicHandler.handle(self.player, self.gameData)
+            self.updateShowItem()
             self.checkNewMap(self.logicHandler.newMapData)
             self.drawer.draw(self.screen, self.mapData.camera, self.mapData.spritesHUD, self.player)
 
@@ -54,6 +54,10 @@ class PlatformScreen:
             self.nextScene = WORLD_MAP
             self.gameData.typeScene = WORLD_MAP
             self.gameData.mapData = newMapData
+
+    def updateShowItem(self):
+        self.showItem.weapon = self.player.inventory.itemList[self.player.currentItem].name
+        self.showItem.update()
 
     def close(self):
         self.sceneRunning = False
