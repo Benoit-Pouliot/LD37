@@ -23,6 +23,3 @@ class EventHandlerPlatformScreen():
 
             for obj in self.gameData.mapData.notifySet:
                 obj.notify(event)
-
-
-

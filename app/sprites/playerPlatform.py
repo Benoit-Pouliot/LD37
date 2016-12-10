@@ -7,6 +7,7 @@ from app.sprites.bullet import Bullet
 from app.sprites.collisionMask import CollisionMask
 from app.sprites.inventory import Inventory
 from app.sprites.target import Target
+from app.sprites.grenade import Grenade
 
 
 class PlayerPlatform(pygame.sprite.Sprite):
@@ -72,6 +73,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.inventory = Inventory()
         self.inventory.addItem('gun',self.shootBullet)
         self.inventory.addItem('barricade',self.createBarricade)
+        self.inventory.addItem('grenade', self.shootGrenade)
 
         #Link your own sounds here
         #self.soundSpring = pygame.mixer.Sound(os.path.join('music_pcm', 'LvlUpFail.wav'))
@@ -219,6 +221,21 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.mapData.camera.add(bullet)
         self.mapData.allSprites.add(bullet)
         self.mapData.friendlyBullet.add(bullet)
+
+    def shootGrenade(self):
+        speedx, speedy = self.power2speed(10)
+
+        grenade = Grenade(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
+
+        self.mapData.camera.add(grenade)
+        self.mapData.allSprites.add(grenade)
+        self.mapData.friendlyBullet.add(grenade)
+
+    def power2speed(self, rawPowerValue):
+
+        speedx = self.target.powerx
+        speedy = self.target.powery
+        return speedx, speedy
 
     def createBarricade(self):
         self.stop()
