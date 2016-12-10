@@ -20,6 +20,8 @@ class LogicHandlerPlatformScreen:
         self.applyFriction(self.mapData.allSprites)
         self.handleZoneCollision(player)
         self.collisionChecker.collisionAllSprites(player, self.mapData, gameData)
+        self.mapData.internalMapTime += 1
+        self.mapData.enemyGeneratorSupervisor.updateSupervisor()
         self.handleBullets(self.mapData, player)
         self.gameOverCondition(player)
         self.mapData.allSprites.update()
