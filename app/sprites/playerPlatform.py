@@ -223,7 +223,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.mapData.friendlyBullet.add(bullet)
 
     def shootGrenade(self):
-        speedx, speedy = self.power2speed(10)
+        speedx, speedy = self.power2speed(2)
 
         grenade = Grenade(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
 
@@ -233,8 +233,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def power2speed(self, rawPowerValue):
 
-        speedx = self.target.powerx
-        speedy = self.target.powery
+        speedx = self.target.powerx*rawPowerValue
+        speedy = self.target.powery*rawPowerValue
         return speedx, speedy
 
     def createBarricade(self):

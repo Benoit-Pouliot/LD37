@@ -14,6 +14,9 @@ class Grenade(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.x = x
+        self.y = y
+        self.friction = 0.01
 
         self.initialSpeed = 20
         self.speedx = speedx
@@ -21,10 +24,37 @@ class Grenade(pygame.sprite.Sprite):
 
         self.isPhysicsApplied = False
         self.isCollisionApplied = False
+        self.isFrictionApplied = True
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
         self.mapData = mapData
 
     def update(self):
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        self.applyFriction()
+
+        self.x += self.speedx
+        self.y += self.speedy
+
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+    def applyFriction(self):
+        if self.speedx > 0 and self.speedx - self.friction > 0:
+            self.speedx -= self.friction
+        elif self.speedx > 0:
+            self.speedx = 0
+
+        if self.speedx < 0 and self.speedx + self.friction < 0:
+            self.speedx += self.friction
+        elif self.speedx < 0:
+            self.speedx = 0
+
+        if self.speedy > 0 and self.speedy - self.friction > 0:
+            self.speedy -= self.friction
+        elif self.speedy > 0:
+            self.speedy = 0
+
+        if self.speedy < 0 and self.speedy + self.friction < 0:
+            self.speedy += self.friction
+        elif self.speedy < 0:
+            self.speedy = 0
