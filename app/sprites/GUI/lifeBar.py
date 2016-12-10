@@ -2,20 +2,23 @@ __author__ = 'Bobsleigh'
 import pygame
 from app.settings import *
 
-class PlayerLifeBar(pygame.sprite.Sprite):
-    def __init__(self, healthMax,width=150,height=16):
+class LifeBar (pygame.sprite.Sprite):
+    def __init__(self, healthMax,width=32,height=5):
         super().__init__()
         self.width = width
         self.height = height
         self.image = pygame.Surface([self.width, self.height])
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
-        self.rect.x = 10
-        self.rect.y = 10
+        self.rect.x = 300
+        self.rect.y = 300
 
         self.healthMax = healthMax
         self.healthCurrent = healthMax
         self.isDisplayed = True
+
+        self.isPhysicsApplied = False
+        self.isCollisionApplied = False
 
     def subtract(self, amount):
         self.healthCurrent -= amount
@@ -30,6 +33,7 @@ class PlayerLifeBar(pygame.sprite.Sprite):
 
     def update(self):
         dmg = self.healthMax-self.healthCurrent
+        self.widthRed = self.width*(dmg)/self.healthMax
         if dmg > 0:
-            dmgBar = pygame.Rect(0, 0, self.width*(dmg)/self.healthMax, self.heights)
+            dmgBar = pygame.Rect(self.width-self.widthRed, 0, self.widthRed+1, self.height)
             pygame.draw.rect(self.image, RED, dmgBar)
