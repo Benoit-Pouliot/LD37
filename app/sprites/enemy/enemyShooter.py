@@ -16,7 +16,7 @@ class EnemyShooter(Enemy):
 
         self.name = "enemyShooter"
 
-        self.imageEnemy = pygame.image.load(os.path.join('img', 'enemybob.png'))
+        self.imageEnemy = pygame.image.load(os.path.join('img', 'shooting_enemy.png'))
 
         self.frames = [self.imageEnemy]
         self.animation = Animation(self,self.frames,20)
