@@ -15,7 +15,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.name = "player"
 
-        self.imageBase=pygame.image.load(os.path.join('img', 'joueur_droite.png'))
+        self.imageBase=pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20,20))
 
         self.imageShapeLeft = None
         self.imageShapeRight = None
