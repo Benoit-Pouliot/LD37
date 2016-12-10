@@ -57,8 +57,8 @@ class MapData:
         # All the data to spawn enemies
         self.enemyGenListData = EnemyGenListData(self)
 
-        # testing TODO : Set time correctly
-        self.enemyGenListData.addData(120,[1],1,120)
+        # FOR DEBUG
+        self.enemyGenListData.addData(120,[1],3,120)
         if TAG_BP == 1:
             self.enemyGenListData.addData(60,[1],3,60)
             self.enemyGenListData.addData(10,[1],20,1)
