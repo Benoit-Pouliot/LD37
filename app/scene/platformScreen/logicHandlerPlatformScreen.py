@@ -17,7 +17,6 @@ class LogicHandlerPlatformScreen:
         self.screen = screen
 
     def handle(self, player, gameData):
-        self.applyGravity(self.mapData.allSprites)
         self.applyFriction(self.mapData.allSprites)
         self.collisionChecker.collisionAllSprites(player, self.mapData, gameData)
         self.handleZoneCollision(player)
@@ -63,6 +62,16 @@ class LogicHandlerPlatformScreen:
                     sprite.speedx += FRICTION
                 elif sprite.speedx < 0:
                     sprite.speedx = 0
+
+                if sprite.speedy > 0 and sprite.speedy - FRICTION > 0:
+                    sprite.speedy -= FRICTION
+                elif sprite.speedy > 0:
+                    sprite.speedy = 0
+
+                if sprite.speedy < 0 and sprite.speedy + FRICTION < 0:
+                    sprite.speedy += FRICTION
+                elif sprite.speedy < 0:
+                    sprite.speedy = 0
 
     def handleBullets(self, mapData, player):
         for bullet in mapData.friendlyBullet:
