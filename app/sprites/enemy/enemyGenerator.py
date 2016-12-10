@@ -12,19 +12,12 @@ class EnemyGenerator(Enemy):
         self.imageIter = 0 # counter
         self.imageWait = 100  # time between enemy spawn
 
-    def update(self):
-        super().update()
+    def spawnEnemy(self, typeEnemy):
 
-        self.imageIter += 1
+        # we place then a little randomly around [x,y] TODO
+        enemy = typeEnemy(self.rect.x, self.rect.y)
+        enemy.setMapData(self.mapData)
 
-        # if the time limit "imageWait" is reached, spawn an enemy
-        if self.imageIter > self.imageWait:
-
-            # enemy = EnemyWalk(self.rect.x, self.rect.y)  # position of enemy spawn
-            enemy = EnemyWalk(600, 500, self.mapData)
-
-            self.mapData.camera.add(enemy)
-            self.mapData.allSprites.add(enemy)
-            self.mapData.enemyBullet.add(enemy)
-
-            self.imageIter = 0
+        self.mapData.camera.add(enemy)
+        self.mapData.allSprites.add(enemy)
+        self.mapData.enemyBullet.add(enemy)

@@ -8,7 +8,8 @@ from app.tools.functionTools import *
 import os
 
 from app.sprites.enemyFactory import EnemyFactory
-# from app.sprites.itemFactory import ItemFactory
+from app.enemyGenListData import EnemyGenListData
+from app.sprites.enemySupervisor import EnemySupervisor
 import weakref
 # from app.sound.soundPlayerController import *
 # from app.sprites.player import *
@@ -37,11 +38,11 @@ class MapData:
         # The player will be set in playerPlatform for instance
         self.player = None
 
-        # Number of EnemyGenerator in the map
-        self.nbEG = 0
+        self.internalMapTime = 0
+        # EnemySupervisor
+        self.enemyGeneratorSupervisor = EnemySupervisor(self)
 
         eFactory = EnemyFactory()
-        # iFactory = ItemFactory()
 
         for obj in self.tmxData.objects:
             if obj.type == "enemy":
@@ -50,13 +51,15 @@ class MapData:
                     self.allSprites.add(enemy)
                     self.enemyGroup.add(enemy)
                     if obj.name == "enemyGenerator":
-                        self.nbEG += 1
+                        self.enemyGeneratorSupervisor.addEnemyGenerator(enemy)
 
-
-            # if obj.type == "item":
-            #     item = iFactory.create(obj)
-            #     self.allSprites.add(item)
-            #     self.itemGroup.add(item)
+        # All the data to spawn enemies
+        self.enemyGenListData = EnemyGenListData(self)
+        # testing
+        if TAG_BP == 1:
+            self.enemyGenListData.addData(5,[1],1,(0,0))
+            self.enemyGenListData.addData(10,[1],20,(1,10))
+            self.enemyGenListData.addData(5,[1],2,(1,10))
 
         # Put camera in mapData
         self.camera = pyscroll.PyscrollGroup(map_layer=self.cameraPlayer, default_layer=SPRITE_LAYER)
