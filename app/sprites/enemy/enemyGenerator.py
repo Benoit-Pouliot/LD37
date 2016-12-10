@@ -8,8 +8,8 @@ class EnemyGenerator(Enemy):
 
         self.name = "enemyGenerator"
 
-        self.imageIter = 0  # counter
-        self.imageWait = 100  # time between enemy spawn
+        self.imageIter = 1000000000000  # counter
+        self.imageWait = 1000000000000  # time between enemy spawn
 
     def update(self):
         super().update()
