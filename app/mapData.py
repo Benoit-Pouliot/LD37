@@ -31,8 +31,11 @@ class MapData:
         self.spritesHUD = pygame.sprite.Group()
         self.notifySet = weakref.WeakSet() #Set of all object that needs to be notified of events. Weak references are used to prevent this set from keeping objects alive
 
+        # The player will be set in playerPlatform for instance
+        self.player = None
+
         eFactory = EnemyFactory()
-        iFactory = ItemFactory()
+        # iFactory = ItemFactory()
 
         for obj in self.tmxData.objects:
             if obj.type == "enemy":

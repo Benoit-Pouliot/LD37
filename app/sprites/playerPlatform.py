@@ -60,6 +60,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.downPressed = False
 
         self.mapData = mapData
+        self.mapData.player = self
 
         self.target = Target(0,0)
         self.mapData.camera.add(self.target)
