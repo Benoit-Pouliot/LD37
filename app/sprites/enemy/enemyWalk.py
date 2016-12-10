@@ -13,7 +13,7 @@ class EnemyWalk(Enemy):
 
         self.name = "enemyWalk"
 
-        self.imageEnemy = pygame.image.load(os.path.join('img', 'enemybob.png'))
+        self.imageEnemy = pygame.image.load(os.path.join('img', 'walking_enemy.png'))
 
         self.frames = [self.imageEnemy]
         self.animation = Animation(self,self.frames,100)
