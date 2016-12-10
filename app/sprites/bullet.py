@@ -124,7 +124,13 @@ class Shuriken(Bullet):
 
         self.friendly = friendly
 
+        self.lifetime_counter = 0
+
     def update(self):
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
-        self.updateCollisionMask()
+
+        self.lifetime_counter += 1
+
+        if self.lifetime_counter < 30:
+            self.rect.x += self.speedx
+            self.rect.y += self.speedy
+            self.updateCollisionMask()

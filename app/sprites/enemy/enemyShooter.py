@@ -37,7 +37,7 @@ class EnemyShooter(Enemy):
         self.isGravityApplied = True
         self.isCollisionApplied = True
 
-        self.imageWaitNextShoot = 10
+        self.imageWaitNextShoot = 30
 
         # self.imageIterShoot = random.randint(10, (self.imageWaitNextShoot - 10))  # To shoot bullets at random pace
         self.imageIterShoot = 0
