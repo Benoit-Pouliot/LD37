@@ -8,6 +8,7 @@ from app.sprites.collisionMask import CollisionMask
 from app.sprites.inventory import Inventory
 from app.sprites.target import Target
 from app.sprites.grenade import Grenade
+from app.tools.cooldown import Cooldown
 
 
 class PlayerPlatform(pygame.sprite.Sprite):
@@ -63,6 +64,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.target = Target(0,0)
         self.mapData.camera.add(self.target)
 
+        self.grenadeCooldown = Cooldown(100)
+
         self.isAlive = True
 
         self.currentItem = 0
@@ -106,6 +109,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.updateCollisionMask()
         self.updatePressedKeys()
         self.updateTarget()
+        self.updateCooldowns()
 
     def capSpeed(self):
         if self.speedx > 0 and self.speedx > self.maxSpeedx:
@@ -132,6 +136,9 @@ class PlayerPlatform(pygame.sprite.Sprite):
     def updateCollisionMask(self):
         self.collisionMask.rect.x = self.rect.x
         self.collisionMask.rect.y = self.rect.y
+
+    def updateCooldowns(self):
+        self.grenadeCooldown.update()
 
     def updateTarget(self):
         mousePos = pygame.mouse.get_pos()
@@ -223,13 +230,16 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.mapData.friendlyBullet.add(bullet)
 
     def shootGrenade(self):
-        speedx, speedy = self.power2speed(10)
+        if self.grenadeCooldown.isZero:
+            speedx, speedy = self.power2speed(10)
 
-        grenade = Grenade(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
+            grenade = Grenade(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
 
-        self.mapData.camera.add(grenade)
-        self.mapData.allSprites.add(grenade)
-        self.mapData.friendlyBullet.add(grenade)
+            self.mapData.camera.add(grenade)
+            self.mapData.allSprites.add(grenade)
+            self.mapData.friendlyBullet.add(grenade)
+
+            self.grenadeCooldown.start()
 
     def power2speed(self, rawPowerValue):
 
