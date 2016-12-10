@@ -268,20 +268,22 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if collidedWith == OBSTACLE:
             if sideOfCollision == RIGHT:
                 if TAG_MARIE == 1:
-                    print('collision Right')
+                    print(objectSize)
                 #On colle le player à gauche de l'obstacle
                 self.speedx = 0
-                self.collisionMask.rect.right += objectSize - (self.collisionMask.rect.right % objectSize) - 1
+                self.rect.right += -2
+
+
             if sideOfCollision == LEFT:
                 self.speedx = 0
-                self.collisionMask.rect.left -= (self.collisionMask.rect.left % objectSize)
+                self.rect.left += 2
             if sideOfCollision == DOWN:
                 self.speedy = 0
-                self.collisionMask.rect.bottom += objectSize - (self.collisionMask.rect.bottom % objectSize) - 1
+                self.rect.bottom += -2
 
             if sideOfCollision == UP:
                 self.speedy = 0
-                self.collisionMask.rect.top -= (self.collisionMask.rect.top % objectSize)
+                self.rect.top += 2
 
     def nextItem(self):
         self.currentItem += 1
