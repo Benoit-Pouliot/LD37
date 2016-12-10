@@ -17,6 +17,7 @@ class EnemyGenerator(Enemy):
         if self.imageIter > self.imageWait:
 
             enemy = EnemyWalk(self.rect.x, self.rect.y)
+            #enemy = EnemyWalk(500,400)
             enemy.setMapData(self.mapData)
 
             self.mapData.camera.add(enemy)

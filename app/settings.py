@@ -109,6 +109,7 @@ HUD_FONT_COLOR = WHITE
 TAG_BP = 0
 TAG_MARIE = 0
 TAG_PHIL = 0
+TAG_ANIKA = 0
 
 # Load settings_local.py if exist
 try:
