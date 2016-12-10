@@ -1,5 +1,6 @@
 import pygame
 import os
+import math
 
 from app.sprites.enemy.enemy import Enemy
 from app.tools.animation import Animation
@@ -41,20 +42,49 @@ class EnemyWalk(Enemy):
 
         self.attack = 1
 
-    def applyAI(self):
-        steeringX, steeringY = self.AI.getAction()
+        self.mode = WALKING
+        self.timerAttack = 0
+        self.timeToAttack = 60
+        self.distanceToAttack = 25
 
-        self.speedx += steeringX
-        self.speedy += steeringY
+    def applyAI(self):
+
+        if self.mode == ATTACK:
+            if self.timerAttack < self.timeToAttack:
+                self.timerAttack += 1
+            else:
+                self.timerAttack = 0
+                self.mode = WALKING
+                self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+
+
+                # NEED TO ATTACK
+
+
+        else:
+            # if player is close : stop and init timer to attack
+            distX = self.mapData.player.rect.x-self.rect.x
+            distY = self.mapData.player.rect.y-self.rect.y
+            if math.sqrt(distX**2 + distY**2) < self.distanceToAttack:
+                self.mode = ATTACK
+                self.timerAttack = 0
+                self.speedx = 0
+                self.speedy = 0
+            else:
+                steeringX, steeringY = self.AI.getAction()
+
+                self.speedx += steeringX
+                self.speedy += steeringY
 
     def update(self):
-        super().update()
         self.capSpeed()
 
         self.x += self.speedx
         self.y += self.speedy
         self.rect.x = self.x
         self.rect.y = self.y
+
+        super().update()
 
     def capSpeed(self):
         if self.speedx > self.maxSpeedx:
