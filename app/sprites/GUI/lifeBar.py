@@ -17,6 +17,9 @@ class LifeBar (pygame.sprite.Sprite):
         self.healthCurrent = healthMax
         self.isDisplayed = True
 
+        self.isPhysicsApplied = False
+        self.isCollisionApplied = False
+
     def subtract(self, amount):
         self.healthCurrent -= amount
         if self.healthCurrent < 0:
@@ -30,6 +33,7 @@ class LifeBar (pygame.sprite.Sprite):
 
     def update(self):
         dmg = self.healthMax-self.healthCurrent
+        self.widthRed = self.width-self.width*(dmg)/self.healthMax
         if dmg > 0:
-            dmgBar = pygame.Rect(0, 0, self.width*(dmg)/self.healthMax, self.heights)
+            dmgBar = pygame.Rect(self.width-self.widthRed, 0, self.widthRed, self.height)
             pygame.draw.rect(self.image, RED, dmgBar)
