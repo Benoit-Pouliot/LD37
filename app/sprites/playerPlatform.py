@@ -24,15 +24,9 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.imageTransparent = pygame.Surface((1,1))
         self.imageTransparent.set_colorkey(BLACK)
 
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect() #Position centrée du player
         self.rect.x = x
         self.rect.y = y
-
-        #To dodge rounding problems with rect
-        self.x = x
-        self.y = y
-        self.pastFrameX = x
-        self.pastFrameY = y
 
         self.speedx = 0
         self.speedy = 0
@@ -140,6 +134,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         angleRad = math.atan2(diffy, diffx)
         self.target.image = pygame.transform.rotate(self.target.imageOrig, -angleRad/math.pi*180)
+        self.image = pygame.transform.rotate(self.imageBase, -angleRad/math.pi*180)
 
     def vectorNorm(self,x,y):
         return math.sqrt(x**2+y**2)
