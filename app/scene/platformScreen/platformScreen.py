@@ -10,7 +10,6 @@ from app.scene.musicFactory import MusicFactory
 from app.mapData import MapData
 
 
-
 class PlatformScreen:
     def __init__(self, screen, gameData):
         self.screen = screen
@@ -34,9 +33,7 @@ class PlatformScreen:
         # self.score = ScoreDisplay()
         # self.mapData.spritesHUD.add(self.score)
 
-
         MusicFactory(PLATFORM_SCREEN, self.mapData.nameMap)
-
 
     def mainLoop(self):
 

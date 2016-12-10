@@ -4,6 +4,7 @@ import os
 from app.sprites.enemy.enemy import Enemy
 from app.sprites.bullet import BeerBullet
 from app.tools.animation import Animation
+from app.AI.steeringAI import SteeringAI
 
 from app.settings import *
 import random
@@ -26,8 +27,10 @@ class EnemyShooter(Enemy):
 
         self.speedx = 0
         self.speedy = 0
+        self.maxSpeedx = 2
+        self.maxSpeedy = 2
 
-        self.theMap = theMap
+        self.mapData = theMap
 
         self.setDirection(direction)
 
@@ -39,6 +42,8 @@ class EnemyShooter(Enemy):
 
         self.dictProperties = {'direction': self.setDirection}
 
+        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+
     def setDirection(self, direction):
         if direction is "Right":
             self.direction = "Right"
@@ -46,9 +51,10 @@ class EnemyShooter(Enemy):
             self.direction = "Left"
 
     def setTheMap(self, theMap):
-        self.theMap = theMap
+        self.mapData = theMap
 
     def update(self):
+        steeringX, steeringY = self.AI.getAction()
 
         self.animation.update(self)
         self.updateCollisionMask()
@@ -61,21 +67,33 @@ class EnemyShooter(Enemy):
             elif self.direction == "Left":
                 bullet = BeerBullet(self.rect.x - 1, self.rect.centery, LEFT, False)
 
-            self.theMap.camera.add(bullet)
-            self.theMap.allSprites.add(bullet)
-            self.theMap.enemyBullet.add(bullet)
+            self.mapData.camera.add(bullet)
+            self.mapData.allSprites.add(bullet)
+            self.mapData.enemyBullet.add(bullet)
 
             self.imageIterShoot = 0
 
+        self.speedx += steeringX
+        self.speedy += steeringY
+
+        self.capSpeed()
 
         self.rect.x += self.speedx
-        if self.speedy < 15:
-            self.rect.y += self.speedy
-
+        self.rect.y += self.speedy
 
     def updateCollisionMask(self):
         self.collisionMask.rect.x = self.rect.x
         self.collisionMask.rect.y = self.rect.y
+
+    def capSpeed(self):
+        if self.speedx > self.maxSpeedx:
+            self.speedx = self.maxSpeedx
+        if self.speedx < -self.maxSpeedx:
+            self.speedx = -self.maxSpeedx
+        if self.speedy > self.maxSpeedy:
+            self.speedy = self.maxSpeedy
+        if self.speedy < -self.maxSpeedy:
+            self.speedy = -self.maxSpeedy
 
     def dead(self):
         self.soundDead.play()
