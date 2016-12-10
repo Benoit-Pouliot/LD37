@@ -28,6 +28,9 @@ class Enemy(pygame.sprite.Sprite):
 
         self.dictProperties = {}
 
+        self.attack = 0
+        self.friendly = False
+
     def setMapData(self, mapData):
         self.mapData = mapData
 

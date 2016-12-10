@@ -191,6 +191,9 @@ class CollisionPlayerPlatform:
 
                 sprite.onCollision(OBSTACLE, sideOfCollision,objectSize)
 
+                if sprite.friendly == False:
+                    obstacle.isHit(sprite.attack)
+
     def pickUpItem(self, player, itemGroup, gameMemory):
         collisionList = pygame.sprite.spritecollide(player, itemGroup, False)
         for item in collisionList:

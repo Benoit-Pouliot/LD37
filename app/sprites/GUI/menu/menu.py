@@ -73,11 +73,11 @@ class Menu(pygame.sprite.Sprite):
     def notify(self, event):
         if self.selected:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_w:
                     self.optionList[self.selector.vPos].deselect()
                     self.selector.moveUp()
                     self.optionList[self.selector.vPos].select()
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_s:
                     self.optionList[self.selector.vPos].deselect()
                     self.selector.moveDown()
                     self.optionList[self.selector.vPos].select()
