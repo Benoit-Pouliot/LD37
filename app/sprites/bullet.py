@@ -76,14 +76,14 @@ class Bullet(Enemy):
 
 class BeerBullet(Bullet):
     def __init__(self, x, y, direction=RIGHT, friendly=True):
-        super().__init__(x, y, os.path.join('img', 'biere32x32.png'))
+        super().__init__(x, y, os.path.join('img', 'biere1.png'))
 
         self.name = "bullet"
 
-        image1 = pygame.image.load(os.path.join('img', 'shuriken.png'))
-        image2 = pygame.image.load(os.path.join('img', 'shuriken.png'))
-        image3 = pygame.image.load(os.path.join('img', 'shuriken.png'))
-        image4 = pygame.image.load(os.path.join('img', 'shuriken.png'))
+        image1 = pygame.image.load(os.path.join('img', 'biere1.png'))
+        image2 = pygame.image.load(os.path.join('img', 'biere2.png'))
+        image3 = pygame.image.load(os.path.join('img', 'biere3.png'))
+        image4 = pygame.image.load(os.path.join('img', 'biere4.png'))
         self.frames = [image1,image2,image3,image4]
         self.image = self.frames[0]
 
