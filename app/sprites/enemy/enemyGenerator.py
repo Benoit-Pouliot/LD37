@@ -1,5 +1,6 @@
 from app.sprites.enemy.enemy import Enemy
 from app.sprites.enemy.enemyWalk import EnemyWalk
+from app.sprites.enemy.enemyShooter import EnemyShooter
 
 
 class EnemyGenerator(Enemy):

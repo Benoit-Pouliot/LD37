@@ -82,14 +82,37 @@ class BeerBullet(Bullet):
 
         self.name = "bullet"
 
-        image1 = pygame.image.load(os.path.join('img', 'biere32x32.png'))
-        image2 = pygame.image.load(os.path.join('img', 'biere32x32-2.png'))
-        image3 = pygame.image.load(os.path.join('img', 'biere32x32-3.png'))
-        image4 = pygame.image.load(os.path.join('img', 'biere32x32-4.png'))
+        image1 = pygame.image.load(os.path.join('img', 'shuriken.png'))
+        image2 = pygame.image.load(os.path.join('img', 'shuriken.png'))
+        image3 = pygame.image.load(os.path.join('img', 'shuriken.png'))
+        image4 = pygame.image.load(os.path.join('img', 'shuriken.png'))
         self.frames = [image1,image2,image3,image4]
         self.image = self.frames[0]
 
         self.animation = self.stand_animation(self.frames,6)
+
+        self.direction = direction
+
+        self.rect = self.image.get_rect()
+        self.rect.y = y - self.rect.height / 2
+
+        if direction == RIGHT:
+            self.speedx = 10
+            self.rect.x = x
+        elif direction == LEFT:
+            self.speedx = -10
+            self.rect.x = x - self.rect.width
+        self.speedy = 0
+
+        self.friendly = friendly
+
+class Shuriken(Bullet):
+    def __init__(self, x, y, direction=RIGHT, friendly=True):
+        super().__init__(x, y, os.path.join('img', 'shuriken.png'))
+
+        self.name = "bullet"
+
+        self.image = pygame.image.load(os.path.join('img', 'shuriken.png'))
 
         self.direction = direction
 
