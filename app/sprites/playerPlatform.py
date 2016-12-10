@@ -60,7 +60,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.target = Target(0,0)
         self.mapData.camera.add(self.target)
-        self.mapData.allSprites.add(self.target)
+        self.mapData.spritesHUD.add(self.target)
 
         self.isAlive = True
 
@@ -235,14 +235,17 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         barricade = Barricade(barricadePosx,barricadePosy)
 
-        occupied = pygame.sprite.spritecollideany(barricade, self.mapData.enemyGroup)
-        if occupied is None:
-            occupied = pygame.sprite.spritecollideany(barricade, self.mapData.obstacleGroup)
+        occupied = pygame.sprite.spritecollideany(barricade, self.mapData.allSprites)
+        # if occupied is None:
+        #     occupied = pygame.sprite.spritecollideany(barricade, self.mapData.obstacleGroup)
 
         if occupied is None:
             self.mapData.camera.add(barricade)
             self.mapData.allSprites.add(barricade)
             self.mapData.obstacleGroup.add(barricade)
+
+            self.mapData.camera.add(barricade.lifeBar)
+
         else:
             if TAG_MARIE == 1:
                 print('cannot put down')
@@ -280,7 +283,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 #On colle le player à gauche de l'obstacle
                 self.speedx = 0
                 self.rect.right += -2
-
 
             if sideOfCollision == LEFT:
                 self.speedx = 0

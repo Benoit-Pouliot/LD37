@@ -6,11 +6,12 @@ from app.scene.platformScreen.collisionPlayerPlatform import *
 # from app.tool.animation import Animation
 from app.tools.animation import Animation
 from app.sprites.collisionMask import CollisionMask
+from app.sprites.GUI.lifeBar import LifeBar
 
 
 
 class Barricade(pygame.sprite.Sprite):
-    def __init__(self, centerx, centery):
+    def __init__(self, centerx, centery,maxHealth = 20):
         super().__init__()
 
         self.name = "barricade"
@@ -31,6 +32,14 @@ class Barricade(pygame.sprite.Sprite):
         self.isPhysicsApplied = False
         self.isCollisionApplied = True
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
+
+        self.maxHealth = maxHealth
+
+        self.lifeBar = LifeBar(maxHealth)
+
+        self.lifeBar.rect.x = self.rect.x
+        self.lifeBar.rect.top = self.rect.bottom +3
+
 
     def update(self):
         if self.animation is not None :
