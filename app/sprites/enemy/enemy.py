@@ -45,3 +45,6 @@ class Enemy(pygame.sprite.Sprite):
     def dead(self):
         self.kill()
 
+    def notify(self, event):
+        pass
+
