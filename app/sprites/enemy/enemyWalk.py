@@ -3,10 +3,12 @@ import os
 
 from app.sprites.enemy.enemy import Enemy
 from app.tools.animation import Animation
+from app.AI.steeringAI import SteeringAI
+
 from app.settings import *
 
 class EnemyWalk(Enemy):
-    def __init__(self, x, y):
+    def __init__(self, x, y, mapData):  # ?
         super().__init__(x, y)
 
         self.name = "enemyWalk"
@@ -22,6 +24,10 @@ class EnemyWalk(Enemy):
 
         self.speedx = 0
         self.speedy = 0
+        self.maxSpeedx = 2
+        self.maxSpeedy = 2
+
+        self.setMapData(mapData)  # ?
 
         self.isPhysicsApplied = True
         self.isCollisionApplied = True
@@ -29,12 +35,29 @@ class EnemyWalk(Enemy):
         self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
         self.soundDead.set_volume(1)
 
+        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+
     def update(self):
+        super().update()
+        steeringX, steeringY = self.AI.getAction()
+
+        self.speedx += steeringX
+        self.speedy += steeringY
+
+        self.capSpeed()
 
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
-        super().update()
+    def capSpeed(self):
+        if self.speedx > self.maxSpeedx:
+            self.speedx = self.maxSpeedx
+        if self.speedx < -self.maxSpeedx:
+            self.speedx = -self.maxSpeedx
+        if self.speedy > self.maxSpeedy:
+            self.speedy = self.maxSpeedy
+        if self.speedy < -self.maxSpeedy:
+            self.speedy = -self.maxSpeedy
 
     def dead(self):
         self.soundDead.play()

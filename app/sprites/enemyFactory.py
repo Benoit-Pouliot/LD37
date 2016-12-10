@@ -1,5 +1,6 @@
 from app.sprites.enemy.enemyGenerator import EnemyGenerator
 
+
 class EnemyFactory:
     def __init__(self):
         self.dictEnemies = {'enemyGenerator': EnemyGenerator}

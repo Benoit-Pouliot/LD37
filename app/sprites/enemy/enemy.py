@@ -2,6 +2,7 @@ import pygame
 from app.sprites.collisionMask import CollisionMask
 from app.tools.animation import Animation
 
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -18,7 +19,6 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-        self.mapData = None
 
         self.isPhysicsApplied = False
         self.isCollisionApplied = False

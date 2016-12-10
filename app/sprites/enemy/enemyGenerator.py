@@ -1,24 +1,26 @@
 from app.sprites.enemy.enemy import Enemy
 from app.sprites.enemy.enemyWalk import EnemyWalk
 
+
 class EnemyGenerator(Enemy):
     def __init__(self, x, y):
         super().__init__(x, y)
 
         self.name = "enemyGenerator"
 
-        self.imageIter = 0
-        self.imageWait = 120
+        self.imageIter = 0  # counter
+        self.imageWait = 100  # time between enemy spawn
 
     def update(self):
         super().update()
 
         self.imageIter += 1
+
+        # if the time limit "imageWait" is reached, spawn an enemy
         if self.imageIter > self.imageWait:
 
-            enemy = EnemyWalk(self.rect.x, self.rect.y)
-            #enemy = EnemyWalk(500,400)
-            enemy.setMapData(self.mapData)
+            # enemy = EnemyWalk(self.rect.x, self.rect.y)  # position of enemy spawn
+            enemy = EnemyWalk(600, 500, self.mapData)
 
             self.mapData.camera.add(enemy)
             self.mapData.allSprites.add(enemy)
