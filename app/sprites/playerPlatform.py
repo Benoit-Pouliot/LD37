@@ -2,6 +2,7 @@ import pygame
 import os, math
 
 from app.settings import *
+from app.sprites.barricade import Barricade
 from app.sprites.bullet import Bullet
 from app.sprites.collisionMask import CollisionMask
 from app.sprites.inventory import Inventory
@@ -64,9 +65,13 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.isAlive = True
 
         self.currentItem = 0
+
+        if TAG_MARIE == 1:
+            self.currentItem = 1
+
         self.inventory = Inventory()
         self.inventory.addItem('gun',self.shootBullet)
-        self.inventory.addItem('barricade',self.addBarricade)
+        self.inventory.addItem('barricade',self.createBarricade)
 
         #Link your own sounds here
         #self.soundSpring = pygame.mixer.Sound(os.path.join('music_pcm', 'LvlUpFail.wav'))
@@ -211,8 +216,21 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.mapData.allSprites.add(bullet)
         self.mapData.friendlyBullet.add(bullet)
 
-    def addBarricade(self):
-        print('You created a barricade.')
+    def createBarricade(self):
+        if TAG_MARIE == 1:
+            print('You created a barricade.')
+        mousePos = pygame.mouse.get_pos()
+
+        diffx = mousePos[0] + self.mapData.cameraPlayer.view_rect.x - self.rect.centerx
+        diffy = mousePos[1] + self.mapData.cameraPlayer.view_rect.y - self.rect.centery
+
+        barricadePosx = BARRICADE_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
+        barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
+
+        barricade = Barricade(barricadePosx,barricadePosy)
+        self.mapData.camera.add(barricade)
+        self.mapData.allSprites.add(barricade)
+
 
     def onCollision(self, collidedWith, sideOfCollision):
         if collidedWith == SOLID:
