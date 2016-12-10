@@ -21,6 +21,8 @@ class EnemyWalk(Enemy):
         self.rect = self.imageEnemy.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.x = x
+        self.y = y
 
         self.speedx = 0
         self.speedy = 0
@@ -47,8 +49,10 @@ class EnemyWalk(Enemy):
         super().update()
         self.capSpeed()
 
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        self.x += self.speedx
+        self.y += self.speedy
+        self.rect.x = self.x
+        self.rect.y = self.y
 
     def capSpeed(self):
         if self.speedx > self.maxSpeedx:
