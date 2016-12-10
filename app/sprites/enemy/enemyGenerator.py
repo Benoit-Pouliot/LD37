@@ -15,7 +15,7 @@ class EnemyGenerator(Enemy):
     def spawnEnemy(self, typeEnemy):
 
         # we place then a little randomly around [x,y] TODO
-        enemy = typeEnemy(self.rect.x, self.rect.y)
+        enemy = typeEnemy(self.rect.x, self.rect.y, self.mapData)
         enemy.setMapData(self.mapData)
 
         self.mapData.camera.add(enemy)

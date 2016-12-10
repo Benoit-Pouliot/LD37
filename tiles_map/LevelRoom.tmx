@@ -227,10 +227,10 @@
   </object>
  </objectgroup>
  <objectgroup name="enemyLayer">
-  <object id="93" name="enemyGenerator" type="enemy" x="257.576" y="160.606" width="66.6667" height="60.6061"/>
-  <object id="95" name="enemyGenerator" type="enemy" x="1339.39" y="166.667" width="66.6667" height="60.6061"/>
-  <object id="96" name="enemyGenerator" type="enemy" x="1342.42" y="1036.36" width="66.6667" height="60.6061"/>
-  <object id="97" name="enemyGenerator" type="enemy" x="260.606" y="1030.3" width="66.6667" height="60.6061"/>
+  <object id="93" name="enemyGenerator" type="enemy" x="663.637" y="451.515" width="66.6667" height="60.6061"/>
+  <object id="95" name="enemyGenerator" type="enemy" x="930.299" y="457.576" width="66.6667" height="60.6061"/>
+  <object id="96" name="enemyGenerator" type="enemy" x="957.572" y="684.845" width="66.6667" height="60.6061"/>
+  <object id="97" name="enemyGenerator" type="enemy" x="660.606" y="681.815" width="66.6667" height="60.6061"/>
  </objectgroup>
  <objectgroup name="itemLayer"/>
 </map>

@@ -17,7 +17,7 @@ class EnemySupervisor():
             if listData[0] > self.mapData.internalMapTime:
                 for k in range(listData[2]):
 
-                    randEnemyGen = random.randint(0,len(self.listEnemyGenerator))
+                    randEnemyGen = random.randint(0,len(self.listEnemyGenerator)-1)
                     randTypeIDEnemy = random.choice(listData[1])
                     self.listEnemyGenerator[randEnemyGen].spawnEnemy(self.mapData.enemyGenListData.dictListEnemiesValues[randTypeIDEnemy])
 
