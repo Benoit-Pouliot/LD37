@@ -33,7 +33,7 @@ class LifeBar (pygame.sprite.Sprite):
 
     def update(self):
         dmg = self.healthMax-self.healthCurrent
-        self.widthRed = self.width-self.width*(dmg)/self.healthMax
+        self.widthRed = self.width*(dmg)/self.healthMax
         if dmg > 0:
-            dmgBar = pygame.Rect(self.width-self.widthRed, 0, self.widthRed, self.height)
+            dmgBar = pygame.Rect(self.width-self.widthRed, 0, self.widthRed+1, self.height)
             pygame.draw.rect(self.image, RED, dmgBar)
