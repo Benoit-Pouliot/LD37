@@ -15,7 +15,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.name = "player"
 
-        self.imageBase=pygame.image.load(os.path.join('img', 'joueur_droite.png'))
+        self.imageBase=pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20,20))
 
         self.imageShapeLeft = None
         self.imageShapeRight = None
@@ -228,11 +228,19 @@ class PlayerPlatform(pygame.sprite.Sprite):
         barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
 
         barricade = Barricade(barricadePosx,barricadePosy)
-        self.mapData.camera.add(barricade)
-        self.mapData.allSprites.add(barricade)
 
+        occupied = pygame.sprite.spritecollideany(barricade, self.mapData.allSprites)
 
-    def onCollision(self, collidedWith, sideOfCollision):
+        if occupied is None:
+            self.mapData.camera.add(barricade)
+            self.mapData.allSprites.add(barricade)
+            self.mapData.obstacleGroup.add(barricade)
+
+        else:
+            print('cannot put down')
+            barricade.destroy()
+
+    def onCollision(self, collidedWith, sideOfCollision,objectSize=0):
         if collidedWith == SOLID:
             if sideOfCollision == RIGHT:
                 #On colle le player sur le mur à droite
@@ -256,6 +264,24 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         if collidedWith == SPIKE:
             self.dead()
+
+        if collidedWith == OBSTACLE:
+            if sideOfCollision == RIGHT:
+                if TAG_MARIE == 1:
+                    print('collision Right')
+                #On colle le player à gauche de l'obstacle
+                self.speedx = 0
+                self.collisionMask.rect.right += objectSize - (self.collisionMask.rect.right % objectSize) - 1
+            if sideOfCollision == LEFT:
+                self.speedx = 0
+                self.collisionMask.rect.left -= (self.collisionMask.rect.left % objectSize)
+            if sideOfCollision == DOWN:
+                self.speedy = 0
+                self.collisionMask.rect.bottom += objectSize - (self.collisionMask.rect.bottom % objectSize) - 1
+
+            if sideOfCollision == UP:
+                self.speedy = 0
+                self.collisionMask.rect.top -= (self.collisionMask.rect.top % objectSize)
 
     def nextItem(self):
         self.currentItem += 1

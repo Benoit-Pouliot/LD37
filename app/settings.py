@@ -68,6 +68,8 @@ SPRING = 3
 LADDER = 4
 NONE = 5 #Pour identifier qu'il n'y a eu aucune collision
 
+OBSTACLE = 100 #This is not a tile
+
 #Player jump states
 GROUNDED = 0
 JUMP = 1
@@ -81,7 +83,7 @@ FRICTION = 0.8
 GRENADE_SPEEDX = 2
 GRENADE_SPEEDY = 2
 TARGET_DISTANCE = 50
-BARRICADE_DISTANCE = 75
+BARRICADE_DISTANCE = 100
 
 POWER_CAP = 9
 RATIO = 5
