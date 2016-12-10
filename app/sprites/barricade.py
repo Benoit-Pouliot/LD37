@@ -11,7 +11,7 @@ from app.sprites.GUI.lifeBar import LifeBar
 
 
 class Barricade(pygame.sprite.Sprite):
-    def __init__(self, centerx, centery,maxHealth = 20):
+    def __init__(self, centerx, centery,maxHealth = 100):
         super().__init__()
 
         self.name = "barricade"
@@ -38,7 +38,7 @@ class Barricade(pygame.sprite.Sprite):
         self.lifeBar = LifeBar(maxHealth)
 
         self.lifeBar.rect.x = self.rect.x
-        self.lifeBar.rect.top = self.rect.bottom +3
+        self.lifeBar.rect.bottom = self.rect.top - 3
 
 
     def update(self):
@@ -49,5 +49,22 @@ class Barricade(pygame.sprite.Sprite):
         if collidedWith == SOLID:
             self.destroy()
 
+    def isHit(self,damage=0):
+        # Should be different depending on which ennemy....
+        self.hurt(damage)
+
+    def hurt(self,damage=1):
+        self.lifeBar.healthCurrent -= damage
+
+        if TAG_MARIE == 1:
+            print('heath: ' + str(self.lifeBar.healthCurrent))
+
+        self.checkIfIsAlive()
+
+    def checkIfIsAlive(self):
+        if self.lifeBar.healthCurrent <= 0:
+            self.destroy()
+
     def destroy(self):
         self.kill()
+        self.lifeBar.kill()

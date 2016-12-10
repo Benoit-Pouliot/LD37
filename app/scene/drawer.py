@@ -12,6 +12,8 @@ class Drawer:
             camera.center(player.rect.center)
             camera.draw(screen)
 
+        
+
         spritesHUD.draw(screen)
         pygame.display.flip()
         self.clock.tick(self.FPS)

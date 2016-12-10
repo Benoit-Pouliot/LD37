@@ -49,8 +49,8 @@ class PlatformScreen:
         if newMapData is not None:
             # we got to change
             self.sceneRunning = False
-            self.nextScene = WORLD_MAP
-            self.gameData.typeScene = WORLD_MAP
+            self.nextScene = SHOP_SCREEN
+            self.gameData.typeScene = SHOP_SCREEN
             self.gameData.mapData = newMapData
 
     def updateShowItem(self):
@@ -66,6 +66,3 @@ class PlatformScreen:
 
         self.close()
 
-    def backToWorldMap(self):
-        newMapData = MapData('WorldMap', 'StartPointWorld')
-        self.checkNewMap(newMapData)

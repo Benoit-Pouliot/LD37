@@ -39,6 +39,8 @@ class EnemyWalk(Enemy):
 
         self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
 
+        self.attack = 1
+
     def applyAI(self):
         steeringX, steeringY = self.AI.getAction()
 
@@ -99,6 +101,8 @@ class EnemyWalk(Enemy):
             self.dead()
 
         if collidedWith == OBSTACLE:
+
+
             if sideOfCollision == RIGHT:
                 if TAG_MARIE == 1:
                     print(objectSize)

@@ -9,8 +9,6 @@ class MusicFactory:
         self.nameMusic = None
         if typeScene == TITLE_SCREEN:
             self.nameMusic = 'MainTheme'
-        elif typeScene == WORLD_MAP:
-            self.nameMusic = 'MainTheme'
         elif typeScene == PLATFORM_SCREEN:
             if secondOption == "LevelSheriff":
                 self.nameMusic = 'Sheriff'
