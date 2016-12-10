@@ -29,6 +29,7 @@ class MapData:
         self.obstacleGroup = pygame.sprite.Group()
         self.itemGroup = pygame.sprite.Group()
         self.friendlyBullet = pygame.sprite.Group()
+        self.friendlyExplosion = pygame.sprite.Group()
         self.enemyBullet = pygame.sprite.Group()
         self.spritesHUD = pygame.sprite.Group()
         # Set of all object that needs to be notified of events.
