@@ -8,6 +8,7 @@ from app.tools.animation import Animation
 from app.sprites.collisionMask import CollisionMask
 
 
+
 class Barricade(pygame.sprite.Sprite):
     def __init__(self, centerx, centery):
         super().__init__()

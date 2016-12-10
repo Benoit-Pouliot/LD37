@@ -172,20 +172,21 @@ class CollisionPlayerPlatform:
         sideOfCollision = None
 
         for obstacle in collisionList:
-            if sprite.speedx >0  and sprite.rect.right>obstacle.rect.left:
-                objectSize = sprite.rect.width
+            if sprite.speedx >0  and sprite.rect.right > obstacle.rect.left:
+                objectSize = obstacle.rect.width
+                sideOfCollision = RIGHT
+            elif sprite.speedx < 0 and sprite.rect.left < obstacle.rect.right:
+                objectSize = obstacle.rect.width
+                sideOfCollision = LEFT
+            elif sprite.speedy > 0 and sprite.rect.bottom > obstacle.rect.top:
+                objectSize = obstacle.rect.height
                 sideOfCollision = DOWN
-            if sprite.speedx < 0 and sprite.rect.left < obstacle.rect.right:
-                objectSize = sprite.rect.width
-                sideOfCollision = DOWN
-            if sprite.speedy > 0 and sprite.rect.bottom > obstacle.rect.top:
-                objectSize = sprite.rect.height
-                sideOfCollision = DOWN
-            if sprite.speedy < 0 and sprite.rect.top < obstacle.rect.bottom:
-                objectSize = sprite.rect.height
-                sideOfCollision=DOWN
+            elif sprite.speedy < 0 and sprite.rect.top < obstacle.rect.bottom:
+                objectSize = obstacle.rect.height
+                sideOfCollision = UP
 
             if sideOfCollision is not None:
+
                 sprite.onCollision(OBSTACLE, sideOfCollision,objectSize)
 
     def pickUpItem(self, player, itemGroup, gameMemory):
