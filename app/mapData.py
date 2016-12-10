@@ -8,7 +8,7 @@ from app.tools.functionTools import *
 import os
 
 from app.sprites.enemyFactory import EnemyFactory
-from app.sprites.itemFactory import ItemFactory
+# from app.sprites.itemFactory import ItemFactory
 import weakref
 # from app.sound.soundPlayerController import *
 # from app.sprites.player import *
@@ -29,10 +29,15 @@ class MapData:
         self.friendlyBullet = pygame.sprite.Group()
         self.enemyBullet = pygame.sprite.Group()
         self.spritesHUD = pygame.sprite.Group()
-        self.notifySet = weakref.WeakSet() #Set of all object that needs to be notified of events. Weak references are used to prevent this set from keeping objects alive
+        # Set of all object that needs to be notified of events.
+        # Weak references are used to prevent this set from keeping objects alive
+        self.notifySet = weakref.WeakSet()
 
         # The player will be set in playerPlatform for instance
         self.player = None
+
+        # Number of EnemyGenerator in the map
+        self.nbEG = 0
 
         eFactory = EnemyFactory()
         # iFactory = ItemFactory()
@@ -43,6 +48,8 @@ class MapData:
                 if enemy is not None:
                     self.allSprites.add(enemy)
                     self.enemyGroup.add(enemy)
+                    if obj.name == "enemyGenerator":
+                        self.nbEG += 1
 
 
             # if obj.type == "item":
