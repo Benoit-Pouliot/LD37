@@ -37,6 +37,10 @@ DEV_MODE = 1
 OPT_MODE = 0
 MODE = DEV_MODE
 
+# To get which mouse button is pressed.
+MOUSE_LEFT = 1
+MOUSE_RIGHT = 3
+
 #Scenes self.nextScene commands, used to tell SceneHandler what next scene to run after this one ends
 TITLE_SCREEN = 0
 WORLD_MAP = 1
