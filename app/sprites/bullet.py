@@ -68,8 +68,6 @@ class Bullet(Enemy):
         if collidedWith == OBSTACLE:
             pass
 
-
-
     def hitEnemy(self):
         self.detonate()
 
@@ -134,3 +132,5 @@ class Shuriken(Bullet):
             self.rect.x += self.speedx
             self.rect.y += self.speedy
             self.updateCollisionMask()
+        else:
+            self.kill()
