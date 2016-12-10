@@ -3,6 +3,8 @@ __author__ = 'Bobsleigh'
 import pygame, os
 from app.sprites.collisionMask import CollisionMask
 from app.sprites.explosion import Explosion
+from app.settings import *
+from app.tools.cooldown import Cooldown
 
 class Grenade(pygame.sprite.Sprite):
     def __init__(self, x, y, speedx, speedy, mapData):
@@ -30,6 +32,9 @@ class Grenade(pygame.sprite.Sprite):
 
         self.mapData = mapData
 
+        self.detonationTimer = Cooldown(60)
+        self.detonationTimer.start()
+
     def update(self):
         self.applyFriction()
 
@@ -39,7 +44,9 @@ class Grenade(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-        if self.speedx == 0 and self.speedy == 0:
+        self.detonationTimer.update()
+
+        if self.detonationTimer.isZero:
             self.detonate()
 
     def applyFriction(self):
@@ -73,3 +80,29 @@ class Grenade(pygame.sprite.Sprite):
         self.mapData.friendlyExplosion.add(explosion)
 
         self.kill()
+
+    def onCollision(self, collidedWith, sideOfCollision,objectSize=0):
+        if collidedWith == SOLID:
+            if sideOfCollision == RIGHT:
+                # On colle la sprite sur le mur à droite
+                self.speedx = 0
+                self.collisionMask.rect.right += self.mapData.tmxData.tilewidth - (
+                self.collisionMask.rect.right % self.mapData.tmxData.tilewidth) - 1
+            elif sideOfCollision == LEFT:
+                self.speedx = 0
+                self.collisionMask.rect.left -= (
+                self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle la sprite sur le mur à gauche
+            elif sideOfCollision == DOWN:
+                self.speedy = 0
+
+            elif sideOfCollision == UP:
+                # Coller le player sur le plafond
+                while self.mapData.tmxData.get_tile_gid(
+                                (self.collisionMask.rect.left + 1) / self.mapData.tmxData.tilewidth,
+                                (self.collisionMask.rect.top) / self.mapData.tmxData.tileheight,
+                                COLLISION_LAYER) != SOLID and self.mapData.tmxData.get_tile_gid(
+                            self.collisionMask.rect.right / self.mapData.tmxData.tilewidth,
+                            (self.collisionMask.rect.top) / self.mapData.tmxData.tileheight, COLLISION_LAYER) != SOLID:
+                    self.collisionMask.rect.bottom -= 1
+                self.collisionMask.rect.bottom += 1  # Redescendre de 1 pour sortir du plafond
+                self.speedy = 0

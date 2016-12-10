@@ -231,7 +231,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def shootGrenade(self):
         if self.grenadeCooldown.isZero:
-            speedx, speedy = self.power2speed(10)
+            speedx, speedy = self.power2speed(8)
 
             grenade = Grenade(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
 
