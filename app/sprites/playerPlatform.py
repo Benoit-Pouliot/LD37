@@ -228,9 +228,17 @@ class PlayerPlatform(pygame.sprite.Sprite):
         barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
 
         barricade = Barricade(barricadePosx,barricadePosy)
-        self.mapData.camera.add(barricade)
-        self.mapData.allSprites.add(barricade)
 
+        occupied = pygame.sprite.spritecollideany(barricade, self.mapData.allSprites)
+
+        if occupied is None:
+            self.mapData.camera.add(barricade)
+            self.mapData.allSprites.add(barricade)
+            self.mapData.obstacleGroup.add(barricade)
+
+        else:
+            print('cannot put down')
+            barricade.destroy()
 
     def onCollision(self, collidedWith, sideOfCollision):
         if collidedWith == SOLID:
@@ -256,6 +264,9 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         if collidedWith == SPIKE:
             self.dead()
+
+        if collidedWith == OBSTACLE:
+            pass
 
     def nextItem(self):
         self.currentItem += 1
