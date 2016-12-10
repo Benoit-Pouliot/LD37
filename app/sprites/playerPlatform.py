@@ -1,9 +1,10 @@
 import pygame
-import os
+import os, math
 
 from app.settings import *
 from app.sprites.bullet import Bullet
 from app.sprites.collisionMask import CollisionMask
+from app.sprites.target import Target
 
 
 class PlayerPlatform(pygame.sprite.Sprite):
@@ -41,7 +42,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.accx = 2
         self.accy = 2
 
-
         self.isPhysicsApplied = True
         self.isCollisionApplied = True
         self.facingSide = RIGHT
@@ -59,8 +59,11 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.upPressed = False
         self.downPressed = False
 
-
         self.mapData = mapData
+
+        self.target = Target(0,0)
+        self.mapData.camera.add(self.target)
+        self.mapData.allSprites.add(self.target)
 
         self.isAlive = True
 
@@ -94,6 +97,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.invincibleUpdate()
         self.updateCollisionMask()
         self.updatePressedKeys()
+        self.updateTarget()
 
     def capSpeed(self):
         if self.speedx > 0 and self.speedx > self.maxSpeedx:
@@ -120,6 +124,24 @@ class PlayerPlatform(pygame.sprite.Sprite):
     def updateCollisionMask(self):
         self.collisionMask.rect.x = self.rect.x
         self.collisionMask.rect.y = self.rect.y
+
+    def updateTarget(self):
+        mousePos = pygame.mouse.get_pos()
+
+        diffx = mousePos[0]+self.mapData.cameraPlayer.view_rect.x-self.rect.centerx
+        diffy = mousePos[1]+self.mapData.cameraPlayer.view_rect.y-self.rect.centery
+
+        self.target.rect.centerx = TARGET_DISTANCE*(diffx)/self.vectorNorm(diffx,diffy) + self.rect.centerx
+        self.target.rect.centery = TARGET_DISTANCE*(diffy)/self.vectorNorm(diffx,diffy) + self.rect.centery
+
+        self.target.powerx = (diffx)/self.vectorNorm(diffx,diffy)
+        self.target.powery = (diffy)/self.vectorNorm(diffx,diffy)
+
+        angleRad = math.atan2(diffy, diffx)
+        self.target.image = pygame.transform.rotate(self.target.imageOrig, -angleRad/math.pi*180)
+
+    def vectorNorm(self,x,y):
+        return math.sqrt(x**2+y**2)
 
     def gainLife(self):
         if self.life < self.lifeMax:
@@ -223,16 +245,16 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def notify(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 self.updateSpeedRight()
                 self.rightPressed = True
-            elif event.key == pygame.K_LEFT:
+            elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
                 self.updateSpeedLeft()
                 self.leftPressed = True
-            elif event.key == pygame.K_UP:
+            elif event.key == pygame.K_UP or event.key == pygame.K_w:
                 self.updateSpeedUp()
                 self.upPressed = True
-            elif event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 self.updateSpeedDown()
                 self.downPressed = True
             elif event.key == pygame.K_SPACE:
@@ -241,13 +263,13 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 self.shootBullet()
 
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 self.rightPressed = False
-            elif event.key == pygame.K_LEFT:
+            elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
                 self.leftPressed = False
-            elif event.key == pygame.K_UP:
+            elif event.key == pygame.K_UP or event.key == pygame.K_w:
                 self.upPressed = False
-            elif event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 self.downPressed = False
 
     def updatePressedKeys(self):
