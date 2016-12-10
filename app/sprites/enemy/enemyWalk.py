@@ -88,9 +88,7 @@ class EnemyWalk(Enemy):
                     self.collisionMask.rect.bottom -= 1
                 self.collisionMask.rect.bottom += 1  # Redescendre de 1 pour sortir du plafond
                 self.speedy = 0
-                if self.jumpState == CLIMBING:
-                    self.jumpState = JUMP
-                    self.upPressed = False
+
 
         if collidedWith == SPIKE:
             self.dead()
