@@ -61,6 +61,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
 
         self.mapData = mapData
+        self.mapData.player = self
 
         self.isAlive = True
 
