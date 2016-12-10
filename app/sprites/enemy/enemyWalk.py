@@ -63,7 +63,7 @@ class EnemyWalk(Enemy):
         self.soundDead.play()
         super().dead()
 
-    def onCollision(self, collidedWith, sideOfCollision):
+    def onCollision(self, collidedWith, sideOfCollision,objectSize=0):
         if collidedWith == SOLID:
             if sideOfCollision == RIGHT:
                 # On colle la sprite sur le mur à droite
@@ -95,10 +95,5 @@ class EnemyWalk(Enemy):
         if collidedWith == SPIKE:
             self.dead()
 
-        if collidedWith == SPRING:
-            if sideOfCollision == DOWN:
-                self.spring()
-            else:  # On agit comme avec un SOLID
-                self.speedx = 0
-                # On colle le player sur le mur à droite
-                self.collisionMask.rect.right += self.mapData.tmxData.tilewidth - (self.collisionMask.rect.right % self.mapData.tmxData.tilewidth) - 1
+        if collidedWith == OBSTACLE:
+            pass

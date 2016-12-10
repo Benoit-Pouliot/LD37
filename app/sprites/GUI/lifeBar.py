@@ -31,5 +31,5 @@ class PlayerLifeBar(pygame.sprite.Sprite):
     def update(self):
         dmg = self.healthMax-self.healthCurrent
         if dmg > 0:
-            dmgBar = pygame.Rect(0, 0, self.width*(dmg)/self.healthMax, self.height)
+            dmgBar = pygame.Rect(0, 0, self.width*(dmg)/self.healthMax, self.heights)
             pygame.draw.rect(self.image, RED, dmgBar)
