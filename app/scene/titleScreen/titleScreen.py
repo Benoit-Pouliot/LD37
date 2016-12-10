@@ -48,5 +48,5 @@ class TitleScreen:
         self.nextScene = PLATFORM_SCREEN
         self.sceneRunning = False
         self.gameData.typeScene = PLATFORM_SCREEN
-        self.gameData.mapData = MapData("LevelSheriff", "StartPointWorld")
+        self.gameData.mapData = MapData("LevelRoom", "StartPointWorld")
 
