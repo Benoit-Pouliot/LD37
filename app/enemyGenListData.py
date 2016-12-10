@@ -5,7 +5,7 @@ from app.settings import *
 #
 # self.listData is a list
 # (time, listEnemiesValues, nbEnemies, type)
-# - time              : The time when the enemies are spawning (in second)
+# - time              : The time when the enemies are spawning (in FRAME)
 # - listEnemiesValues : The type of enemies we want to spawn
 #                       If several type, we take it randomly each spawn
 # - nbEnemies         : Number of enemies spawning
@@ -18,6 +18,8 @@ class EnemyGenListData():
 
         self.listData = []
         self.mapData = mapData
+
+        self.limitNumberEnemy = 500
 
         # The link between numeration and the enemy
         self.dictListEnemiesValues = {1: EnemyWalk}
