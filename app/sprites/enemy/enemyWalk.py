@@ -96,4 +96,20 @@ class EnemyWalk(Enemy):
             self.dead()
 
         if collidedWith == OBSTACLE:
-            pass
+            if sideOfCollision == RIGHT:
+                if TAG_MARIE == 1:
+                    print(objectSize)
+                #On colle le player à gauche de l'obstacle
+                self.speedx = 0
+                self.rect.right += -2
+
+            if sideOfCollision == LEFT:
+                self.speedx = 0
+                self.rect.left += 2
+            if sideOfCollision == DOWN:
+                self.speedy = 0
+                self.rect.bottom += -2
+
+            if sideOfCollision == UP:
+                self.speedy = 0
+                self.rect.top += 2
