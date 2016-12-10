@@ -2,7 +2,7 @@ import pygame
 import os
 
 from app.sprites.enemy.enemy import Enemy
-from app.sprites.bullet import BeerBullet
+from app.sprites.bullet import Shuriken
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
 
@@ -61,9 +61,9 @@ class EnemyShooter(Enemy):
         if self.imageIterShoot > self.imageWaitNextShoot:
 
             if self.direction == "Right":
-                bullet = BeerBullet(self.rect.x + self.rect.width + 1, self.rect.centery, RIGHT, False)
+                bullet = Shuriken(self.rect.x + self.rect.width + 1, self.rect.centery, RIGHT, False)
             elif self.direction == "Left":
-                bullet = BeerBullet(self.rect.x - 1, self.rect.centery, LEFT, False)
+                bullet = Shuriken(self.rect.x - 1, self.rect.centery, LEFT, False)
 
             self.mapData.camera.add(bullet)
             self.mapData.allSprites.add(bullet)
