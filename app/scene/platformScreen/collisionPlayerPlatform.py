@@ -22,6 +22,7 @@ class CollisionPlayerPlatform:
                 self.upCollision(sprite, mapData)
 
                 self.collisionWithEnemy(player, mapData.enemyGroup)
+                self.collisionWithObstacle(sprite, mapData.obstacleGroup)
                 self.pickUpItem(player, mapData.itemGroup, gameData)
 
 
@@ -163,6 +164,13 @@ class CollisionPlayerPlatform:
             player.hurt()
             # player.loseLife()
             # self.soundControl.hurt()
+            pass
+
+    def collisionWithObstacle(self, sprite, obsctacleGroup):
+        collisionList = pygame.sprite.spritecollide(sprite, obsctacleGroup, False)
+        for obstacle in collisionList:
+            if sprite.speedx >0  and sprite.rect.right>obstacle.rect.left:
+                sprite.onCollision(OBSTACLE,RIGHT)
             pass
 
     def pickUpItem(self, player, itemGroup, gameMemory):

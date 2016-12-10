@@ -24,10 +24,20 @@ class Barricade(pygame.sprite.Sprite):
         self.rect.x = centerx-self.rect.width/2
         self.rect.y = centery-self.rect.width/2
 
+        self.speedx = 0
+        self.speedy = 0
+
         self.isPhysicsApplied = False
-        self.isCollisionApplied = False
+        self.isCollisionApplied = True
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
     def update(self):
         if self.animation is not None :
            next(self.animation)
+
+    def onCollision(self, collidedWith, sideOfCollision):
+        if collidedWith == SOLID:
+            self.destroy()
+
+    def destroy(self):
+        self.kill()
