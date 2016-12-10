@@ -37,8 +37,10 @@ class EnemyShooter(Enemy):
         self.isGravityApplied = True
         self.isCollisionApplied = True
 
-        self.imageIterShoot = random.randint(10,70)
-        self.imageWaitNextShoot = 80
+        self.imageWaitNextShoot = 10
+
+        # self.imageIterShoot = random.randint(10, (self.imageWaitNextShoot - 10))  # To shoot bullets at random pace
+        self.imageIterShoot = 0
 
         self.dictProperties = {'direction': self.setDirection}
 
@@ -57,19 +59,25 @@ class EnemyShooter(Enemy):
         super().update()
         steeringX, steeringY = self.AI.getAction()
 
+        distx = self.mapData.player.rect.x - self.rect.x
+        disty = self.mapData.player.rect.y - self.rect.y
+
+        distance = distx + disty
+
         self.imageIterShoot += 1
-        if self.imageIterShoot > self.imageWaitNextShoot:
 
-            if self.direction == "Right":
-                bullet = Shuriken(self.rect.x + self.rect.width + 1, self.rect.centery, RIGHT, False)
-            elif self.direction == "Left":
-                bullet = Shuriken(self.rect.x - 1, self.rect.centery, LEFT, False)
+        if distance < 100:
+            if self.imageIterShoot > self.imageWaitNextShoot:
 
-            self.mapData.camera.add(bullet)
-            self.mapData.allSprites.add(bullet)
-            self.mapData.enemyBullet.add(bullet)
+                speedx_bullet = self.speedx*2 + steeringX
+                speedy_bullet = self.speedy*2 + steeringY
+                bullet = Shuriken(self.rect.centerx, self.rect.centery, speedx_bullet, speedy_bullet, False)
 
-            self.imageIterShoot = 0
+                self.mapData.camera.add(bullet)
+                self.mapData.allSprites.add(bullet)
+                self.mapData.enemyBullet.add(bullet)
+
+                self.imageIterShoot = 0
 
         self.speedx += steeringX
         self.speedy += steeringY

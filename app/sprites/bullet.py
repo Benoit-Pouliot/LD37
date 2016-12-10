@@ -106,25 +106,25 @@ class BeerBullet(Bullet):
 
         self.friendly = friendly
 
+
 class Shuriken(Bullet):
-    def __init__(self, x, y, direction=RIGHT, friendly=True):
+    def __init__(self, x, y, bullet_speedx, bullet_speedy, friendly=True):
         super().__init__(x, y, os.path.join('img', 'shuriken.png'))
 
         self.name = "bullet"
 
         self.image = pygame.image.load(os.path.join('img', 'shuriken.png'))
 
-        self.direction = direction
-
         self.rect = self.image.get_rect()
         self.rect.y = y - self.rect.height / 2
 
-        if direction == RIGHT:
-            self.speedx = 10
-            self.rect.x = x
-        elif direction == LEFT:
-            self.speedx = -10
-            self.rect.x = x - self.rect.width
-        self.speedy = 0
+        self.speedx = bullet_speedx
+        self.speedy = bullet_speedy
+        self.rect.x = x  # starting point of the bullet
 
         self.friendly = friendly
+
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        self.updateCollisionMask()

@@ -63,6 +63,8 @@ class MapData:
             self.enemyGenListData.addData(60,[1],3,60)
             self.enemyGenListData.addData(10,[1],20,1)
             self.enemyGenListData.addData(5,[1],2,1)
+        if TAG_ANIKA == 1:
+            self.enemyGenListData.addData(120,[2],1,120)
 
         # Put camera in mapData
         self.camera = pyscroll.PyscrollGroup(map_layer=self.cameraPlayer, default_layer=SPRITE_LAYER)
