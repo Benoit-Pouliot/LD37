@@ -76,6 +76,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.grenadeCooldown = Cooldown(100)
         self.mineCooldown = Cooldown(40)
+        self.gunCooldown = Cooldown(10)
 
         self.isAlive = True
 
@@ -151,6 +152,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
     def updateCooldowns(self):
         self.grenadeCooldown.update()
         self.mineCooldown.update()
+        self.gunCooldown.update()
 
     def updateTarget(self):
         mousePos = pygame.mouse.get_pos()
@@ -233,16 +235,15 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.setShapeImage()
 
     def shootBullet(self):
-        # if self.facingSide == RIGHT:
-        #     bullet = Bullet(self.rect.x + self.rect.width +1, self.rect.centery, self.facingSide)
-        # else:
-        #     bullet = Bullet(self.rect.x -1, self.rect.centery, self.facingSide)
-        speedx, speedy = self.power2speed(10)
+        if self.gunCooldown.isZero:
+            speedx, speedy = self.power2speed(10)
 
-        bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy)
-        self.mapData.camera.add(bullet)
-        self.mapData.allSprites.add(bullet)
-        self.mapData.friendlyBullet.add(bullet)
+            bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy)
+            self.mapData.camera.add(bullet)
+            self.mapData.allSprites.add(bullet)
+            self.mapData.friendlyBullet.add(bullet)
+
+            self.gunCooldown.start()
 
     def shootGrenade(self):
         if self.grenadeCooldown.isZero:

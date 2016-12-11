@@ -132,7 +132,7 @@ class EnemyWalk(Enemy):
         if self.speedy > self.maxSpeedy:
             self.speedy = self.maxSpeedy
         if self.speedy < -self.maxSpeedy:
-            self.speedy = self.maxSpeedy
+            self.speedy = -self.maxSpeedy
 
     def isHit(self, dmg):
         self.lifeBar.healthCurrent -= dmg
