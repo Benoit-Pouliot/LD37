@@ -21,9 +21,7 @@ class PlatformScreen:
         self.mapData = self.gameData.mapData
         self.mapData.gold = self.gameData.gold
 
-        self.player = PlayerPlatform(self.mapData.spawmPointPlayerx, self.mapData.spawmPointPlayery, self.mapData)
-
-        self.setPlayerUpgrade()
+        self.player = PlayerPlatform(self.mapData.spawmPointPlayerx, self.mapData.spawmPointPlayery, self.gameData)
 
         self.mapData.allSprites.add(self.player)
         self.mapData.camera.add(self.player)
@@ -71,9 +69,6 @@ class PlatformScreen:
     def updateShowItem(self):
         self.showItem.weapon = self.player.inventory.itemList[self.player.currentItem].name
         self.showItem.update()
-
-    def setPlayerUpgrade(self):
-        self.player.barricadeMaxHealth = self.gameData.upgrade['barricade'][1]*50
 
     def addHUD(self):
         self.HUD = HUDPlatformScreen(self.gameData)

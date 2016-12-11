@@ -74,7 +74,7 @@ class MapData:
             self.enemyGenListData.addData(120, [2], 1, 120)
             self.enemyGenListData.addData(120, [3], 1, 120)
         if TAG_PHIL == 1:
-            self.enemyGenListData.addData(120, [3], 3, 120)
+            self.enemyGenListData.addData(120, [2], 3, 120)
 
 
 

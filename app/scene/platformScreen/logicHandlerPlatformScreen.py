@@ -80,7 +80,7 @@ class LogicHandlerPlatformScreen:
 
     def handleBullets(self, mapData, player):
         for bullet in mapData.friendlyBullet:
-            if type(bullet) == Bullet:
+            if type(bullet) == PlayerBullet:
                 collisionBulletEnemy(bullet, mapData)
 
         collisionBulletPlayer(mapData, player)

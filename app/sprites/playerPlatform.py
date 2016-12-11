@@ -4,7 +4,7 @@ import math
 
 from app.settings import *
 from app.sprites.barricade import Barricade
-from app.sprites.bullet import Bullet
+from app.sprites.bullet import PlayerBullet
 from app.sprites.collisionMask import CollisionMask
 from app.sprites.inventory import Inventory
 from app.sprites.target import Target
@@ -15,7 +15,7 @@ from app.sprites.GUI.lifeBar import LifeBar
 
 
 class PlayerPlatform(pygame.sprite.Sprite):
-    def __init__(self, x, y, mapData, max_health=10):
+    def __init__(self, x, y, gameData, max_health=10):
         super().__init__()
 
         self.name = "player"
@@ -70,8 +70,9 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.downPressed = False
         self.leftMousePressed = False
 
-        self.mapData = mapData
+        self.mapData = gameData.mapData
         self.mapData.player = self
+        self.gameData = gameData
 
         self.target = Target(0, 0)
         self.mapData.camera.add(self.target)
@@ -274,7 +275,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if self.gunCooldown.isZero:
             speedx, speedy = self.power2speed(10)
 
-            bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy)
+            bullet = PlayerBullet(self.rect.centerx, self.rect.centery, speedx, speedy, self.gameData)
             self.mapData.camera.add(bullet)
             self.mapData.allSprites.add(bullet)
             self.mapData.friendlyBullet.add(bullet)
@@ -312,7 +313,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def createBarricade(self):
         #self.stop()
-        if self.barricadeCharges > 0:
+        if self.gameData.upgrade['barricade'][1] > 0 and self.barricadeCharges > 0:
             if TAG_MARIE == 1:
                 print('You created a barricade.')
             mousePos = pygame.mouse.get_pos()
@@ -323,7 +324,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
             barricadePosx = BARRICADE_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
             barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
 
-            barricade = Barricade(barricadePosx, barricadePosy,self.barricadeMaxHealth)
+            barricade = Barricade(barricadePosx, barricadePosy, self.gameData)
 
             occupied = pygame.sprite.spritecollideany(barricade, self.mapData.enemyGroup)
             if occupied is None:

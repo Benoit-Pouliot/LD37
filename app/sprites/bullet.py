@@ -76,6 +76,13 @@ class Bullet(Enemy):
     def detonate(self):
         self.kill()
 
+class PlayerBullet(Bullet):
+    def __init__(self, x, y, speedx, speedy, gameData, friendly=True):
+        super().__init__(x, y, speedx, speedy)
+
+        self.attackDMG = gameData.upgrade['gun'][1]
+
+
 class BeerBullet(Bullet):
     def __init__(self, x, y, direction=RIGHT, friendly=True):
         super().__init__(x, y, os.path.join('img', 'biere1.png'))
@@ -108,7 +115,7 @@ class BeerBullet(Bullet):
 
 
 class Shuriken(Bullet):
-    def __init__(self, x, y, bullet_speedx, bullet_speedy, friendly=False):
+    def __init__(self, x, y, bullet_speedx, bullet_speedy, gameData, friendly=False):
         super().__init__(x,y,0,0)
 
         self.name = "bullet"

@@ -84,8 +84,8 @@ class ShopScreen:
 
     def buy(self,item):
         if self.sold == True:
-            self.gameData.upgrade[item][1] += self.gameData.upgrade[item][3]
-            self.gameData.upgrade[item][2] = int(round(self.gameData.upgrade[item][4]*self.gameData.upgrade[item][2]))
+            self.gameData.upgrade[item][1] += self.gameData.upgrade[item][3] #Increase lvl
+            self.gameData.upgrade[item][2] = int(round(self.gameData.upgrade[item][4]*self.gameData.upgrade[item][2])) #Increase cost
             self.sold = False
             self.recreateButton(self.upgradeList[item])
         else:
@@ -96,7 +96,6 @@ class ShopScreen:
         self.buy('gun')
 
     def buyBarricadeUp(self):
-
         self.pay(self.gameData.upgrade['barricade'][2])
         self.buy('barricade')
 
@@ -116,4 +115,3 @@ class ShopScreen:
     def addHUD(self):
         self.HUD = HUDShopScreeen(self.gameData)
         self.shopScreenData.spritesHUD.add(self.HUD)
-

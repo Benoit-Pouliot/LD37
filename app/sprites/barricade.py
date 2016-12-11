@@ -11,7 +11,7 @@ from app.sprites.GUI.lifeBar import LifeBar
 
 
 class Barricade(pygame.sprite.Sprite):
-    def __init__(self, centerx, centery, maxHealth = 100):
+    def __init__(self, centerx, centery, gameData):
         super().__init__()
 
         self.name = "barricade"
@@ -33,15 +33,14 @@ class Barricade(pygame.sprite.Sprite):
         self.isCollisionApplied = True
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
-        self.maxHealth = maxHealth
+        self.maxHealth = gameData.upgrade['barricade'][1]*50
 
-        self.lifeBar = LifeBar(maxHealth)
+        self.lifeBar = LifeBar(self.maxHealth)
 
         self.lifeBar.rect.x = self.rect.x
         self.lifeBar.rect.bottom = self.rect.top - 3
 
         self.friendly = True
-
 
     def update(self):
         if self.animation is not None :
