@@ -21,7 +21,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.name = "player"
 
-        self.imageBase = rectSurface((ENEMY_DIMX, ENEMY_DIMY), BLUE, 3)
+        self.imageBase = rectSurface((PLAYER_DIMX, PLAYER_DIMY), BLUE, 3)
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
@@ -30,7 +30,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.setShapeImage()
         self.image = self.imageShapeRight
 
-        self.imageTransparent = rectSurface((ENEMY_DIMX, ENEMY_DIMY), WHITE, 3)
+        self.imageTransparent = rectSurface((PLAYER_DIMX, PLAYER_DIMY), WHITE, 3)
         self.imageTransparent.set_colorkey(COLORKEY)
 
         self.rect = self.image.get_rect()  # Position centrée du player
@@ -203,6 +203,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         angleRad = math.atan2(diffy, diffx)
         self.target.image = pygame.transform.rotate(self.target.imageOrig, -angleRad/math.pi*180)
+
+        # self.image = self.rot_center(self.imageBase, -angleRad/math.pi*180)
         self.image = pygame.transform.rotate(self.imageBase, -angleRad/math.pi*180)
 
     def vectorNorm(self,x,y):
@@ -266,7 +268,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.imageBase = self.imageTransparent
             self.image = self.imageTransparent
         elif self.invincibleFrameCounter[0] == 15:
-            self.imageBase = rectSurface((ENEMY_DIMX, ENEMY_DIMY), BLUE, 3)
+            self.imageBase = rectSurface((PLAYER_DIMX, PLAYER_DIMY), BLUE, 3)
             self.imageBase.set_colorkey(COLORKEY)
             self.setShapeImage()
 
@@ -471,3 +473,11 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.inventory.itemList[self.currentItem].useItem()
         if self.rightMousePressed:
             self.createBarricade()
+
+    # Suppose to work, but dont
+    # Need to understand why the camera is OK, with a simple rotation?
+    # http://pygame.org/wiki/RotateCenter?parent=
+    def rot_center(self, image, angle):
+        rot_image = pygame.transform.rotate(image, angle)
+        self.rect = rot_image.get_rect(center=self.rect.center)
+        return rot_image
