@@ -43,6 +43,8 @@ class Explosion(pygame.sprite.Sprite):
         self.counter = Counter()
         self.duration = 25  #In frames
 
+        self.attackDMG = 5
+
     def update(self):
         self.counter.count()
 

@@ -23,6 +23,7 @@ class LogicHandlerPlatformScreen:
         self.mapData.internalMapTime += 1
         self.mapData.enemyGeneratorSupervisor.updateSupervisor()
         self.handleBullets(self.mapData, player)
+        self.handleExplosions(self.mapData, player)
         self.handleAttacks(self.mapData, player)
         self.gameOverCondition(player)
         self.mapData.allSprites.update()
@@ -83,6 +84,10 @@ class LogicHandlerPlatformScreen:
                 collisionBulletEnemy(bullet, mapData)
 
         collisionBulletPlayer(mapData, player)
+
+    def handleExplosions(self, mapData, player):
+        for explosion in mapData.friendlyExplosion:
+            collisionExplosionEnemy(explosion, mapData)
 
     def handleAttacks(self, mapData, player):
         collisionAttackPlayer(mapData, player)

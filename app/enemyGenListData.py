@@ -36,7 +36,7 @@ class EnemyGenListData():
 
     def addData(self, time, listEnemiesValues, nbEnemies=1, plustime=0):
         if plustime < 0:
-            raise ValueError('You can''t create a type of EnemyGenListData where plustime < 0')
+            raise ValueError('You cant create a type of EnemyGenListData where plustime < 0')
         if nbEnemies >= 1:
             index = len(self.listData)
             for k in range(len(self.listData)):

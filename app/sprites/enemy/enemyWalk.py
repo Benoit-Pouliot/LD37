@@ -7,6 +7,7 @@ from app.sprites.enemy.enemyAttack import EnemyAttack
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
 from app.sprites.collisionMask import CollisionMask
+from app.sprites.GUI.lifeBar import LifeBar
 
 from app.settings import *
 
@@ -54,6 +55,14 @@ class EnemyWalk(Enemy):
         self.distanceToAttack = 25
         self.attackSprite = None
         self.factorAttack = 1.5
+
+        self.maxHealth = 5
+        self.lifeBar = LifeBar(5, self.rect.width)
+        self.mapData.allSprites.add(self.lifeBar)
+        self.mapData.camera.add(self.lifeBar, layer=CAMERA_HUD_LAYER)
+        self.lifeBar.rect.x = self.rect.x
+        self.lifeBar.rect.bottom = self.rect.top - 3
+
 
     def applyAI(self):
 
@@ -108,6 +117,11 @@ class EnemyWalk(Enemy):
         self.rect.x = self.x
         self.rect.y = self.y
 
+        self.lifeBar.rect.x = self.rect.x
+        self.lifeBar.rect.bottom = self.rect.top - 3
+
+        self.checkIfIsAlive()
+
         super().update()
 
     def capSpeed(self):
@@ -118,10 +132,18 @@ class EnemyWalk(Enemy):
         if self.speedy > self.maxSpeedy:
             self.speedy = self.maxSpeedy
         if self.speedy < -self.maxSpeedy:
-            self.speedy = -self.maxSpeedy
+            self.speedy = self.maxSpeedy
+
+    def isHit(self, dmg):
+        self.lifeBar.healthCurrent -= dmg
+
+    def checkIfIsAlive(self):
+        if self.lifeBar.healthCurrent <= 0:
+            self.dead()
 
     def dead(self):
         self.soundDead.play()
+        self.lifeBar.kill()
         super().dead()
 
     def prepareAttack(self):
