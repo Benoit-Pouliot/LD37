@@ -15,11 +15,11 @@ import weakref
 # from app.sprites.player import *
 
 class MapData:
-    def __init__(self, mapName="LevelRoom", nameInZone="StartPointWorld", screenSize=(SCREEN_WIDTH, SCREEN_HEIGHT)):
+    def __init__(self, mapName="LevelRoom", nameInZone="StartPointWorld",currentLevel=1, screenSize=(SCREEN_WIDTH, SCREEN_HEIGHT)):
 
         self.nameMap = mapName
 
-        self.currentLevel = 1
+        self.currentLevel = currentLevel
         self.levelEndTime = None
 
         self.tmxData = pytmx.util_pygame.load_pygame(self.reqImageName(self.nameMap))
@@ -114,3 +114,4 @@ class MapData:
 
         if currentLevel == 2:
             self.enemyGenListData.addData(400, [1], 50, 0)
+            self.levelEndTime = 402

@@ -110,7 +110,7 @@ class ShopScreen:
         self.sceneRunning = False
         self.nextScene = PLATFORM_SCREEN
         self.gameData.typeScene = PLATFORM_SCREEN
-        self.gameData.mapData = MapData("LevelRoom", "StartPointWorld")
+        self.gameData.mapData = MapData("LevelRoom", "StartPointWorld", self.gameData.currentLevel)
 
     def addHUD(self):
         self.HUD = HUDShopScreeen(self.gameData)
