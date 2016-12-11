@@ -19,7 +19,7 @@ class Grenade(pygame.sprite.Sprite):
         self.rect.y = y
         self.x = x
         self.y = y
-        self.friction = 0.01
+        self.friction = 0.4
 
         self.initialSpeed = 20
         self.speedx = speedx
@@ -68,8 +68,6 @@ class Grenade(pygame.sprite.Sprite):
             self.speedy += self.friction
         elif self.speedy < 0:
             self.speedy = 0
-
-        self.friction += 0.01
 
     def detonate(self):
         explosion = Explosion(self.rect.midbottom[0], self.rect.midbottom[1])

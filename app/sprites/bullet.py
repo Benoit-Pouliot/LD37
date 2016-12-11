@@ -109,7 +109,7 @@ class BeerBullet(Bullet):
 
 class Shuriken(Bullet):
     def __init__(self, x, y, bullet_speedx, bullet_speedy, friendly=True):
-        super().__init__(x, y, os.path.join('img', 'shuriken.png'))
+        super().__init__(x, y,0,0)
 
         self.name = "bullet"
 
