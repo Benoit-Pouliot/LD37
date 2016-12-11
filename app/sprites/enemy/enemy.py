@@ -47,7 +47,7 @@ class Enemy(pygame.sprite.Sprite):
         self.collisionMask.rect.x = self.rect.x
         self.collisionMask.rect.y = self.rect.y
 
-    def isHit(self):
+    def isHit(self,dmg=0):
         pass
 
     def dead(self):

@@ -11,8 +11,10 @@ class GameData:
 
         #Was map unlocked?
         self.upgrade = {} #Give [attributeName,attributeNumber,cost,attributeUpper,costUpper]
-        self.upgrade["gun"] = ['Level',1,500,1,1.1]
-        self.upgrade["barricade"] = ['Level',1,400,1,1.1]
+        self.upgrade["gun"] = ['Level',1,50,1,1.1]
+        self.upgrade["barricade"] = ['Level',1,30,1,1.1]
+
+        self.gold = 500
 
         self.maxItemOfAType = 99
 

@@ -4,9 +4,9 @@ import sys
 
 import pygame
 
-
+from app.mapData import MapData
 from app.sprites.GUI.button import Button
-from app.sprites.GUI.menu.menu import Menu
+from app.sprites.GUI.HUDShopScreen import HUDShopScreeen
 from app.scene.shopScreen.eventHandlerShopScreen import EventHandlerShopScreen
 from app.sprites.upgrade.barricadeUp import BarricadeUp
 from app.sprites.upgrade.gun import Gun
@@ -30,8 +30,14 @@ class ShopScreen:
 
         # We should adjust position.
 
-        self.addUpgrade('gun',(50,50))
-        self.addUpgrade('barricade',(250,50))
+        self.addUpgrade('gun',(50,80))
+        self.addUpgrade('barricade',(250,80))
+
+        self.startGameButton = Button((600,500),(100,80),'Fight!',self.nextLevel)
+        self.shopScreenData.allSprites.add(self.startGameButton)
+        self.shopScreenData.notifySet.add(self.startGameButton)
+
+        self.addHUD()
 
         self.eventHandler = EventHandlerShopScreen(self.gameData)
         self.logicHandler = LogicHandlerShopScreen(self.screen, self.gameData)
@@ -65,23 +71,34 @@ class ShopScreen:
         item.attribute = self.gameData.upgrade[item.name][1]
         item.cost = self.gameData.upgrade[item.name][2]
 
-        print(self.gameData.upgrade[item.name][0])
         self.shopScreenData.allSprites.add(item)
         self.shopScreenData.notifySet.add(item)
 
         item.rect.x = pos[0]
         item.rect.y = pos[1]
 
+    def pay(self,amount):
+        if self.gameData.gold >=amount:
+            self.sold = True
+            self.gameData.gold -= amount
+
+    def buy(self,item):
+        if self.sold == True:
+            self.gameData.upgrade[item][1] += self.gameData.upgrade[item][3]
+            self.gameData.upgrade[item][2] = int(round(self.gameData.upgrade[item][4]*self.gameData.upgrade[item][2]))
+            self.sold = False
+            self.recreateButton(self.upgradeList[item])
+        else:
+            print('Not enough money')
+
     def buyGun(self):
-        self.gameData.upgrade['gun'][1] += self.gameData.upgrade['gun'][3]
-        self.gameData.upgrade['gun'][2] = int(round(self.gameData.upgrade['gun'][4]*self.gameData.upgrade['gun'][2]))
-        self.recreateButton(self.upgradeList['gun'])
+        self.pay(self.gameData.upgrade['gun'][2])
+        self.buy('gun')
 
     def buyBarricadeUp(self):
-        print('You bought a barricade')
-        self.gameData.upgrade['barricade'][1] += self.gameData.upgrade['barricade'][3]
-        self.gameData.upgrade['barricade'][2] = int(round(self.gameData.upgrade['barricade'][4]*self.gameData.upgrade['barricade'][2]))
-        self.recreateButton(self.upgradeList['barricade'])
+
+        self.pay(self.gameData.upgrade['barricade'][2])
+        self.buy('barricade')
 
     def recreateButton(self,item):
         item.attribute = self.gameData.upgrade[item.name][1]
@@ -89,3 +106,14 @@ class ShopScreen:
 
     def doNothing(self):
         print('You did nothing')
+
+    def nextLevel(self):
+        self.sceneRunning = False
+        self.nextScene = PLATFORM_SCREEN
+        self.gameData.typeScene = PLATFORM_SCREEN
+        self.gameData.mapData = MapData("LevelRoom", "StartPointWorld")
+
+    def addHUD(self):
+        self.HUD = HUDShopScreeen(self.gameData)
+        self.shopScreenData.allSprites.add(self.HUD)
+
