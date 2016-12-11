@@ -77,10 +77,13 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.grenadeCooldown = Cooldown(100)
         self.mineCooldown = Cooldown(40)
         self.gunCooldown = Cooldown(20)
+        self.barricadeCooldown = Cooldown(50)
 
         self.isAlive = True
 
         self.barricadeMaxHeath = 100
+        self.barricadeCharges = 2
+        self.barricadeChargesMax = 2
 
         self.currentItem = 0
 
@@ -155,6 +158,13 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.grenadeCooldown.update()
         self.mineCooldown.update()
         self.gunCooldown.update()
+        self.barricadeCooldown.update()
+
+        if self.barricadeCharges < self.barricadeChargesMax and self.barricadeCooldown.isZero:
+            self.barricadeCharges += 1
+            if self.barricadeCharges < self.barricadeChargesMax:
+                self.barricadeCooldown.start()
+
 
     def updateTarget(self):
         mousePos = pygame.mouse.get_pos()
@@ -278,35 +288,40 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def createBarricade(self):
         #self.stop()
-
-        if TAG_MARIE == 1:
-            print('You created a barricade.')
-        mousePos = pygame.mouse.get_pos()
-
-        diffx = mousePos[0] + self.mapData.cameraPlayer.view_rect.x - self.rect.centerx
-        diffy = mousePos[1] + self.mapData.cameraPlayer.view_rect.y - self.rect.centery
-
-        barricadePosx = BARRICADE_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
-        barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
-
-        barricade = Barricade(barricadePosx, barricadePosy,self.barricadeMaxHeath)
-
-        occupied = pygame.sprite.spritecollideany(barricade, self.mapData.enemyGroup)
-        if occupied is None:
-            occupied = pygame.sprite.spritecollideany(barricade, self.mapData.obstacleGroup)
-
-        if occupied is None:
-            self.mapData.camera.add(barricade)
-            self.mapData.allSprites.add(barricade)
-            self.mapData.obstacleGroup.add(barricade)
-
-            self.mapData.allSprites.add(barricade.lifeBar)
-            self.mapData.camera.add(barricade.lifeBar, layer=CAMERA_HUD_LAYER)
-
-        else:
+        if self.barricadeCharges > 0:
             if TAG_MARIE == 1:
-                print('cannot put down')
-            barricade.destroy()
+                print('You created a barricade.')
+            mousePos = pygame.mouse.get_pos()
+
+            diffx = mousePos[0] + self.mapData.cameraPlayer.view_rect.x - self.rect.centerx
+            diffy = mousePos[1] + self.mapData.cameraPlayer.view_rect.y - self.rect.centery
+
+            barricadePosx = BARRICADE_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
+            barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
+
+            barricade = Barricade(barricadePosx, barricadePosy,self.barricadeMaxHeath)
+
+            occupied = pygame.sprite.spritecollideany(barricade, self.mapData.enemyGroup)
+            if occupied is None:
+                occupied = pygame.sprite.spritecollideany(barricade, self.mapData.obstacleGroup)
+
+            if occupied is None:
+                self.mapData.camera.add(barricade)
+                self.mapData.allSprites.add(barricade)
+                self.mapData.obstacleGroup.add(barricade)
+
+                self.mapData.allSprites.add(barricade.lifeBar)
+                self.mapData.camera.add(barricade.lifeBar, layer=CAMERA_HUD_LAYER)
+
+                self.barricadeCharges -= 1
+
+                if self.barricadeCooldown.isZero:
+                    self.barricadeCooldown.start()
+
+            else:
+                if TAG_MARIE == 1:
+                    print('cannot put down')
+                barricade.destroy()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:

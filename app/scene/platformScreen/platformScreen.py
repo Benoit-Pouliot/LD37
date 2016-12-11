@@ -6,6 +6,7 @@ from app.settings import *
 from app.sprites.GUI.showItem import ShowItem
 from app.sprites.playerPlatform import PlayerPlatform
 from app.scene.musicFactory import MusicFactory
+from app.sprites.GUI.showBarricadeCharges import ShowBarricadeCharges
 
 from app.mapData import MapData
 
@@ -35,6 +36,9 @@ class PlatformScreen:
         self.showItem = ShowItem()
         self.mapData.spritesHUD.add(self.showItem)
 
+        self.showBarricadeCharges = ShowBarricadeCharges(self.mapData)
+        self.mapData.spritesHUD.add(self.showBarricadeCharges)
+
         MusicFactory(PLATFORM_SCREEN, self.mapData.nameMap)
 
     def mainLoop(self):
@@ -44,6 +48,7 @@ class PlatformScreen:
             self.eventHandler.eventHandle()
             self.logicHandler.handle(self.player, self.gameData)
             self.updateShowItem()
+            self.showBarricadeCharges.update()
             self.checkNewMap(self.logicHandler.newMapData)
             self.drawer.draw(self.screen, self.mapData.camera, self.mapData.spritesHUD, self.player)
 

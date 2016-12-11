@@ -7,11 +7,12 @@ class Cooldown:
         self.isZero = True
 
     def update(self):
-        self.value -= 1
+        if not self.isZero:
+            self.value -= 1
 
-        if self.value <= 0:
-            self.value = 0
-            self.isZero = True
+            if self.value <= 0:
+                self.value = 0
+                self.isZero = True
 
     def start(self):
         self.value = self.max
