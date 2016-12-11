@@ -83,7 +83,7 @@ class EnemyBomber(EnemyCollision):
             # if player is close :  init timer to attack
             distX = self.mapData.player.rect.x-self.rect.x
             distY = self.mapData.player.rect.y-self.rect.y
-            if math.sqrt(distX**2 + distY**2) < self.distanceToAttack:
+            if math.sqrt(distX**2 + distY**2+EPS) < self.distanceToAttack:
                 self.prepareAttack()
                 self.animation = Animation(self, self.attackingFrames, 5)
 

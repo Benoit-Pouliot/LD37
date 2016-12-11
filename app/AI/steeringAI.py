@@ -1,8 +1,6 @@
-__author__ = 'Bobsleigh'
-
 import math
+from app.settings import *
 
-#-angleRad/math.pi*180
 class SteeringAI:
     def __init__(self, mapData, userRect, userSpeedx, userSpeedy):
         self.mapData = mapData
@@ -25,7 +23,7 @@ class SteeringAI:
 
 
     def vectorNorm(self,x,y):
-        result = math.sqrt(x**2+y**2)
+        result = math.sqrt(x**2+y**2+EPS)
         if result == 0:
             return 1
 

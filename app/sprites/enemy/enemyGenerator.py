@@ -7,6 +7,7 @@ class EnemyGenerator(Enemy):
         super().__init__(x, y)
 
         self.name = "enemyGenerator"
+        self.type = "enemyGenerator"
 
         self.factorRandom = 10
 

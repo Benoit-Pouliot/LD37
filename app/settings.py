@@ -26,6 +26,9 @@ FONT_NAME = 'arial'
 
 FPS = 60
 
+#EPSILON
+EPS = 0.000001
+
 #DIMENSION
 # http://gamedevelopment.tutsplus.com/articles/quick-tip-what-is-the-best-screen-resolution-for-your-game--gamedev-14723
 SCREEN_WIDTH = 800

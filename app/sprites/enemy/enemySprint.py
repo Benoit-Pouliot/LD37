@@ -15,9 +15,15 @@ class EnemySprint(EnemyCollision):
 
         self.name = "enemySprint"
 
-        self.imageEnemy = pygame.image.load(os.path.join('img', 'sprinting_enemy.png'))
+        self.imageEnemy = pygame.Surface((ENEMY_DIMX, ENEMY_DIMY))
+        self.imageEnemy.fill(YELLOW)
+
+        self.attackingEnemy = pygame.Surface((ENEMY_DIMX, ENEMY_DIMY))
+        self.attackingEnemy.fill(RED)
 
         self.enemyFrames = [self.imageEnemy]
+        self.prepareAttackingFrames = [self.attackingEnemy, self.imageEnemy]
+        self.attackingFrames = [self.attackingEnemy]
         self.animation = Animation(self, self.enemyFrames, 100)
 
         self.rect = self.imageEnemy.get_rect()
@@ -26,10 +32,13 @@ class EnemySprint(EnemyCollision):
         self.x = x
         self.y = y
 
+        self.maxSpeedWalkx = 2
+        self.maxSpeedWalky = 2
+
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 2
-        self.maxSpeedy = 2
+        self.maxSpeedx = self.maxSpeedWalkx
+        self.maxSpeedy = self.maxSpeedWalky
 
         self.setMapData(mapData)  # ?
 
@@ -48,38 +57,54 @@ class EnemySprint(EnemyCollision):
         self.timerSprint = 0
         self.timeToSprint = 60
         self.timeInSprint = 5
-        self.distanceToSprint = 25
-        self.SprintSprite = None
+        self.distanceToSprint = 150
+        self.speedSprint = 25
+        self.maxSpeedSprintx = self.speedSprint
+        self.maxSpeedSprinty = self.speedSprint
+        self.speedAttackX = 0
+        self.speedAttackY = 0
 
         self.bounty = 20
 
     def applyAI(self):
 
-        if self.mode == SPRINT:
-            if self.timerSprint == 0:
-                self.timerSprint += 1
+        if self.mode == IN_ATTACK:
+            self.speedx = self.speedAttackX
+            self.speedy = self.speedAttackY
 
-            elif self.timerSprint < self.timeInSprint:
+            if self.timerSprint <= self.timeInSprint:
                 self.timerSprint += 1
             else:
                 self.timerSprint = 0
                 self.mode = WALKING
-                self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
-                self.animation = Animation(self, self.enemyFrames, 100)
+                self.maxSpeedx = self.maxSpeedWalkx
+                self.maxSpeedy = self.maxSpeedWalky
+                self.speedx = 0
+                self.speedy = 0
 
-        elif self.mode == PREPARE_SPRINT:
-            if self.timerSprint < self.timeToSprint:
+        elif self.mode == PREPARE_ATTACK:
+            if self.timerSprint == 0:
+                self.timerSprint += 1
+                diffX = self.mapData.player.rect.centerx - self.rect.centerx
+                diffY = self.mapData.player.rect.centery - self.rect.centery
+                norm = math.sqrt(diffX**2+diffY**2+EPS)
+                self.speedAttackX = diffX/norm*self.speedSprint
+                self.speedAttackY = diffY/norm*self.speedSprint
+            elif self.timerSprint < self.timeToSprint:
                 self.timerSprint += 1
             else:
                 self.timerSprint = 0
-                self.mode = IN_SPRINT
+                self.mode = IN_ATTACK
+                self.animation = Animation(self, self.enemyFrames, 100)
+                self.maxSpeedx = self.maxSpeedSprintx
+                self.maxSpeedy = self.maxSpeedSprinty
 
         else:
             # if player is close : stop and init timer to sprint
-            distX = self.mapData.player.rect.x-self.rect.x
-            distY = self.mapData.player.rect.y-self.rect.y
-            if math.sqrt(distX**2 + distY**2) < self.distanceToSprint:
-                self.prepareSprint()
+            distX = self.mapData.player.rect.centerx-self.rect.centerx
+            distY = self.mapData.player.rect.centery-self.rect.centery
+            if math.sqrt(distX**2 + distY**2+EPS) < self.distanceToSprint:
+                self.prepareAttack()
             else:
                 steeringX, steeringY = self.AI.getAction()
 
@@ -110,8 +135,9 @@ class EnemySprint(EnemyCollision):
         self.soundDead.play()
         super().dead()
 
-    def prepareSprint(self):
-        self.mode = PREPARE_SPRINT
+    def prepareAttack(self):
+        self.mode = PREPARE_ATTACK
+        self.animation = Animation(self, self.prepareAttackingFrames, 5)
         self.timerSprint = 0
         self.speedx = 0
         self.speedy = 0

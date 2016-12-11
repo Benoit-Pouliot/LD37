@@ -33,6 +33,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.imageTransparent = pygame.transform.scale(pygame.image.load(os.path.join('img', 'biere1.png')), (20, 20))
 
         self.rect = self.image.get_rect()  # Position centrée du player
+        self.x = x
+        self.y = y
         self.rect.x = x
         self.rect.y = y
 
@@ -87,6 +89,9 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.currentItem = 0
 
+        if TAG_BP == 1:
+            self.spriteRED = None
+
         if TAG_MARIE == 1:
             self.currentItem = 0
 
@@ -112,8 +117,27 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def update(self):
         self.capSpeed()
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+
+        self.x += self.speedx
+        self.y += self.speedy
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+
+        if TAG_BP == 1:
+            if self.spriteRED is not None:
+                self.spriteRED.kill()
+            self.spriteRED = pygame.sprite.Sprite()
+            self.spriteRED.image = pygame.Surface((300,300), pygame.SRCALPHA, 32)
+            pygame.draw.circle(self.spriteRED.image, RED, [150, 150], 150,5)
+            self.spriteRED.rect = self.spriteRED.image.get_rect()
+            self.spriteRED.rect.x = self.rect.centerx-150
+            self.spriteRED.rect.y = self.rect.centery-150
+            self.mapData.camera.add(self.spriteRED)
+            self.mapData.allSprites.add(self.spriteRED)
+            self.spriteRED.isPhysicsApplied = False
+            self.spriteRED.isCollisionApplied = False
+
 
         if self.speedx > 0:
             self.image = self.imageShapeRight
@@ -183,7 +207,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.imageBase, -angleRad/math.pi*180)
 
     def vectorNorm(self,x,y):
-        return math.sqrt(x**2+y**2)
+        return math.sqrt(x**2+y**2+EPS)
 
     def gainLife(self):
         if self.life < self.lifeMax:
