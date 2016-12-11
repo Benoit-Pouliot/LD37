@@ -15,8 +15,8 @@ class SteeringAI:
         angleSpeed = math.atan2(self.mapData.player.speedy, self.mapData.player.speedx)
         angleToTarget = math.atan2(self.mapData.player.rect.y - self.rect.y, self.mapData.player.rect.x - self.rect.x)
 
-        desiredSpdX = (self.mapData.player.rect.x - self.rect.x)/self.vectorNorm(self.mapData.player.rect.x - self.rect.x, self.mapData.player.rect.y - self.rect.y)
-        desiredSpdY = (self.mapData.player.rect.y - self.rect.y)/self.vectorNorm(self.mapData.player.rect.x - self.rect.x, self.mapData.player.rect.y - self.rect.y)
+        desiredSpdX = (self.mapData.player.rect.x - self.rect.x)/self.vectorNorm(self.mapData.player.rect.x - self.rect.x, self.mapData.player.rect.y - self.rect.y) * self.mapData.player.maxSpeedx
+        desiredSpdY = (self.mapData.player.rect.y - self.rect.y)/self.vectorNorm(self.mapData.player.rect.x - self.rect.x, self.mapData.player.rect.y - self.rect.y) * self.mapData.player.maxSpeedy
 
         steeringX = desiredSpdX - self.userSpeedx
         steeringY = desiredSpdY - self.userSpeedy

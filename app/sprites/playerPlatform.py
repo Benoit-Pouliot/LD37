@@ -39,8 +39,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.speedx = 0
         self.speedy = 0
         self.maxSpeedx = 5
-        self.maxSpeedyUp = 5
-        self.maxSpeedyDown = 5
+        self.maxSpeedy = 5
         self.accx = 2
         self.accy = 2
 
@@ -131,10 +130,10 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.speedx = self.maxSpeedx
         if self.speedx < 0 and self.speedx < -self.maxSpeedx:
             self.speedx = -self.maxSpeedx
-        if self.speedy > 0 and self.speedy > self.maxSpeedyDown:
-            self.speedy = self.maxSpeedyDown
-        if self.speedy < 0 and self.speedy < -self.maxSpeedyUp:
-            self.speedy = -self.maxSpeedyUp
+        if self.speedy > 0 and self.speedy > self.maxSpeedy:
+            self.speedy = self.maxSpeedy
+        if self.speedy < 0 and self.speedy < -self.maxSpeedy:
+            self.speedy = -self.maxSpeedy
 
     def updateSpeedRight(self):
         self.speedx += self.accx

@@ -32,8 +32,8 @@ class EnemyWalk(Enemy):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 2
-        self.maxSpeedy = 2
+        self.maxSpeedx = 1
+        self.maxSpeedy = 1
 
         self.setMapData(mapData)  # ?
 
