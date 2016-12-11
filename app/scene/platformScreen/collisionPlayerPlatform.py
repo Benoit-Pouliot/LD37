@@ -24,10 +24,10 @@ class CollisionPlayerPlatform:
                 self.downCollision(sprite, mapData)
                 self.upCollision(sprite, mapData)
 
-                self.collisionWithEnemy(player, mapData.enemyGroup)
                 self.collisionWithObstacle(sprite, mapData.obstacleGroup)
                 self.collisionWithMine(sprite, mapData.mineGroup)
-                self.pickUpItem(player, mapData.itemGroup, gameData)
+        self.collisionWithEnemy(player, mapData.enemyGroup)
+        self.pickUpItem(player, mapData.itemGroup, gameData)
 
 
 
@@ -183,17 +183,15 @@ class CollisionPlayerPlatform:
 
         collisionList = pygame.sprite.spritecollide(sprite, obsctacleGroup, False)
         for obstacle in collisionList:
+
             if sprite.speedx > 0:
                 limit = obstacle.rect.left
                 sideOfCollision = RIGHT
             elif sprite.speedx < 0:
                 limit = obstacle.rect.right
                 sideOfCollision = LEFT
-
             if sideOfCollision == LEFT or sideOfCollision == RIGHT:
-                sprite.onCollision(OBSTACLE, sideOfCollision,limit)
-                if sprite.friendly == False:
-                    obstacle.isHit(sprite.attackDMG)
+                sprite.onCollision(OBSTACLE, sideOfCollision, limit)
 
             if sprite.speedy > 0:
                 limit = obstacle.rect.top
@@ -201,13 +199,12 @@ class CollisionPlayerPlatform:
             elif sprite.speedy < 0:
                 limit = obstacle.rect.bottom
                 sideOfCollision = UP
-
             if sideOfCollision == UP or sideOfCollision == DOWN:
-                sprite.onCollision(OBSTACLE, sideOfCollision,limit)
+                sprite.onCollision(OBSTACLE, sideOfCollision, limit)
 
-            if sideOfCollision is not None:
-                if sprite.friendly == False:
-                    obstacle.isHit(sprite.attackDMG)
+            if sideOfCollision is not None and sprite.speedx == 0 and sprite.speedy == 0 and sprite.friendly is False:
+                # An obstacle? We hit with an attack!
+                sprite.prepareAttack()
 
         #Test for vertical move
         # sprite.rect.y += sprite.speedy
@@ -273,6 +270,11 @@ def collisionAttackPlayer(map, player):
     for attack in collisionList:
         player.hurt(1)
         attack.kill()
+
+def collisionBarricadePlayer(map, barricade):
+    collisionList = pygame.sprite.spritecollide(barricade, map.attackGroup, False)
+    for attack in collisionList:
+        barricade.isHit(attack.attackDMG)
 
 def collisionBulletPlayer(map, player):
     collisionList = pygame.sprite.spritecollide(player, map.enemyBullet, False)
