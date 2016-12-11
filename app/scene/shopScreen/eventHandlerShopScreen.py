@@ -9,7 +9,19 @@ class EventHandlerShopScreen():
 
 
     def eventHandle(self):
-        pass
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quitGame()
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    pass
+                    #self.menuPause.mainLoop()
+                # elif event.key == pygame.K_ESCAPE:
+                #     self.menuPause.mainLoop()
+
+            for obj in self.gameData.shopScreenData.notifySet:
+                obj.notify(event)
 
 
 

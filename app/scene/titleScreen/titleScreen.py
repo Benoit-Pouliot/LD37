@@ -11,6 +11,8 @@ from app.settings import *
 from app.scene.musicFactory import MusicFactory
 from app.scene.drawer import Drawer
 
+from app.shopScreenData import ShopScreenData
+
 
 class TitleScreen:
     def __init__(self, screen, gameData=None):
@@ -26,7 +28,7 @@ class TitleScreen:
         self.menu = Menu(pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 12 / 16, SCREEN_WIDTH / 3, SCREEN_HEIGHT * 0.25))
 
         if TAG_MARIE == 1:
-            self.menu.addOption('Wat Marie wants to test', self.startGame)
+            self.menu.addOption('What Marie wants to test', self.goToTheShop)
 
         self.menu.addOption('Start', self.startGame)
         self.menu.addOption('Shop', self.goToTheShop)
@@ -60,3 +62,4 @@ class TitleScreen:
         self.sceneRunning = False
         self.gameData.typeScene = SHOP_SCREEN
         self.gameData.mapData = None
+        self.gameData.shopScreenData = ShopScreenData()

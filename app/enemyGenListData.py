@@ -1,5 +1,6 @@
 from app.sprites.enemy.enemyWalk import EnemyWalk
 from app.sprites.enemy.enemyShooter import EnemyShooter
+from app.sprites.enemy.enemySprint import EnemySprint
 from app.settings import *
 
 # List data of all enemies spawning in a level.
@@ -14,6 +15,8 @@ from app.settings import *
 #
 # It is important to use only addData and reqData to change the list
 #
+
+
 class EnemyGenListData():
     def __init__(self, mapData):
 
@@ -23,12 +26,14 @@ class EnemyGenListData():
         # For now, the game is slow at 120
         self.limitNumberEnemy = 80
 
-        if TAG_MARIE == 1:
-            self.limitNumberEnemy = 3
+        # To change enemy spawn number
+        # if TAG_MARIE == 1:
+        #     self.limitNumberEnemy = 3
 
         # The link between numeration and the enemy
         self.dictListEnemiesValues = {1: EnemyWalk,
-                                      2: EnemyShooter}
+                                      2: EnemyShooter,
+                                      3: EnemySprint}
 
     def addData(self, time, listEnemiesValues, nbEnemies=1, plustime=0):
         if plustime < 0:

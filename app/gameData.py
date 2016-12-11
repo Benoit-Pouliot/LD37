@@ -21,3 +21,4 @@ class GameData:
         self.scene = scene
 
         self.mapData = None
+        self.shopScreenData = None
