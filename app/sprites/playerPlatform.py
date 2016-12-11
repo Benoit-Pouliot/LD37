@@ -20,7 +20,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.name = "player"
 
-        self.imageBase=pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20,20))
+        self.imageBase = pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20, 20))
 
         self.imageShapeLeft = None
         self.imageShapeRight = None
@@ -28,8 +28,9 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.setShapeImage()
         self.image = self.imageShapeRight
 
-        self.imageTransparent = pygame.Surface((1,1))
-        self.imageTransparent.set_colorkey(BLACK)
+        # self.imageTransparent = pygame.Surface((1,1))
+        # self.imageTransparent.set_colorkey(BLACK)
+        self.imageTransparent = pygame.transform.scale(pygame.image.load(os.path.join('img', 'biere1.png')), (20, 20))
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.rect.x = x
@@ -225,15 +226,11 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def visualFlash(self):
         if self.invincibleFrameCounter[0] == 5:
-            self.imageShapeLeft = self.imageTransparent
-            self.imageShapeRight = self.imageTransparent
+            self.imageBase = self.imageTransparent
             self.image = self.imageTransparent
         elif self.invincibleFrameCounter[0] == 15:
+            self.imageBase = pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20, 20))
             self.setShapeImage()
-            if self.facingSide == RIGHT:
-                self.image = self.imageShapeRight
-            else:
-                self.image = self.imageShapeLeft
 
     def shootBullet(self):
         # if self.facingSide == RIGHT:
@@ -381,6 +378,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.destroy()
 
     def destroy(self):
+        self.imageBase = pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20, 20))
+        self.setShapeImage()
         if TAG_ANIKA == 1:
             print('player is dead')
         self.dead()
