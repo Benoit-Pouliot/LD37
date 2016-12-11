@@ -44,14 +44,19 @@ class ShopScreen:
             self.logicHandler.handle()
             self.drawer.draw(self.screen, None, self.shopScreenData.allSprites, None)  # Drawer in THIS file, below
 
+
     def addUpgrade(self,pos):
         item = Gun()
+        item.method = self.buyGun
         self.shopScreenData.allSprites.add(item)
         self.shopScreenData.notifySet.add(item)
 
         item.rect.x = pos[0]
         item.rect.y = pos[0]
 
+
+    def buyGun(self):
+        print('You bought a gun')
 
     def doNothing(self):
         print('You did nothing')

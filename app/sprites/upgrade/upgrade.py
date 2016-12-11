@@ -11,9 +11,11 @@ class Upgrade(pygame.sprite.Sprite):
 
         self.name = 'name'
         self.method = self.doNothing
-        self.level = 0
+        self.attribute = 0
+        self.cost = 0
 
-        self.upgFont = pygame.font.SysFont(FONT_NAME, 24)
+        self.fontSize = 24
+        self.upgFont = pygame.font.SysFont(FONT_NAME, self.fontSize)
 
         self.width = 150
         self.height = 200
@@ -29,10 +31,18 @@ class Upgrade(pygame.sprite.Sprite):
         self.icon = pygame.image.load(os.path.join('img', 'biere1.png'))
         self.iconPos = [0, 0]
 
-        self.textLevel = 'Level ' + str(self.level)
-        self.textPos = [0,0]
+        self.attributeName = 'Level'
+        self.textAttribute = self.attributeName + ' : ' + str(self.attribute)
+        self.textAttributePos = [0,0]
+
+        self.textCost = 'Cost : ' + str(self.cost)
+        self.textCostPos = [0, 0]
 
         self.isSelected = False
+
+        # Color
+        self.color1 = COLOR_MENU_1
+        self.color2 = COLOR_MENU_2
 
     def doNothing(self):
         print('You did nothing')
@@ -41,22 +51,27 @@ class Upgrade(pygame.sprite.Sprite):
         if self.isSelected:
             self.color1 = COLOR_MENU_SELECT_1
             self.color2 = COLOR_MENU_SELECT_2
-            self.printedName = self.upgFont.render(self.textLevel, True, COLOR_MENU_FONTS_SELECT)
+            self.printedAttribute = self.upgFont.render(self.textAttribute, True, COLOR_MENU_FONTS_SELECT)
+            self.printedCost = self.upgFont.render(self.textCost, True, COLOR_MENU_FONTS_SELECT)
+
         else:
             self.color1 = COLOR_MENU_1
             self.color2 = COLOR_MENU_2
-            self.printedName = self.upgFont.render(self.textLevel, True, COLOR_MENU_FONTS)
+            self.printedAttribute = self.upgFont.render(self.textAttribute, True, COLOR_MENU_FONTS)
+            self.printedCost = self.upgFont.render(self.textCost, True, COLOR_MENU_FONTS)
 
         self.image.fill(self.color2)
         self.image.fill(self.color1,self.interior)
         self.image.blit(self.icon, self.iconPos)
-        self.image.blit(self.printedName,self.textPos)
+        self.image.blit(self.printedAttribute,self.textAttributePos)
+        self.image.blit(self.printedCost,self.textCostPos)
         self.setUpgradeSpec()
 
 
     def setUpgradeSpec(self):
         # Button real space
-        self.textPos = [(self.image.get_width()-self.printedName.get_width())/2,self.image.get_height()*0.6]
+        self.textAttributePos = [(self.image.get_width()-self.printedAttribute.get_width())/2,self.interior.bottom-3*self.fontSize]
+        self.textCostPos = [(self.image.get_width()-self.printedCost.get_width())/2,self.interior.bottom-1.5*self.fontSize]
 
         self.iconPos = [(self.image.get_width()-self.icon.get_width())/2, (self.image.get_height()*0.6 - self.icon.get_height()) * 0.5]
 
