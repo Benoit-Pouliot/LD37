@@ -67,8 +67,8 @@ class CollisionPlayerPlatform:
                     # while map.tmxData.get_tile_gid((player.collisionMask.rect.right + 1)/self.tileWidth, player.collisionMask.rect.top/self.tileHeight, COLLISION_LAYER) != SOLID and map.tmxData.get_tile_gid((player.collisionMask.rect.right + 1)/self.tileWidth, (player.collisionMask.rect.bottom)/self.tileHeight, COLLISION_LAYER) != SOLID:
                     #     player.collisionMask.rect.right += 1
                     sprite.onCollision(SOLID, RIGHT)
-                elif upRightTileGid  == SPIKE or downRightTileGid == SPIKE or lowMidRightTileGid == SPIKE or highMidRightTileGid == SPIKE:
-                    sprite.onCollision(SPIKE, RIGHT)
+                elif upRightTileGid  == ENTRANCEWALL or downRightTileGid == ENTRANCEWALL or lowMidRightTileGid == ENTRANCEWALL or highMidRightTileGid == ENTRANCEWALL:
+                    sprite.onCollision(ENTRANCEWALL, RIGHT)
                 elif (upRightTileGid  == SPRING or downRightTileGid == SPRING or lowMidRightTileGid == SPRING or highMidRightTileGid == SPRING) and sprite.speedx > 0:
                     sprite.onCollision(SPRING, RIGHT)
 
@@ -120,8 +120,8 @@ class CollisionPlayerPlatform:
                 #while map.tmxData.get_tile_gid((player.collisionMask.rect.left)/tileWidth, player.collisionMask.rect.top/tileHeight, COLLISION_LAYER) != SOLID and map.tmxData.get_tile_gid((player.collisionMask.rect.left)/tileWidth, (player.collisionMask.rect.bottom-1)/tileHeight, COLLISION_LAYER) != SOLID:
                      #player.collisionMask.rect.left -= 1
                 sprite.onCollision(SOLID, LEFT)
-            elif upLeftTileGid  == SPIKE or downLeftTileGid  == SPIKE or lowMidLeftTileGid == SPIKE or highMidLeftTileGid == SPIKE:
-                sprite.onCollision(SPIKE, LEFT)
+            elif upLeftTileGid  == ENTRANCEWALL or downLeftTileGid  == ENTRANCEWALL or lowMidLeftTileGid == ENTRANCEWALL or highMidLeftTileGid == ENTRANCEWALL:
+                sprite.onCollision(ENTRANCEWALL, LEFT)
             elif (upLeftTileGid  == SPRING or downLeftTileGid  == SPRING or lowMidLeftTileGid == SPRING or highMidLeftTileGid == SPRING) and sprite.speedx < 0:
                 sprite.onCollision(SPRING, LEFT)
 
@@ -140,8 +140,8 @@ class CollisionPlayerPlatform:
             # while map.tmxDaata.get_tile_gid((player.collisionMask.rect.left+1)/tileWidth, (player.collisionMask.rect.bottom)/tileHeight, COLLISION_LAYER) != SOLID and map.tmxData.get_tile_gid((player.collisionMask.rect.right)/tileWidth, (player.collisionMask.rect.bottom)/tileHeight, COLLISION_LAYER) != SOLID:
             #     player.collisionMask.rect.bottom += 1
             sprite.onCollision(SOLID, DOWN)
-        elif downLeftTileGid == SPIKE or downRightTileGid == SPIKE  or downMidTileGID == SPIKE:
-            sprite.onCollision(SPIKE, DOWN)
+        elif downLeftTileGid == ENTRANCEWALL or downRightTileGid == ENTRANCEWALL  or downMidTileGID == ENTRANCEWALL:
+            sprite.onCollision(ENTRANCEWALL, DOWN)
         elif downLeftTileGid == SPRING or downRightTileGid == SPRING  or downMidTileGID == SPRING:
             sprite.onCollision(SPRING, DOWN)
         else:
@@ -158,8 +158,8 @@ class CollisionPlayerPlatform:
         if upLeftTileGid == SOLID or upRightTileGid == SOLID or upMidTileGid == SOLID:
             sprite.onCollision(SOLID, UP)
 
-        elif upLeftTileGid == SPIKE or upRightTileGid == SPIKE:
-            sprite.onCollision(SPIKE, UP)
+        elif upLeftTileGid == ENTRANCEWALL or upRightTileGid == ENTRANCEWALL:
+            sprite.onCollision(ENTRANCEWALL, UP)
         elif upLeftTileGid == LADDER or upRightTileGid == LADDER or upMidTileGid == LADDER:
             sprite.onCollision(LADDER, UP)
         else:
@@ -286,8 +286,8 @@ def collisionBulletPlayer(map, player):
 def printTile(tile):
     if tile == SOLID:
         print('SOLID')
-    elif tile == SPIKE:
-        print('SPIKE')
+    elif tile == ENTRANCEWALL:
+        print('ENTRANCEWALL')
     elif tile == SPRING:
         print('SPRING')
     else:
@@ -326,8 +326,8 @@ def collisionCircleRect(circle, rect):
 def printTopTile(tile):
     if tile == SOLID:
         print("SOLID")
-    elif tile == SPIKE:
-        print("SPIKE")
+    elif tile == ENTRANCEWALL:
+        print("ENTRANCEWALL")
     elif tile == SPRING:
         print("SPRING")
     elif tile == LADDER:

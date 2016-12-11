@@ -348,7 +348,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 barricade.destroy()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
-        if collidedWith == SOLID:
+        if collidedWith == SOLID or collidedWith == ENTRANCEWALL:
             if sideOfCollision == RIGHT:
                 #On colle le player sur le mur à droite
                 self.speedx = 0
