@@ -34,7 +34,7 @@ class PlatformScreen:
 
         self.addHUD()
 
-        MusicFactory(PLATFORM_SCREEN, self.mapData.nameMap)
+        MusicFactory(PLATFORM_SCREEN, self.mapData.currentLevel)
 
     def mainLoop(self):
 

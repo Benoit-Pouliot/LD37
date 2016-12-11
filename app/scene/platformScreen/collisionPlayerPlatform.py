@@ -260,6 +260,7 @@ def collisionBulletEnemy(bullet, map):
     for enemy in collisionList:
         enemy.isHit(bullet.attackDMG)
         bullet.hitEnemy()
+        break  #so that only 1 enemy is hit by a bullet
 
 def collisionGrenadeEnemy(grenade, map):
     collisionList = pygame.sprite.spritecollide(grenade, map.enemyGroup, False)

@@ -14,7 +14,6 @@ class SceneHandler:
         self.screen = screen
         self.gameData = GameData(firstScene)
 
-
     def mainLoop(self):
         self.handlerRunning = True
         while self.handlerRunning:
