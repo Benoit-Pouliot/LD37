@@ -11,7 +11,7 @@ from app.sprites.GUI.lifeBar import LifeBar
 
 
 class Barricade(pygame.sprite.Sprite):
-    def __init__(self, centerx, centery,maxHealth = 100):
+    def __init__(self, centerx, centery, maxHealth = 100):
         super().__init__()
 
         self.name = "barricade"

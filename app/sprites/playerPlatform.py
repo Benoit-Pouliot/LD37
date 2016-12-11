@@ -286,7 +286,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         barricadePosx = BARRICADE_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
         barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
 
-        barricade = Barricade(barricadePosx,barricadePosy)
+        barricade = Barricade(barricadePosx, barricadePosy)
 
         occupied = pygame.sprite.spritecollideany(barricade, self.mapData.enemyGroup)
         if occupied is None:
@@ -378,8 +378,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.destroy()
 
     def destroy(self):
-        self.imageBase = pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20, 20))
-        self.setShapeImage()
         if TAG_ANIKA == 1:
             print('player is dead')
         self.dead()

@@ -102,10 +102,7 @@ class EnemyWalk(Enemy):
             distX = self.mapData.player.rect.x-self.rect.x
             distY = self.mapData.player.rect.y-self.rect.y
             if math.sqrt(distX**2 + distY**2) < self.distanceToAttack:
-                self.mode = PREPARE_ATTACK
-                self.timerAttack = 0
-                self.speedx = 0
-                self.speedy = 0
+                self.prepareAttack()
             else:
                 steeringX, steeringY = self.AI.getAction()
 
@@ -148,6 +145,12 @@ class EnemyWalk(Enemy):
         self.soundDead.play()
         self.lifeBar.kill()
         super().dead()
+
+    def prepareAttack(self):
+        self.mode = PREPARE_ATTACK
+        self.timerAttack = 0
+        self.speedx = 0
+        self.speedy = 0
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
