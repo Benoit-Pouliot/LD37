@@ -1,6 +1,6 @@
 __author__ = 'Bobsleigh'
 
-import pygame, os
+import pygame, os, math
 from app.sprites.collisionMask import CollisionMask
 from app.sprites.explosion import Explosion
 from app.settings import *
@@ -49,25 +49,11 @@ class Grenade(pygame.sprite.Sprite):
             self.detonate()
 
     def applyFriction(self):
-        if self.speedx > 0 and self.speedx - self.friction > 0:
-            self.speedx -= self.friction
-        elif self.speedx > 0:
-            self.speedx = 0
+        initialNorm = math.sqrt(self.speedx**2 + self.speedy**2)
+        finalNorm = initialNorm - self.friction
 
-        if self.speedx < 0 and self.speedx + self.friction < 0:
-            self.speedx += self.friction
-        elif self.speedx < 0:
-            self.speedx = 0
-
-        if self.speedy > 0 and self.speedy - self.friction > 0:
-            self.speedy -= self.friction
-        elif self.speedy > 0:
-            self.speedy = 0
-
-        if self.speedy < 0 and self.speedy + self.friction < 0:
-            self.speedy += self.friction
-        elif self.speedy < 0:
-            self.speedy = 0
+        self.speedx = self.speedx * (finalNorm/(initialNorm+EPS))
+        self.speedy = self.speedy * (finalNorm/(initialNorm+EPS))
 
     def detonate(self):
         explosion = Explosion(self.rect.midbottom[0], self.rect.midbottom[1])
