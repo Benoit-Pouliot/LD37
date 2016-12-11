@@ -31,7 +31,7 @@ class Upgrade(pygame.sprite.Sprite):
         self.icon = pygame.image.load(os.path.join('img', 'biere1.png'))
         self.iconPos = [0, 0]
 
-        self.attributeName = 'Level'
+        self.attributeName = 'Peanut'
         self.textAttribute = self.attributeName + ' : ' + str(self.attribute)
         self.textAttributePos = [0,0]
 
@@ -48,6 +48,7 @@ class Upgrade(pygame.sprite.Sprite):
         print('You did nothing')
 
     def update(self):
+
         if self.isSelected:
             self.color1 = COLOR_MENU_SELECT_1
             self.color2 = COLOR_MENU_SELECT_2
@@ -60,15 +61,19 @@ class Upgrade(pygame.sprite.Sprite):
             self.printedAttribute = self.upgFont.render(self.textAttribute, True, COLOR_MENU_FONTS)
             self.printedCost = self.upgFont.render(self.textCost, True, COLOR_MENU_FONTS)
 
+        self.setUpgradeSpec()
+
         self.image.fill(self.color2)
         self.image.fill(self.color1,self.interior)
         self.image.blit(self.icon, self.iconPos)
         self.image.blit(self.printedAttribute,self.textAttributePos)
         self.image.blit(self.printedCost,self.textCostPos)
-        self.setUpgradeSpec()
 
 
     def setUpgradeSpec(self):
+        self.textAttribute = self.attributeName + ' : ' + str(self.attribute)
+        self.textCost = 'Cost : ' + str(self.cost)
+
         # Button real space
         self.textAttributePos = [(self.image.get_width()-self.printedAttribute.get_width())/2,self.interior.bottom-3*self.fontSize]
         self.textCostPos = [(self.image.get_width()-self.printedCost.get_width())/2,self.interior.bottom-1.5*self.fontSize]

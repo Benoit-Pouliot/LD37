@@ -1,21 +1,20 @@
 import pygame
 import os
+from app.sprites.upgrade.upgrade import Upgrade
 
 from app.settings import *
 from app.sprites.collisionMask import CollisionMask
 
 
-class Item(pygame.sprite.Sprite):
-    def __init__(self,name,method, type=None,image=os.path.join('img', 'biere1.png')):
+class BarricadeUp(Upgrade):
+    def __init__(self):
         super().__init__()
 
-        self.name = name
-        self.method = method
-        self.specialAttributeNum = 0
+        self.name = 'barricade'
+
+        self.icon = pygame.image.load(os.path.join('img', 'biere1.png'))
 
         # self.image = pygame.transform.scale(pygame.image.load(image), (TILEDIMX, TILEDIMY))
-        self.image = pygame.image.load(image)
-        self.rect = self.image.get_rect()
 
         self.type = type
 

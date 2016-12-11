@@ -28,7 +28,10 @@ class ShopScreen:
 
         self.upgradeList = {}
 
-        self.addUpgrade('gun',(50,200))
+        # We should adjust position.
+
+        self.addUpgrade('gun',(50,50))
+        self.addUpgrade('barricade',(250,50))
 
         self.eventHandler = EventHandlerShopScreen(self.gameData)
         self.logicHandler = LogicHandlerShopScreen(self.screen, self.gameData)
@@ -53,9 +56,9 @@ class ShopScreen:
         if name == 'gun':
             self.upgradeList[name] = Gun()
             self.upgradeList[name].method = self.buyGun
-        # elif name == 'barricadeUp':
-        #     self.upgradeList[name] = BarricadeUp()
-        #     self.upgradeList[name].method = self.buyGun
+        elif name == 'barricade':
+             self.upgradeList[name] = BarricadeUp()
+             self.upgradeList[name].method = self.buyBarricadeUp
 
         item = self.upgradeList[name]
         item.attributeName = self.gameData.upgrade[item.name][0]
@@ -67,13 +70,18 @@ class ShopScreen:
         self.shopScreenData.notifySet.add(item)
 
         item.rect.x = pos[0]
-        item.rect.y = pos[0]
+        item.rect.y = pos[1]
 
     def buyGun(self):
-        print('You bought a gun')
         self.gameData.upgrade['gun'][1] += self.gameData.upgrade['gun'][3]
         self.gameData.upgrade['gun'][2] = int(round(self.gameData.upgrade['gun'][4]*self.gameData.upgrade['gun'][2]))
         self.recreateButton(self.upgradeList['gun'])
+
+    def buyBarricadeUp(self):
+        print('You bought a barricade')
+        self.gameData.upgrade['barricade'][1] += self.gameData.upgrade['barricade'][3]
+        self.gameData.upgrade['barricade'][2] = int(round(self.gameData.upgrade['barricade'][4]*self.gameData.upgrade['barricade'][2]))
+        self.recreateButton(self.upgradeList['barricade'])
 
     def recreateButton(self,item):
         item.attribute = self.gameData.upgrade[item.name][1]
