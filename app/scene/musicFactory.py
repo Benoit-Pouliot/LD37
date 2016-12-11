@@ -12,6 +12,8 @@ class MusicFactory:
         elif typeScene == PLATFORM_SCREEN:
             if secondOption >= 1:
                 self.nameMusic = 'TheLoomingBattle'
+        elif typeScene == SHOP_SCREEN:
+            self.nameMusic = 'MainTheme'
 
         if self.nameMusic is not None:
             if self.nameMusic == 'TheLoomingBattle':
