@@ -24,6 +24,7 @@ class GameData:
 
         if TAG_MARIE == 1:
             self.gold = 50000
+            self.upgrade["barricade"] = ['Level',1,50,1,1.1]
 
         self.maxItemOfAType = 99
 

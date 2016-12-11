@@ -67,6 +67,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.upPressed = False
         self.downPressed = False
         self.leftMousePressed = False
+        self.rightMousePressed = False
 
         self.mapData = gameData.mapData
         self.mapData.player = self
@@ -444,17 +445,18 @@ class PlayerPlatform(pygame.sprite.Sprite):
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 self.downPressed = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN :
-            if event.button == LEFT:
-                self.inventory.itemList[self.currentItem].useItem()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == MOUSE_LEFT:
                 self.leftMousePressed = True
+            elif event.button == MOUSE_RIGHT:
+                self.rightMousePressed = True
 
-            if event.button == RIGHT:
-                self.inventory.itemList[self.currentItem].useItem()
-                self.leftMousePressed = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == MOUSE_LEFT:
+                self.leftMousePressed = False
+            elif event.button == MOUSE_RIGHT:
+                self.rightMousePressed = False
 
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == LEFT:
-            self.leftMousePressed = False
 
     def updatePressedKeys(self):
         if self.rightPressed:
@@ -466,7 +468,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if self.downPressed:
             self.updateSpeedDown()
         if self.leftMousePressed:
-            if self.currentItem == 0:
-                self.inventory.itemList[self.currentItem].useItem()
+            self.inventory.itemList[self.currentItem].useItem()
         if self.rightMousePressed:
             self.createBarricade()
