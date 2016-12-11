@@ -14,7 +14,7 @@ from app.sprites.GUI.lifeBar import LifeBar
 
 
 class PlayerPlatform(pygame.sprite.Sprite):
-    def __init__(self, x, y, mapData, max_health=100):
+    def __init__(self, x, y, mapData, max_health=10):
         super().__init__()
 
         self.name = "player"
@@ -57,7 +57,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.lifeMax = 1
         self.lifeMaxCap = 5
         self.isInvincible = False
-        self.invincibleFrameCounter = [0, 0]  # Timer,flashes nb
+        self.invincibleFrameCounter = [0, 0]  # Timer, flashes nb
         self.invincibleTimer = 20  # Must be even number
         self.invincibleNbFlashes = 5
 
@@ -192,6 +192,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def invincibleOnHit(self):
         self.isInvincible = True
+        if TAG_ANIKA == 1:
+            print('invincibility activated')
         self.invincibleFrameCounter[0] = 1
 
     def invincibleUpdate(self):
@@ -203,6 +205,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         elif self.invincibleFrameCounter[1] == self.invincibleNbFlashes:
             self.isInvincible = False
+            if TAG_ANIKA == 1:
+                print('player is no more invincible')
             self.invincibleFrameCounter = [0,0]
         self.visualFlash()
 
@@ -334,10 +338,34 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if self.currentItem >= len(self.inventory.itemList):
             self.currentItem = 0
 
-    def hurt(self):
+    def isHit(self, damage=1):
+        # Could be different depending on which enemy...
+        self.hurt(damage)
+
+    def hurt(self, damage):
+
         if not self.isInvincible:
+
+            self.lifeBar.healthCurrent -= damage
+
+            if TAG_ANIKA == 1:
+                print('player health :', self.lifeBar.healthCurrent)
+
+            self.checkIfIsAlive()
+
             self.invincibleOnHit()
+            if TAG_ANIKA == 1:
+                print('player is now invincible')
             self.visualFlash()
+
+    def checkIfIsAlive(self):
+        if self.lifeBar.healthCurrent <= 0:
+            self.destroy()
+
+    def destroy(self):
+        if TAG_ANIKA == 1:
+            print('player is dead')
+        self.dead()
 
     def notify(self, event):
         if event.type == pygame.KEYDOWN:
@@ -370,7 +398,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.inventory.itemList[self.currentItem].useItem()
             if TAG_MARIE == 1 :
                 print("You pressed the left mouse button") # event.pos
-
 
     def updatePressedKeys(self):
         if self.rightPressed:

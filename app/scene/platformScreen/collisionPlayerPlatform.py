@@ -164,7 +164,7 @@ class CollisionPlayerPlatform:
     def collisionWithEnemy(self, player, enemyGroup):
         collisionList = pygame.sprite.spritecollide(player, enemyGroup, False)
         for enemy in collisionList:
-            player.hurt()
+            player.hurt(1)
             # player.loseLife()
             # self.soundControl.hurt()
             pass
@@ -261,13 +261,13 @@ def collisionGrenadeEnemy(grenade, map):
 def collisionAttackPlayer(map, player):
     collisionList = pygame.sprite.spritecollide(player, map.attackGroup, False)
     for attack in collisionList:
-        player.hurt()
+        player.hurt(1)
         attack.kill()
 
 def collisionBulletPlayer(map, player):
     collisionList = pygame.sprite.spritecollide(player, map.enemyBullet, False)
     for bullet in collisionList:
-        player.hurt()
+        player.hurt(1)
         bullet.kill()
 
 def printTile(tile):
