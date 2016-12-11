@@ -53,8 +53,12 @@ class MapData:
                 if enemy is not None:
                     self.allSprites.add(enemy)
                     self.enemyGroup.add(enemy)
-                    if obj.name == "enemyGenerator":
-                        self.enemyGeneratorSupervisor.addEnemyGenerator(enemy)
+
+            if obj.type == "enemyGenerator":
+                enemy = eFactory.create(obj, self)
+                if enemy is not None:
+                    self.allSprites.add(enemy)
+                    self.enemyGeneratorSupervisor.addEnemyGenerator(enemy)
 
         # All the data to spawn enemies
         self.enemyGenListData = EnemyGenListData(self)

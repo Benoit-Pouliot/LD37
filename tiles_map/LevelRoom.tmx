@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="45" tilewidth="32" tileheight="32" nextobjectid="98">
- <tileset firstgid="1" name="collision_set" tilewidth="32" tileheight="32" tilecount="50" columns="5">
+ <tileset firstgid="1" name="collision_set" tilewidth="32" tileheight="32" tilecount="50">
   <image source="img/collision_set.png" width="160" height="320"/>
  </tileset>
- <tileset firstgid="51" name="tile_set" tilewidth="32" tileheight="32" tilecount="50" columns="5">
+ <tileset firstgid="51" name="tile_set" tilewidth="32" tileheight="32" tilecount="50">
   <image source="img/tile_set.png" width="160" height="320"/>
   <terraintypes>
    <terrain name="Floor" tile="0"/>
@@ -325,10 +325,10 @@
   </object>
  </objectgroup>
  <objectgroup name="enemyLayer">
-  <object id="93" name="enemyGenerator" type="enemy" x="663.637" y="451.515" width="66.6667" height="60.6061"/>
-  <object id="95" name="enemyGenerator" type="enemy" x="930.299" y="457.576" width="66.6667" height="60.6061"/>
-  <object id="96" name="enemyGenerator" type="enemy" x="957.572" y="684.845" width="66.6667" height="60.6061"/>
-  <object id="97" name="enemyGenerator" type="enemy" x="660.606" y="681.815" width="66.6667" height="60.6061"/>
+  <object id="93" name="enemyGenerator" type="enemyGenerator" x="663.637" y="451.515" width="66.6667" height="60.6061"/>
+  <object id="95" name="enemyGenerator" type="enemyGenerator" x="930.299" y="457.576" width="66.6667" height="60.6061"/>
+  <object id="96" name="enemyGenerator" type="enemyGenerator" x="957.572" y="684.845" width="66.6667" height="60.6061"/>
+  <object id="97" name="enemyGenerator" type="enemyGenerator" x="660.606" y="681.815" width="66.6667" height="60.6061"/>
  </objectgroup>
  <objectgroup name="itemLayer"/>
 </map>
