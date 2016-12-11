@@ -1,6 +1,7 @@
 from app.sprites.enemy.enemyWalk import EnemyWalk
 from app.sprites.enemy.enemyShooter import EnemyShooter
 from app.sprites.enemy.enemySprint import EnemySprint
+from app.sprites.enemy.enemyBomber import EnemyBomber
 from app.settings import *
 
 # List data of all enemies spawning in a level.
@@ -33,7 +34,8 @@ class EnemyGenListData():
         # The link between numeration and the enemy
         self.dictListEnemiesValues = {1: EnemyWalk,
                                       2: EnemyShooter,
-                                      3: EnemySprint}
+                                      3: EnemySprint,
+                                      4: EnemyBomber}
 
     def addData(self, time, listEnemiesValues, nbEnemies=1, plustime=0):
         if plustime < 0:

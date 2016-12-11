@@ -68,7 +68,7 @@ class MapData:
         if TAG_MARIE == 1:
             self.enemyGenListData.addData(120, [1], 1, 120)
         if TAG_BP == 1:
-            self.enemyGenListData.addData(120, [1], 1, 120)
+            self.enemyGenListData.addData(120, [1,4], 3, 120)
         if TAG_ANIKA == 1:
             self.enemyGenListData.addData(120, [2], 1, 120)
             self.enemyGenListData.addData(120, [3], 1, 120)

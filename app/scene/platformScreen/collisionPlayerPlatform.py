@@ -1,4 +1,5 @@
 from app.settings import *
+from app.tools.functionTools import *
 from app.tools.circle import Circle
 import pygame
 import copy
@@ -16,7 +17,7 @@ class CollisionPlayerPlatform:
     def collisionAllSprites(self, player, mapData, gameData):
         for sprite in mapData.allSprites:
             if sprite.isPhysicsApplied == True or sprite.isCollisionApplied == True:
-                if sprite.name == "enemyWalk":
+                if seekAtt(sprite, "type") == "enemy":
                     sprite.applyAI()
 
                 self.rightCollision(sprite, mapData)
@@ -204,7 +205,7 @@ class CollisionPlayerPlatform:
 
             if sideOfCollision is not None and sprite.speedx == 0 and sprite.speedy == 0 and sprite.friendly is False:
                 # An obstacle? We hit with an attack!
-                sprite.prepareAttack()
+                sprite.attackOnCollision()
 
         #Test for vertical move
         # sprite.rect.y += sprite.speedy

@@ -3,7 +3,7 @@ import os
 import math
 
 from app.sprites.enemy.enemy import Enemy
-from app.sprites.enemy.enemyAttack import EnemyAttack
+from app.sprites.explosion import Explosion
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
 from app.sprites.collisionMask import CollisionMask
@@ -11,17 +11,20 @@ from app.sprites.GUI.lifeBar import LifeBar
 
 from app.settings import *
 
-class EnemyWalk(Enemy):
-    def __init__(self, x, y, mapData=None):  # ?
+class EnemyBomber(Enemy):
+    def __init__(self, x, y, mapData=None):
         super().__init__(x, y)
 
-        self.name = "enemyWalk"
+        self.name = "enemyBomber"
 
-        self.imageEnemy = pygame.image.load(os.path.join('img', 'walking_enemy.png'))
-        self.attackingEnemy = pygame.image.load(os.path.join('img', 'shooting_enemy.png'))
+        self.imageEnemy = pygame.Surface((ENEMY_DIMX, ENEMY_DIMY))
+        self.imageEnemy.fill(ORANGE)
+
+        self.attackingEnemy = pygame.Surface((ENEMY_DIMX, ENEMY_DIMY))
+        self.attackingEnemy.fill(RED)
 
         self.enemyFrames = [self.imageEnemy]
-        self.attackingFrames = [self.attackingEnemy]
+        self.attackingFrames = [self.attackingEnemy, self.imageEnemy]
         self.animation = Animation(self, self.enemyFrames, 100)
 
         self.rect = self.imageEnemy.get_rect()
@@ -32,10 +35,10 @@ class EnemyWalk(Enemy):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 1
-        self.maxSpeedy = 1
+        self.maxSpeedx = 3
+        self.maxSpeedy = 3
 
-        self.setMapData(mapData)  # ?
+        self.setMapData(mapData)
 
         self.isPhysicsApplied = True
         self.isCollisionApplied = True
@@ -50,13 +53,11 @@ class EnemyWalk(Enemy):
 
         self.mode = WALKING
         self.timerAttack = 0
-        self.timeToAttack = 60
-        self.timeInAttack = 5
-        self.distanceToAttack = 25
+        self.timeToAttack = 30
+        self.distanceToAttack = 45
         self.attackSprite = None
-        self.factorAttack = 1.5
 
-        self.maxHealth = 5
+        self.maxHealth = 3
         self.lifeBar = LifeBar(5, self.rect.width)
         self.mapData.allSprites.add(self.lifeBar)
         self.mapData.camera.add(self.lifeBar, layer=CAMERA_HUD_LAYER)
@@ -67,28 +68,7 @@ class EnemyWalk(Enemy):
     def applyAI(self):
 
         if self.mode == IN_ATTACK:
-            if self.timerAttack == 0:
-                self.timerAttack += 1
-
-                # create an invisible sprite that damage player
-                valueX = float(self.image.get_width())*self.factorAttack
-                valueY = float(self.image.get_height())*self.factorAttack
-                positionX = float(self.rect.x)-(valueX-self.image.get_width())/2
-                positionY = float(self.rect.y)-(valueY-self.image.get_height())/2
-                self.attackSprite = EnemyAttack(positionX, positionY, (valueX, valueY), self.attackDMG)
-                self.attackSprite.setMapData(self.mapData)
-
-                # do an animation
-                self.animation = Animation(self, self.attackingFrames, 100)
-
-            elif self.timerAttack < self.timeInAttack:
-                self.timerAttack += 1
-            else:
-                self.timerAttack = 0
-                self.mode = WALKING
-                self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
-                self.attackSprite.kill()
-                self.animation = Animation(self, self.enemyFrames, 100)
+            self.detonate()
 
         elif self.mode == PREPARE_ATTACK:
             if self.timerAttack < self.timeToAttack:
@@ -98,16 +78,18 @@ class EnemyWalk(Enemy):
                 self.mode = IN_ATTACK
 
         else:
-            # if player is close : stop and init timer to attack
+            # if player is close :  init timer to attack
             distX = self.mapData.player.rect.x-self.rect.x
             distY = self.mapData.player.rect.y-self.rect.y
             if math.sqrt(distX**2 + distY**2) < self.distanceToAttack:
                 self.prepareAttack()
-            else:
-                steeringX, steeringY = self.AI.getAction()
+                self.animation = Animation(self, self.attackingFrames, 5)
 
-                self.speedx += steeringX
-                self.speedy += steeringY
+        # Move even if he want to blow
+        steeringX, steeringY = self.AI.getAction()
+
+        self.speedx += steeringX
+        self.speedy += steeringY
 
     def update(self):
         self.capSpeed()
@@ -142,18 +124,23 @@ class EnemyWalk(Enemy):
             self.dead()
 
     def dead(self):
+        self.detonate()
         self.soundDead.play()
         self.lifeBar.kill()
         super().dead()
 
+    def detonate(self):
+        explosion = Explosion(self.rect.midbottom[0], self.rect.midbottom[1])
+        self.mapData.camera.add(explosion)
+        self.mapData.allSprites.add(explosion)
+        self.mapData.friendlyExplosion.add(explosion)
+
     def prepareAttack(self):
         self.mode = PREPARE_ATTACK
         self.timerAttack = 0
-        self.speedx = 0
-        self.speedy = 0
 
     def attackOnCollision(self):
-        self.prepareAttack()
+        pass
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:

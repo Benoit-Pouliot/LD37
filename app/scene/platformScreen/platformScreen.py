@@ -60,7 +60,7 @@ class PlatformScreen:
         self.showItem.update()
 
     def setPlayerUpgrade(self):
-        self.player.barricadeMaxHeath = self.gameData.upgrade['barricade'][1]
+        self.player.barricadeMaxHealth = self.gameData.upgrade['barricade'][1]*100
 
     def close(self):
         self.sceneRunning = False
