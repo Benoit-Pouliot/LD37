@@ -300,6 +300,10 @@ def collisionExplosionEnemy(explosion, mapData):
         if collisionCircleRect(circle, enemy.rect):
             enemy.isHit(explosion.attackDMG)
 
+    for barricade in mapData.obstacleGroup:
+        if collisionCircleRect(circle, barricade.rect):
+            barricade.isHit(explosion.attackDMG)
+
 
 def collisionCircleRect(circle, rect):
     circleDistancex = abs(circle.x - rect.centerx)

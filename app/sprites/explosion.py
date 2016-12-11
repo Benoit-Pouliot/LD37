@@ -26,7 +26,7 @@ class Explosion(pygame.sprite.Sprite):
         self.speedx = 0
         self.speedy = 0
 
-        self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
+        self.collisionMask = CollisionMask(self.rect.x, self.rect.y, 60, 60)
 
         self.animation = None
 
