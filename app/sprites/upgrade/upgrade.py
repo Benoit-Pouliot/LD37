@@ -23,7 +23,7 @@ class Upgrade(pygame.sprite.Sprite):
         self.image = pygame.Surface((self.width, self.height))
         self.rect = self.image.get_rect()
 
-        self.borderButton = 10
+        self.borderButton = 5
 
         self.interior = pygame.Rect(self.borderButton,self.borderButton,self.width-2*self.borderButton,self.height-2*self.borderButton)
 
