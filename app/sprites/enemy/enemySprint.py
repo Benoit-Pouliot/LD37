@@ -3,7 +3,6 @@ import os
 import math
 
 from app.sprites.enemy.enemy import Enemy
-from app.sprites.enemy.enemyAttack import EnemyAttack
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
 from app.sprites.collisionMask import CollisionMask
@@ -43,55 +42,42 @@ class EnemySprint(Enemy):
         self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
-        self.attackDMG = 1
+        self.sprintDMG = 1
 
         self.mode = WALKING
-        self.timerAttack = 0
-        self.timeToAttack = 60
-        self.timeInAttack = 5
-        self.distanceToAttack = 25
-        self.attackSprite = None
-        self.factorAttack = 1.5
+        self.timerSprint = 0
+        self.timeToSprint = 60
+        self.timeInSprint = 5
+        self.distanceToSprint = 25
+        self.SprintSprite = None
 
     def applyAI(self):
 
-        if self.mode == IN_ATTACK:
-            if self.timerAttack == 0:
-                self.timerAttack += 1
+        if self.mode == SPRINT:
+            if self.timerSprint == 0:
+                self.timerSprint += 1
 
-                # create an invisible sprite that damage player
-                valueX = float(self.image.get_width())*self.factorAttack
-                valueY = float(self.image.get_height())*self.factorAttack
-                positionX = float(self.rect.x)-(valueX-self.image.get_width())/2
-                positionY = float(self.rect.y)-(valueY-self.image.get_height())/2
-                self.attackSprite = EnemyAttack(positionX, positionY, (valueX, valueY), self.attackDMG)
-                self.attackSprite.setMapData(self.mapData)
-
-                # do an animation
-                self.animation = Animation(self, self.attackingFrames, 100)
-
-            elif self.timerAttack < self.timeInAttack:
-                self.timerAttack += 1
+            elif self.timerSprint < self.timeInSprint:
+                self.timerSprint += 1
             else:
-                self.timerAttack = 0
+                self.timerSprint = 0
                 self.mode = WALKING
                 self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
-                self.attackSprite.kill()
                 self.animation = Animation(self, self.enemyFrames, 100)
 
-        elif self.mode == PREPARE_ATTACK:
-            if self.timerAttack < self.timeToAttack:
-                self.timerAttack += 1
+        elif self.mode == PREPARE_SPRINT:
+            if self.timerSprint < self.timeToSprint:
+                self.timerSprint += 1
             else:
-                self.timerAttack = 0
-                self.mode = IN_ATTACK
+                self.timerSprint = 0
+                self.mode = IN_SPRINT
 
         else:
-            # if player is close : stop and init timer to attack
+            # if player is close : stop and init timer to sprint
             distX = self.mapData.player.rect.x-self.rect.x
             distY = self.mapData.player.rect.y-self.rect.y
-            if math.sqrt(distX**2 + distY**2) < self.distanceToAttack:
-                self.prepareAttack()
+            if math.sqrt(distX**2 + distY**2) < self.distanceToSprint:
+                self.prepareSprint()
             else:
                 steeringX, steeringY = self.AI.getAction()
 
@@ -122,9 +108,9 @@ class EnemySprint(Enemy):
         self.soundDead.play()
         super().dead()
 
-    def prepareAttack(self):
-        self.mode = PREPARE_ATTACK
-        self.timerAttack = 0
+    def prepareSprint(self):
+        self.mode = PREPARE_SPRINT
+        self.timerSprint = 0
         self.speedx = 0
         self.speedy = 0
 
