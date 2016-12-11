@@ -132,8 +132,6 @@ class CollisionPlayerPlatform:
         downMidTileGID = map.tmxData.get_tile_gid((sprite.rect.centerx)/tileWidth, (sprite.rect.bottom + sprite.speedy)/tileHeight, COLLISION_LAYER)
 
         if downLeftTileGid == SOLID or downRightTileGid == SOLID or downMidTileGID == SOLID:
-            # while map.tmxDaata.get_tile_gid((player.collisionMask.rect.left+1)/tileWidth, (player.collisionMask.rect.bottom)/tileHeight, COLLISION_LAYER) != SOLID and map.tmxData.get_tile_gid((player.collisionMask.rect.right)/tileWidth, (player.collisionMask.rect.bottom)/tileHeight, COLLISION_LAYER) != SOLID:
-            #     player.collisionMask.rect.bottom += 1
             sprite.onCollision(SOLID, DOWN)
         elif downLeftTileGid == ENTRANCEWALL or downRightTileGid == ENTRANCEWALL  or downMidTileGID == ENTRANCEWALL:
             sprite.onCollision(ENTRANCEWALL, DOWN)
@@ -164,7 +162,6 @@ class CollisionPlayerPlatform:
         collisionList = pygame.sprite.spritecollide(player, enemyGroup, False)
         for enemy in collisionList:
             player.hurt(1)
-            # player.loseLife()
             # self.soundControl.hurt()
             pass
 
@@ -299,6 +296,9 @@ def collisionExplosionEnemy(explosion, mapData):
     for barricade in mapData.obstacleGroup:
         if collisionCircleRect(circle, barricade.rect):
             barricade.isHit(explosion.attackDMG)
+
+    if collisionCircleRect(circle, mapData.player.rect):
+        mapData.player.isHit(explosion.attackDMG)
 
 
 def collisionCircleRect(circle, rect):
