@@ -52,28 +52,28 @@ class EnemyCollision(Enemy):
                 self.collisionMask.rect.right % self.mapData.tmxData.tilewidth) - 1
             elif sideOfCollision == LEFT:
                 self.speedx = 0
-                self.collisionMask.rect.left -= (self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle la sprite sur le mur à gauche
+                self.collisionMask.rect.left -= (self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle la sprite sur le mur à gauche PAS UTILISÉ?? PCQ COLLISION MASK ET NON RECT DE LENNEMI
             elif sideOfCollision == DOWN:
-                while self.mapData.tmxData.get_tile_gid(
-                                (self.collisionMask.rect.left + 1) / self.mapData.tmxData.tilewidth,
-                                (self.collisionMask.rect.bottom) / self.mapData.tmxData.tileheight,
-                                COLLISION_LAYER) != SOLID and self.mapData.tmxData.get_tile_gid(
-                            self.collisionMask.rect.right / self.mapData.tmxData.tilewidth,
-                            (self.collisionMask.rect.bottom) / self.mapData.tmxData.tileheight, COLLISION_LAYER) != SOLID:
-                    self.collisionMask.rect.top += 1
-                self.collisionMask.rect.top -= 1  # Redescendre de 1 pour sortir du plafond
                 self.speedy = 0
+                # while self.mapData.tmxData.get_tile_gid(
+                #                 (self.collisionMask.rect.left + 1) / self.mapData.tmxData.tilewidth,
+                #                 (self.collisionMask.rect.bottom) / self.mapData.tmxData.tileheight,
+                #                 COLLISION_LAYER) != SOLID and self.mapData.tmxData.get_tile_gid(
+                #             self.collisionMask.rect.right / self.mapData.tmxData.tilewidth,
+                #             (self.collisionMask.rect.bottom) / self.mapData.tmxData.tileheight, COLLISION_LAYER) != SOLID:
+                #     self.collisionMask.rect.top += 1
+                # self.collisionMask.rect.top -= 1  # Redescendre de 1 pour sortir du plafond
 
             elif sideOfCollision == UP:
                 # Coller le player sur le plafond
-                while self.mapData.tmxData.get_tile_gid(
-                                (self.collisionMask.rect.left + 1) / self.mapData.tmxData.tilewidth,
-                                (self.collisionMask.rect.top) / self.mapData.tmxData.tileheight,
-                                COLLISION_LAYER) != SOLID and self.mapData.tmxData.get_tile_gid(
-                            self.collisionMask.rect.right / self.mapData.tmxData.tilewidth,
-                            (self.collisionMask.rect.top) / self.mapData.tmxData.tileheight, COLLISION_LAYER) != SOLID:
-                    self.collisionMask.rect.bottom -= 1
-                self.collisionMask.rect.bottom += 1  # Redescendre de 1 pour sortir du plafond
+                # while self.mapData.tmxData.get_tile_gid(
+                #                 (self.collisionMask.rect.left + 1) / self.mapData.tmxData.tilewidth,
+                #                 (self.collisionMask.rect.top) / self.mapData.tmxData.tileheight,
+                #                 COLLISION_LAYER) != SOLID and self.mapData.tmxData.get_tile_gid(
+                #             self.collisionMask.rect.right / self.mapData.tmxData.tilewidth,
+                #             (self.collisionMask.rect.top) / self.mapData.tmxData.tileheight, COLLISION_LAYER) != SOLID:
+                #     self.collisionMask.rect.bottom -= 1
+                # self.collisionMask.rect.bottom += 1  # Redescendre de 1 pour sortir du plafond
                 self.speedy = 0
 
 

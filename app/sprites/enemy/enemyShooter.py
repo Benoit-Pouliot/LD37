@@ -45,7 +45,7 @@ class EnemyShooter(EnemyCollision):
 
         self.imageWaitNextShoot = 60
         self.distanceToAttack = 200
-        self.speedShuriken = 2
+        self.speedShuriken = 3
 
         # self.imageIterShoot = random.randint(10, (self.imageWaitNextShoot - 10))  # To shoot bullets at random pace
         self.imageIterShoot = self.imageWaitNextShoot + 1
