@@ -3,13 +3,14 @@ import os
 import math
 
 from app.sprites.enemy.enemy import Enemy
+from app.sprites.enemy.enemyAttack import EnemyAttack
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
 
 from app.settings import *
 
 class EnemyWalk(Enemy):
-    def __init__(self, x, y, mapData):  # ?
+    def __init__(self, x, y, mapData=None):  # ?
         super().__init__(x, y)
 
         self.name = "enemyWalk"
@@ -40,33 +41,50 @@ class EnemyWalk(Enemy):
 
         self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
 
-        self.attack = 1
+        self.attackDMG = 1
 
         self.mode = WALKING
         self.timerAttack = 0
         self.timeToAttack = 60
+        self.timeInAttack = 5
         self.distanceToAttack = 25
+        self.attackSprite = None
 
     def applyAI(self):
 
-        if self.mode == ATTACK:
-            if self.timerAttack < self.timeToAttack:
+        if self.mode == IN_ATTACK:
+            if self.timerAttack == 0:
                 self.timerAttack += 1
+
+                # create an invisible sprite that damage player
+                self.attackSprite = EnemyAttack(self.rect.x, self.rect.y, (self.image.get_width(), self.image.get_height()), self.attackDMG)
+                self.attackSprite.setMapData(self.mapData)
+
+                # do an animation? TODO
+
+                # self.soundAttack.play()
+
+            elif self.timerAttack < self.timeInAttack:
+                    self.timerAttack +=1
             else:
                 self.timerAttack = 0
                 self.mode = WALKING
                 self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+                self.attackSprite.kill()
 
-
-                # NEED TO ATTACK
-
+        elif self.mode == PREPARE_ATTACK:
+            if self.timerAttack < self.timeToAttack:
+                self.timerAttack += 1
+            else:
+                self.timerAttack = 0
+                self.mode = IN_ATTACK
 
         else:
             # if player is close : stop and init timer to attack
             distX = self.mapData.player.rect.x-self.rect.x
             distY = self.mapData.player.rect.y-self.rect.y
             if math.sqrt(distX**2 + distY**2) < self.distanceToAttack:
-                self.mode = ATTACK
+                self.mode = PREPARE_ATTACK
                 self.timerAttack = 0
                 self.speedx = 0
                 self.speedy = 0

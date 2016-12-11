@@ -23,6 +23,7 @@ class LogicHandlerPlatformScreen:
         self.mapData.internalMapTime += 1
         self.mapData.enemyGeneratorSupervisor.updateSupervisor()
         self.handleBullets(self.mapData, player)
+        self.handleAttacks(self.mapData, player)
         self.gameOverCondition(player)
         self.mapData.allSprites.update()
         self.mapData.spritesHUD.update()
@@ -82,6 +83,9 @@ class LogicHandlerPlatformScreen:
                 collisionBulletEnemy(bullet, mapData)
 
         collisionBulletPlayer(mapData, player)
+
+    def handleAttacks(self, mapData, player):
+        collisionAttackPlayer(mapData, player)
 
     def gameOverCondition(self,player):
         if player.isAlive == False:

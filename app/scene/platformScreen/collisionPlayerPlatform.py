@@ -204,7 +204,7 @@ class CollisionPlayerPlatform:
 
             if sideOfCollision is not None:
                 if sprite.friendly == False:
-                    obstacle.isHit(sprite.attack)
+                    obstacle.isHit(sprite.attackDMG)
 
         #Test for vertical move
         # sprite.rect.y += sprite.speedy
@@ -257,6 +257,12 @@ def collisionGrenadeEnemy(grenade, map):
     collisionList = pygame.sprite.spritecollide(grenade, map.enemyGroup, False)
     for enemy in collisionList:
         grenade.detonate()
+
+def collisionAttackPlayer(map, player):
+    collisionList = pygame.sprite.spritecollide(player, map.attackGroup, False)
+    for attack in collisionList:
+        player.hurt()
+        attack.kill()
 
 def collisionBulletPlayer(map, player):
     collisionList = pygame.sprite.spritecollide(player, map.enemyBullet, False)

@@ -8,12 +8,12 @@ class EnemyGenerator(Enemy):
 
         self.name = "enemyGenerator"
 
-        self.factorRamdom = 50
+        self.factorRandom = 50
 
     def spawnEnemy(self, typeEnemy):
 
-        randX = (random.random()*2-1)*self.factorRamdom
-        randY = (random.random()*2-1)*self.factorRamdom
+        randX = (random.random()*2-1)*self.factorRandom
+        randY = (random.random()*2-1)*self.factorRandom
         enemy = typeEnemy(self.rect.x+randX, self.rect.y+randY, self.mapData)
         enemy.setMapData(self.mapData)
 
