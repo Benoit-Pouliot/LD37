@@ -32,14 +32,6 @@ class PlatformScreen:
         self.logicHandler = LogicHandlerPlatformScreen(self.screen, self.player, self.mapData)
         self.drawer = Drawer()
 
-        # Pour fair afficher un score... en construction!
-
-        self.showItem = ShowItem()
-        self.mapData.spritesHUD.add(self.showItem)
-
-        self.showBarricadeCharges = ShowBarricadeCharges(self.mapData)
-        self.mapData.spritesHUD.add(self.showBarricadeCharges)
-
         self.addHUD()
 
         MusicFactory(PLATFORM_SCREEN, self.mapData.nameMap)
@@ -50,8 +42,6 @@ class PlatformScreen:
         while self.sceneRunning:
             self.eventHandler.eventHandle()
             self.logicHandler.handle(self.player, self.gameData)
-            self.updateShowItem()
-            self.showBarricadeCharges.update()
             self.checkNewMap(self.logicHandler.newMapData)
             self.drawer.draw(self.screen, self.mapData.camera, self.mapData.spritesHUD, self.player)
 
@@ -66,12 +56,9 @@ class PlatformScreen:
             self.gameData.typeScene = SHOP_SCREEN
             self.gameData.mapData = None
 
-    def updateShowItem(self):
-        self.showItem.weapon = self.player.inventory.itemList[self.player.currentItem].name
-        self.showItem.update()
 
     def addHUD(self):
-        self.HUD = HUDPlatformScreen(self.gameData)
+        self.HUD = HUDPlatformScreen(self.gameData,self.player)
         self.mapData.spritesHUD.add(self.HUD)
 
     def close(self):

@@ -53,9 +53,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.maxHealth = max_health
         self.lifeBar = LifeBar(max_health)
 
-        self.lifeBar.rect.x = self.rect.x
-        self.lifeBar.rect.bottom = self.rect.top - 3
-
         self.life = 1
         self.lifeMax = 1
         self.lifeMaxCap = 5
@@ -314,8 +311,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
     def createBarricade(self):
         #self.stop()
         if self.gameData.upgrade['barricade'][1] > 0 and self.barricadeCharges > 0:
-            if TAG_MARIE == 1:
-                print('You created a barricade.')
+
             mousePos = pygame.mouse.get_pos()
 
             diffx = mousePos[0] + self.mapData.cameraPlayer.view_rect.x - self.rect.centerx
