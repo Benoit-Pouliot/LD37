@@ -4,7 +4,7 @@ import sys
 
 import pygame
 
-
+from app.mapData import MapData
 from app.sprites.GUI.button import Button
 from app.sprites.GUI.menu.menu import Menu
 from app.scene.shopScreen.eventHandlerShopScreen import EventHandlerShopScreen
@@ -32,6 +32,10 @@ class ShopScreen:
 
         self.addUpgrade('gun',(50,50))
         self.addUpgrade('barricade',(250,50))
+
+        self.startGameButton = Button((600,500),(100,80),'Fight!',self.nextLevel)
+        self.shopScreenData.allSprites.add(self.startGameButton)
+        self.shopScreenData.notifySet.add(self.startGameButton)
 
         self.eventHandler = EventHandlerShopScreen(self.gameData)
         self.logicHandler = LogicHandlerShopScreen(self.screen, self.gameData)
@@ -65,7 +69,6 @@ class ShopScreen:
         item.attribute = self.gameData.upgrade[item.name][1]
         item.cost = self.gameData.upgrade[item.name][2]
 
-        print(self.gameData.upgrade[item.name][0])
         self.shopScreenData.allSprites.add(item)
         self.shopScreenData.notifySet.add(item)
 
@@ -89,3 +92,9 @@ class ShopScreen:
 
     def doNothing(self):
         print('You did nothing')
+
+    def nextLevel(self):
+        self.sceneRunning = False
+        self.nextScene = PLATFORM_SCREEN
+        self.gameData.typeScene = PLATFORM_SCREEN
+        self.gameData.mapData = MapData("LevelRoom", "StartPointWorld")
