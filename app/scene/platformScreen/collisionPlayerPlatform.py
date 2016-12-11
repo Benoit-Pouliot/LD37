@@ -257,7 +257,7 @@ class CollisionPlayerPlatform:
 def collisionBulletEnemy(bullet, map):
     collisionList = pygame.sprite.spritecollide(bullet, map.enemyGroup, False)
     for enemy in collisionList:
-        enemy.isHit()
+        enemy.isHit(bullet.attackDMG)
         bullet.hitEnemy()
 
 def collisionGrenadeEnemy(grenade, map):
@@ -297,7 +297,7 @@ def collisionExplosionEnemy(explosion, mapData):
 
     for enemy in mapData.enemyGroup:
         if collisionCircleRect(circle, enemy.rect):
-            enemy.hurt()
+            enemy.isHit(explosion.attackDMG)
 
 
 def collisionCircleRect(circle, rect):

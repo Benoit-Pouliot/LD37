@@ -134,8 +134,8 @@ class EnemyWalk(Enemy):
         if self.speedy < -self.maxSpeedy:
             self.speedy = self.maxSpeedy
 
-    def isHit(self):
-        self.lifeBar.healthCurrent -= 1
+    def isHit(self, dmg):
+        self.lifeBar.healthCurrent -= dmg
 
     def checkIfIsAlive(self):
         if self.lifeBar.healthCurrent <= 0:

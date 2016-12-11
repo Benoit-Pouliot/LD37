@@ -34,6 +34,7 @@ class Bullet(Enemy):
         self.speedy = speedy
 
         self.animation = None
+        self.attackDMG = 1
 
         self.friendly = friendly
         self.isCollisionApplied = True
