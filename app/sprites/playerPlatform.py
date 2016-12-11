@@ -1,5 +1,6 @@
 import pygame
-import os, math
+import os
+import math
 
 from app.settings import *
 from app.sprites.barricade import Barricade
@@ -10,10 +11,11 @@ from app.sprites.target import Target
 from app.sprites.grenade import Grenade
 from app.tools.cooldown import Cooldown
 from app.sprites.mine import Mine
+from app.sprites.GUI.lifeBar import LifeBar
 
 
 class PlayerPlatform(pygame.sprite.Sprite):
-    def __init__(self, x, y, mapData):
+    def __init__(self, x, y, mapData, max_health=100):
         super().__init__()
 
         self.name = "player"
@@ -29,7 +31,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.imageTransparent = pygame.Surface((1,1))
         self.imageTransparent.set_colorkey(BLACK)
 
-        self.rect = self.image.get_rect() #Position centrée du player
+        self.rect = self.image.get_rect()  # Position centrée du player
         self.rect.x = x
         self.rect.y = y
 
@@ -46,12 +48,18 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.facingSide = RIGHT
         self.friendly = True
 
+        self.maxHealth = max_health
+        self.lifeBar = LifeBar(max_health)
+
+        self.lifeBar.rect.x = self.rect.x
+        self.lifeBar.rect.bottom = self.rect.top - 3
+
         self.life = 1
         self.lifeMax = 1
         self.lifeMaxCap = 5
         self.isInvincible = False
-        self.invincibleFrameCounter = [0,0] #Timer,flashes nb
-        self.invincibleTimer = 20 #Must be even number
+        self.invincibleFrameCounter = [0, 0]  # Timer,flashes nb
+        self.invincibleTimer = 20  # Must be even number
         self.invincibleNbFlashes = 5
 
         self.rightPressed = False
@@ -62,7 +70,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.mapData = mapData
         self.mapData.player = self
 
-        self.target = Target(0,0)
+        self.target = Target(0, 0)
         self.mapData.camera.add(self.target)
 
         self.grenadeCooldown = Cooldown(100)
@@ -76,25 +84,24 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.currentItem = 1
 
         self.inventory = Inventory()
-        self.inventory.addItem('gun',self.shootBullet)
-        self.inventory.addItem('barricade',self.createBarricade)
+        self.inventory.addItem('gun', self.shootBullet)
+        self.inventory.addItem('barricade', self.createBarricade)
         self.inventory.addItem('grenade', self.shootGrenade)
         self.inventory.addItem('mine', self.shootMine)
 
-        #Link your own sounds here
-        #self.soundSpring = pygame.mixer.Sound(os.path.join('music_pcm', 'LvlUpFail.wav'))
-        #self.soundBullet = pygame.mixer.Sound(os.path.join('music_pcm', 'Gun.wav'))
-        #self.soundGetHit = pygame.mixer.Sound(os.path.join('music_pcm', 'brokenGlass.wav'))
-        #self.soundSpring.set_volume(1)
-        #self.soundBullet.set_volume(.3)
-        #self.soundGetHit.set_volume(.3)
+        # Link your own sounds here
+        # self.soundSpring = pygame.mixer.Sound(os.path.join('music_pcm', 'LvlUpFail.wav'))
+        # self.soundBullet = pygame.mixer.Sound(os.path.join('music_pcm', 'Gun.wav'))
+        # self.soundGetHit = pygame.mixer.Sound(os.path.join('music_pcm', 'brokenGlass.wav'))
+        # self.soundSpring.set_volume(1)
+        # self.soundBullet.set_volume(.3)
+        # self.soundGetHit.set_volume(.3)
 
         self.collisionMask = CollisionMask(self.rect.x + 3, self.rect.y, self.rect.width-6, self.rect.height)
 
     def setShapeImage(self):
         self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
         self.imageShapeRight = self.imageBase
-
 
     def update(self):
         self.capSpeed()
@@ -176,7 +183,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.life = self.lifeMax
 
     def knockedBack(self):
-        #Can break collision ATM
+        # Can break collision ATM
         if self.speedx == 0:
             self.speedx = self.maxSpeedx
 
