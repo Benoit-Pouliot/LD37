@@ -2,6 +2,7 @@ import pygame
 from app.sprites.collisionMask import CollisionMask
 from app.tools.animation import Animation
 
+from app.settings import *
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -57,7 +58,8 @@ class Enemy(pygame.sprite.Sprite):
     def dead(self):
         if self.mapData != None:
             self.mapData.gold += self.bounty
-            print(self.mapData.gold)
+            if TAG_MARIE == 1:
+                print('Gold : ' + str(self.mapData.gold))
 
         self.kill()
 
