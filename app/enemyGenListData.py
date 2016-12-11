@@ -22,6 +22,9 @@ class EnemyGenListData():
 
         self.limitNumberEnemy = 500
 
+        if TAG_MARIE == 1:
+            self.limitNumberEnemy = 3
+
         # The link between numeration and the enemy
         self.dictListEnemiesValues = {1: EnemyWalk,
                                       2: EnemyShooter}

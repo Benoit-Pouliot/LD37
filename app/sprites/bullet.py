@@ -61,7 +61,7 @@ class Bullet(Enemy):
                 for i in range(timer):
                     yield None
 
-    def onCollision(self, collidedWith, sideOfCollision,objectSize=0):
+    def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID or collidedWith == SPIKE:
             self.detonate()
 

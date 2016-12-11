@@ -70,7 +70,7 @@ class EnemyWalk(Enemy):
         self.soundDead.play()
         super().dead()
 
-    def onCollision(self, collidedWith, sideOfCollision,objectSize=0):
+    def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
             if sideOfCollision == RIGHT:
                 # On colle la sprite sur le mur à droite
@@ -101,11 +101,9 @@ class EnemyWalk(Enemy):
             self.dead()
 
         if collidedWith == OBSTACLE:
-
-
             if sideOfCollision == RIGHT:
                 if TAG_MARIE == 1:
-                    print(objectSize)
+                    print(limit)
                 #On colle le player à gauche de l'obstacle
                 self.speedx = 0
                 self.rect.right += -2

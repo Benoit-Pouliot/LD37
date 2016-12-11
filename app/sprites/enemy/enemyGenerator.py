@@ -1,4 +1,5 @@
 from app.sprites.enemy.enemy import Enemy
+from app.settings import *
 import random
 
 class EnemyGenerator(Enemy):

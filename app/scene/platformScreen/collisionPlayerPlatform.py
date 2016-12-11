@@ -47,8 +47,8 @@ class CollisionPlayerPlatform:
                     upRightTileGid = map.tmxData.get_tile_gid((sprite.collisionMask.rect.right + i*self.tileWidth)/self.tileWidth, sprite.collisionMask.rect.top/self.tileHeight, COLLISION_LAYER)
                     downRightTileGid = map.tmxData.get_tile_gid((sprite.collisionMask.rect.right + i*self.tileWidth)/self.tileWidth, (sprite.collisionMask.rect.bottom-1)/self.tileHeight, COLLISION_LAYER)
 
-                    if (upRightTileGid  == SOLID or downRightTileGid  == SOLID) and player.speedx > 0 and sprite.facingSide == RIGHT:
-                        while map.tmxData.get_tile_gid((sprite.collisionMask.rect.right + 1)/self.tileWidth, sprite.collisionMask.rect.top/self.tileHeight, COLLISION_LAYER) != SOLID and map.tmxData.get_tile_gid((player.collisionMask.rect.right + 1)/self.tileWidth, (sprite.collisionMask.rect.bottom-1)/self.tileHeight, COLLISION_LAYER) != SOLID:
+                    if (upRightTileGid  == SOLID or downRightTileGid  == SOLID) and sprite.speedx > 0 and sprite.facingSide == RIGHT:
+                        while map.tmxData.get_tile_gid((sprite.collisionMask.rect.right + 1)/self.tileWidth, sprite.collisionMask.rect.top/self.tileHeight, COLLISION_LAYER) != SOLID and map.tmxData.get_tile_gid((sprite.collisionMask.rect.right + 1)/self.tileWidth, (sprite.collisionMask.rect.bottom-1)/self.tileHeight, COLLISION_LAYER) != SOLID:
                             sprite.collisionMask.rect.right += 1
                             sprite.onCollision(SOLID, RIGHT)
                     i += 1
@@ -170,10 +170,15 @@ class CollisionPlayerPlatform:
             pass
 
     def collisionWithObstacle(self, sprite, obsctacleGroup):
-        collisionList = pygame.sprite.spritecollide(sprite, obsctacleGroup, False)
-        objectSize = 0
         sideOfCollision = None
+        #Test for horizontal move
+        posx = copy.deepcopy(sprite.rect.x)
+        posy = copy.deepcopy(sprite.rect.y)
 
+        sprite.rect.x += sprite.speedx
+        sprite.rect.y += sprite.speedy
+
+        collisionList = pygame.sprite.spritecollide(sprite, obsctacleGroup, False)
         for obstacle in collisionList:
             if sprite.speedx > 0:
                 limit = obstacle.rect.left
@@ -200,6 +205,41 @@ class CollisionPlayerPlatform:
             if sideOfCollision is not None:
                 if sprite.friendly == False:
                     obstacle.isHit(sprite.attack)
+
+        #Test for vertical move
+        # sprite.rect.y += sprite.speedy
+        # collisionList = pygame.sprite.spritecollide(sprite, obsctacleGroup, False)
+        # for obstacle in collisionList:
+        #     if sprite.speedx > 0:
+        #         limit = obstacle.rect.left
+        #         sideOfCollision = RIGHT
+        #     elif sprite.speedx < 0:
+        #         limit = obstacle.rect.right
+        #         sideOfCollision = LEFT
+        #
+        #     if sideOfCollision == LEFT or sideOfCollision == RIGHT:
+        #         sprite.onCollision(OBSTACLE, sideOfCollision, limit)
+        #         if sprite.friendly == False:
+        #             obstacle.isHit(sprite.attack)
+        #
+        #     if sprite.speedy > 0:
+        #         limit = obstacle.rect.top
+        #         sideOfCollision = DOWN
+        #     elif sprite.speedy < 0:
+        #         limit = obstacle.rect.bottom
+        #         sideOfCollision = UP
+        #
+        #     if sideOfCollision == UP or sideOfCollision == DOWN:
+        #         sprite.onCollision(OBSTACLE, sideOfCollision, limit)
+        #
+        #     if sideOfCollision is not None:
+        #         if sprite.friendly == False:
+        #             obstacle.isHit(sprite.attack)
+
+        #Reset Sprite.... this IS hardcoded...
+        sprite.rect.x = posx
+        sprite.rect.y = posy
+
 
     def pickUpItem(self, player, itemGroup, gameMemory):
         collisionList = pygame.sprite.spritecollide(player, itemGroup, False)
