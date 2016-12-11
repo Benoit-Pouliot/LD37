@@ -232,10 +232,13 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 self.image = self.imageShapeLeft
 
     def shootBullet(self):
-        if self.facingSide == RIGHT:
-            bullet = Bullet(self.rect.x + self.rect.width +1, self.rect.centery, self.facingSide)
-        else:
-            bullet = Bullet(self.rect.x -1, self.rect.centery, self.facingSide)
+        # if self.facingSide == RIGHT:
+        #     bullet = Bullet(self.rect.x + self.rect.width +1, self.rect.centery, self.facingSide)
+        # else:
+        #     bullet = Bullet(self.rect.x -1, self.rect.centery, self.facingSide)
+        speedx, speedy = self.power2speed(10)
+
+        bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy)
         self.mapData.camera.add(bullet)
         self.mapData.allSprites.add(bullet)
         self.mapData.friendlyBullet.add(bullet)
