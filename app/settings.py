@@ -109,6 +109,10 @@ TILEDIMY = 32
 ENEMY_DIMX = 20
 ENEMY_DIMY = 20
 
+# Dimension tile base for player
+PLAYER_DIMX = 21
+PLAYER_DIMY = 21
+
 #GUI settings
 DIALOG_TEXT_SIZE = 20
 INPUT_BOX_FONT = "Arial"

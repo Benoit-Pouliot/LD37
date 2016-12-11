@@ -108,3 +108,6 @@ class LogicHandlerPlatformScreen:
                 gameData.currentLevel += 1
                 self.newMapData = True
                 self.sceneRunning = False
+
+        if TAG_PHIL ==1:
+            print(self.mapData.internalMapTime)

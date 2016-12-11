@@ -10,8 +10,8 @@ class SteeringAI:
 
     def getAction(self):
         norm = self.vectorNorm(self.mapData.player.rect.x - self.rect.x, self.mapData.player.rect.y - self.rect.y)
-        desiredSpdX = (self.mapData.player.rect.x - self.rect.x)/norm * self.userSpeedx
-        desiredSpdY = (self.mapData.player.rect.y - self.rect.y)/norm * self.userSpeedy
+        desiredSpdX = float(self.mapData.player.rect.x - self.rect.x)/norm * self.userSpeedx
+        desiredSpdY = float(self.mapData.player.rect.y - self.rect.y)/norm * self.userSpeedy
 
         steeringX = desiredSpdX
         steeringY = desiredSpdY
@@ -25,7 +25,3 @@ class SteeringAI:
             return 1
 
         return result
-
-    def truncate(self, value, max):
-        if value > max:
-            value = max

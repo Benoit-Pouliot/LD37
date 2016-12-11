@@ -1,11 +1,9 @@
-__author__ = 'Bobsleigh'
-
-
 import pygame, os
 from app.sprites.collisionMask import CollisionMask
 from app.sprites.explosion import Explosion
 from app.settings import *
 from app.tools.cooldown import Cooldown
+from app.tools.animation import Animation
 
 class Mine(pygame.sprite.Sprite):
     def __init__(self, x, y, mapData):
@@ -13,7 +11,12 @@ class Mine(pygame.sprite.Sprite):
 
         self.name = "Mine"
 
-        self.image = pygame.image.load(os.path.join('img', 'Bullet.png'))
+        self.mineNotArmedFrames = [pygame.image.load(os.path.join('img', 'mine3.png'))]
+
+        self.mineFrames = [pygame.image.load(os.path.join('img', 'mine1.png'))]
+        self.mineFrames.append(pygame.image.load(os.path.join('img', 'mine2.png')))
+        self.image = self.mineNotArmedFrames[0]
+        self.animation = Animation(self, self.mineNotArmedFrames, 100)
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -25,10 +28,15 @@ class Mine(pygame.sprite.Sprite):
 
         self.mapData = mapData
         self.armCooldown = Cooldown(100)
+        self.mineArmed = False
         self.armCooldown.start()
 
     def update(self):
         self.armCooldown.update()
+        self.animation.update(self)
+        if self.armCooldown.isZero and self.mineArmed is False:
+            self.mineArmed = True
+            self.animation = Animation(self, self.mineFrames, 15)
 
     def detonate(self):
         if self.armCooldown.isZero:

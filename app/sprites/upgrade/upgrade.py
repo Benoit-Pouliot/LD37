@@ -14,7 +14,7 @@ class Upgrade(pygame.sprite.Sprite):
         self.attribute = 0
         self.cost = 0
 
-        self.fontSize = 24
+        self.fontSize = 20
         self.upgFont = pygame.font.SysFont(FONT_NAME, self.fontSize)
 
         self.width = 150
