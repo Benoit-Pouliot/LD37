@@ -1,10 +1,9 @@
-__author__ = 'Bobsleigh'
-
 import pygame, os, math
 from app.sprites.collisionMask import CollisionMask
 from app.sprites.explosion import Explosion
 from app.settings import *
 from app.tools.cooldown import Cooldown
+from app.tools.animation import Animation
 
 class Grenade(pygame.sprite.Sprite):
     def __init__(self, x, y, speedx, speedy, mapData):
@@ -12,7 +11,11 @@ class Grenade(pygame.sprite.Sprite):
 
         self.name = "Grenade"
 
-        self.image = pygame.image.load(os.path.join('img', 'Bullet.png'))
+        self.grenadeFrames = [pygame.image.load(os.path.join('img', 'grenade.png'))]
+        self.image = self.grenadeFrames[0]
+        for k in range(1, 8):
+            self.grenadeFrames.append(pygame.transform.rotate(self.grenadeFrames[k-1], k*30))
+        self.animation = Animation(self, self.grenadeFrames, 6)
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -42,6 +45,9 @@ class Grenade(pygame.sprite.Sprite):
 
         self.rect.x = self.x
         self.rect.y = self.y
+
+        if self.speedx**2+self.speedy**2 >= .1:
+            self.animation.update(self)
 
         self.detonationTimer.update()
 
