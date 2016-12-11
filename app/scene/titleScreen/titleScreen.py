@@ -4,7 +4,7 @@ import sys
 
 import pygame
 
-from app.sprites.GUI.menu.menu import Menu
+from app.sprites.GUI.button import Button
 from app.scene.titleScreen.eventHandlerTitleScreen import EventHandlerTitleScreen
 from app.mapData import MapData
 from app.settings import *
@@ -12,6 +12,7 @@ from app.scene.musicFactory import MusicFactory
 from app.scene.drawer import Drawer
 
 from app.shopScreenData import ShopScreenData
+import weakref
 
 
 class TitleScreen:
@@ -21,23 +22,21 @@ class TitleScreen:
         self.gameData = gameData
 
         self.screen.fill((0,0,0))
-        titleImage = pygame.image.load(os.path.join('img', 'menu.png'))
+        titleImage = pygame.image.load(os.path.join('img', 'TitleScreen.png'))
         self.screen.blit(titleImage, (0, 0))
 
-        if TAG_MARIE == 1:
-            self.gameData.shopScreenData = ShopScreenData()
-            self.menu = Menu(
-                pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.2, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.5))
-            self.menu.addOption('What Marie wants to test', self.goToTheShop)
-        else:
-            # Define MainMenu
-            self.menu = Menu(
-                pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 12 / 16, SCREEN_WIDTH / 3, SCREEN_HEIGHT * 0.25))
+        self.spritesHUD = pygame.sprite.Group()
+        self.notifySet = weakref.WeakSet()
 
-        self.menu.addOption('Start', self.goToTheShop)
-        self.menu.addOption('Exit', sys.exit)
+        self.startGameButton = Button((540, 2*SCREEN_HEIGHT/5), (150, 50), 'Start game', self.goToTheShop)
+        self.spritesHUD.add(self.startGameButton)
+        self.notifySet.add(self.startGameButton)
 
-        self.eventHandler = EventHandlerTitleScreen(self.menu)
+        self.exitButton = Button((540, 11*SCREEN_HEIGHT/20), (150, 50), 'Exit', sys.exit)
+        self.spritesHUD.add(self.exitButton)
+        self.notifySet.add(self.exitButton)
+
+        self.eventHandler = EventHandlerTitleScreen()
         self.drawer = Drawer()
 
         self.type = TITLE_SCREEN
@@ -49,9 +48,21 @@ class TitleScreen:
     def mainLoop(self):
         self.sceneRunning = True
         while self.sceneRunning:
-            self.eventHandler.eventHandle(self.menu.optionList, self.menu.selector)
-            self.menu.update()  # This would be in the logic
-            self.drawer.draw(self.screen, None, self.menu, None)  # Drawer in THIS file, below
+            self.eventHandler.eventHandle(self.notifySet)
+            self.handle()  # This would be in the logic
+            self.drawer.draw(self.screen, None, self.spritesHUD, None)  # Drawer in THIS file, below
+
+    def handle(self):
+        self.checkHighlight()
+        self.spritesHUD.update()
+
+    def checkHighlight(self):
+        mousePos = pygame.mouse.get_pos()
+        for obj in self.notifySet:
+            if obj.rect.collidepoint(mousePos):
+                obj.isSelected = True
+            else:
+                obj.isSelected = False
 
 
     def startGame(self):
