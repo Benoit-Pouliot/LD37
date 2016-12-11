@@ -20,6 +20,10 @@ class WorldMap:
 
         self.mapData.allSprites.add(self.player)
         self.mapData.camera.add(self.player)
+
+        self.mapData.allSprites.add(self.player.lifeBar)
+        self.mapData.camera.add(self.player.lifeBar, layer=CAMERA_HUD_LAYER)
+
         self.camera = self.mapData.camera
 
         # Handler
