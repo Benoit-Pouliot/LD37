@@ -9,6 +9,8 @@ from app.sprites.GUI.button import Button
 from app.sprites.GUI.HUDShopScreen import HUDShopScreeen
 from app.scene.shopScreen.eventHandlerShopScreen import EventHandlerShopScreen
 from app.sprites.upgrade.barricadeUp import BarricadeUp
+from app.sprites.upgrade.grenadeUpgrade import GrenadeUpgrade
+from app.sprites.upgrade.mineUpgrade import MineUpgrade
 from app.sprites.upgrade.gun import Gun
 from app.scene.shopScreen.logicHandlerShopScreen import LogicHandlerShopScreen
 from app.settings import *
@@ -30,8 +32,11 @@ class ShopScreen:
 
         # We should adjust position.
 
-        self.addUpgrade('gun',(50,80))
-        self.addUpgrade('barricade',(250,80))
+        self.addUpgrade('gun',(1*SCREEN_WIDTH/10,80))
+        self.addUpgrade('barricade',(3*SCREEN_WIDTH/10,80))
+        self.addUpgrade('grenade', (5*SCREEN_WIDTH/10, 80))
+        self.addUpgrade('mine', (7*SCREEN_WIDTH/10, 80))
+
 
         self.startGameButton = Button((600,500),(100,80),'Fight!',self.nextLevel)
         self.shopScreenData.allSprites.add(self.startGameButton)
@@ -67,6 +72,12 @@ class ShopScreen:
         elif name == 'barricade':
              self.upgradeList[name] = BarricadeUp()
              self.upgradeList[name].method = self.buyBarricadeUp
+        elif name == 'grenade':
+             self.upgradeList[name] = GrenadeUpgrade()
+             self.upgradeList[name].method = self.buyGrenadeUpgrade
+        elif name == 'mine':
+             self.upgradeList[name] = MineUpgrade()
+             self.upgradeList[name].method = self.buyMineUpgrade
 
         item = self.upgradeList[name]
         item.attributeName = self.gameData.upgrade[item.name][0]
@@ -100,6 +111,14 @@ class ShopScreen:
     def buyBarricadeUp(self):
         self.pay(self.gameData.upgrade['barricade'][2])
         self.buy('barricade')
+
+    def buyGrenadeUpgrade(self):
+        self.pay(self.gameData.upgrade['grenade'][2])
+        self.buy('grenade')
+
+    def buyMineUpgrade(self):
+        self.pay(self.gameData.upgrade['mine'][2])
+        self.buy('mine')
 
     def recreateButton(self,item):
         item.attribute = self.gameData.upgrade[item.name][1]
