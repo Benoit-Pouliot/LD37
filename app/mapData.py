@@ -20,7 +20,7 @@ class MapData:
         self.nameMap = mapName
 
         self.currentLevel = currentLevel
-        self.levelEndTime = None
+        self.levelEndTime = 2000
 
         self.tmxData = pytmx.util_pygame.load_pygame(self.reqImageName(self.nameMap))
         self.tiledMapData = pyscroll.data.TiledMapData(self.tmxData)
