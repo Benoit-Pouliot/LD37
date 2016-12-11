@@ -29,7 +29,7 @@ class ShopScreen:
         self.shopScreenData = self.gameData.shopScreenData
 
         self.screen.fill((0, 0, 0))
-        titleImage = pygame.image.load(os.path.join('img', 'menu.png'))
+        titleImage = pygame.image.load(os.path.join('img', 'ShopScreen.png'))
         self.screen.blit(titleImage, (0, 0))
 
         self.upgradeList = {}

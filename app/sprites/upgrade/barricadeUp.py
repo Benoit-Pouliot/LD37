@@ -14,7 +14,7 @@ class BarricadeUp(Upgrade):
 
         self.icon = pygame.image.load(os.path.join('img', 'barricade.png'))
 
-        # self.image = pygame.transform.scale(pygame.image.load(image), (TILEDIMX, TILEDIMY))
+        self.resizeIcon()
 
         self.type = type
 

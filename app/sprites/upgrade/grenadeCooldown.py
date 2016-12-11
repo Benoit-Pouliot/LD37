@@ -12,9 +12,9 @@ class GrenadeCooldown(Upgrade):
 
         self.name = 'grenadeCooldown'
 
-        self.icon = pygame.image.load(os.path.join('img', 'biere1.png'))
+        self.icon = pygame.image.load(os.path.join('img', 'grenade.png'))
 
-        # self.image = pygame.transform.scale(pygame.image.load(image), (TILEDIMX, TILEDIMY))
+        self.resizeIcon()
 
         self.type = type
 

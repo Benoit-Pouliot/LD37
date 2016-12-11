@@ -84,3 +84,9 @@ class Upgrade(pygame.sprite.Sprite):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 self.method()
+
+    def resizeIcon(self):
+        resizeSizeX = 64
+        imageSizeY = self.icon.get_height() * resizeSizeX / self.icon.get_width()
+
+        self.icon = pygame.transform.scale(self.icon, (int(resizeSizeX), int(imageSizeY)))
