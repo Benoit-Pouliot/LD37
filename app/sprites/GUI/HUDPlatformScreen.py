@@ -38,7 +38,7 @@ class HUDPlatformScreen(pygame.sprite.Sprite):
 
         self.cooldownBarricades = CooldownBar(self.player.barricadeCooldown.max, width=SCREEN_WIDTH / 10,
                                               height=HUD_HEIGHT / 2)
-        self.cooldownBarricades.rect.x = 47 * (SCREEN_WIDTH - self.cooldownBarricades.width) / 100
+        self.cooldownBarricades.rect.x = 50 * (SCREEN_WIDTH - self.cooldownBarricades.width) / 100
         self.cooldownBarricades.rect.y = 5
 
         self.lifeBar = LifeBar(self.player.maxHealth,width=SCREEN_WIDTH/5,height=HUD_HEIGHT/2)
