@@ -190,7 +190,7 @@ class CollisionPlayerPlatform:
             if sideOfCollision == LEFT or sideOfCollision == RIGHT:
                 sprite.onCollision(OBSTACLE, sideOfCollision,limit)
                 if sprite.friendly == False:
-                    obstacle.isHit(sprite.attack)
+                    obstacle.isHit(sprite.attackDMG)
 
             if sprite.speedy > 0:
                 limit = obstacle.rect.top
