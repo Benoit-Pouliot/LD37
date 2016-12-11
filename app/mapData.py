@@ -105,13 +105,14 @@ class MapData:
     def enemyGenData(self, currentLevel):
         if currentLevel == 1:
             self.enemyGenListData.addData(400, [1], 1, 0)
-            # self.enemyGenListData.addData(800, [1], 2, 0)
-            # self.enemyGenListData.addData(1800, [1], 4, 0)
-            # self.enemyGenListData.addData(2800, [1], 4, 0)
-            self.levelEndTime = 402
-
-            # self.levelEndTime = 2800
+            self.enemyGenListData.addData(800, [1], 2, 0)
+            self.enemyGenListData.addData(1800, [1], 4, 0)
+            self.enemyGenListData.addData(2800, [1], 4, 0)
+            self.levelEndTime = 2800
 
         if currentLevel == 2:
-            self.enemyGenListData.addData(400, [1], 50, 0)
-            self.levelEndTime = 402
+            self.enemyGenListData.addData(400, [1], 4, 0)
+            self.enemyGenListData.addData(800, [1], 4, 0)
+            self.enemyGenListData.addData(1000, [1], 5, 0)
+            self.enemyGenListData.addData(2500, [1], 8, 0)
+            self.levelEndTime = 3001

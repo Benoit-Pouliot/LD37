@@ -87,7 +87,7 @@ class ShopScreen:
     def buy(self,item):
         if self.sold == True:
             self.gameData.upgrade[item][1] += self.gameData.upgrade[item][3] #Increase lvl
-            self.gameData.upgrade[item][2] = int(round(self.gameData.upgrade[item][4]*self.gameData.upgrade[item][2])) #Increase cost
+            self.gameData.upgrade[item][2] *= 2 #Increase cost
             self.sold = False
             self.recreateButton(self.upgradeList[item])
         else:

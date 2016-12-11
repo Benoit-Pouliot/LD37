@@ -41,8 +41,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 5
-        self.maxSpeedy = 5
+        self.maxSpeedx = 3
+        self.maxSpeedy = 3
         self.accx = 2
         self.accy = 2
 
@@ -77,8 +77,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.grenadeCooldown = Cooldown(100)
         self.mineCooldown = Cooldown(40)
-        self.gunCooldown = Cooldown(20)
-        self.barricadeCooldown = Cooldown(50)
+        self.gunCooldown = Cooldown(40)
+        self.barricadeCooldown = Cooldown(300)
 
         self.isAlive = True
 

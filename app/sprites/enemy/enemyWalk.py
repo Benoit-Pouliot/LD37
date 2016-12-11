@@ -51,7 +51,7 @@ class EnemyWalk(EnemyCollision):
 
         self.mode = WALKING
         self.timerAttack = 0
-        self.timeToAttack = 60
+        self.timeToAttack = 20
         self.timeInAttack = 5
         self.distanceToAttack = 25
         self.attackSprite = None
