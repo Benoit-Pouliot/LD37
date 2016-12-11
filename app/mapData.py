@@ -45,6 +45,7 @@ class MapData:
         # EnemySupervisor
         self.enemyGeneratorSupervisor = EnemySupervisor(self)
 
+
         eFactory = EnemyFactory()
 
         for obj in self.tmxData.objects:
@@ -66,7 +67,7 @@ class MapData:
         # FOR DEBUG
         # self.enemyGenListData.addData(120,[1],3,120)
         if TAG_MARIE == 1:
-            self.enemyGenListData.addData(120, [2], 5, 120)
+            self.enemyGenListData.addData(120, [4], 5, 120)
         if TAG_BP == 1:
             self.enemyGenListData.addData(120, [1,4], 3, 120)
         if TAG_ANIKA == 1:
@@ -91,6 +92,10 @@ class MapData:
         # The game is not complete?
         if valBool == False:
             quitGame()
+
+        #Money!!
+
+        self.gold = 0
 
     def reqImageName(self, nameMap):
         return os.path.join('tiles_map', nameMap + ".tmx")

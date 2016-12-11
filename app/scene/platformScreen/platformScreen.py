@@ -18,6 +18,8 @@ class PlatformScreen:
         self.nextScene = None
 
         self.mapData = self.gameData.mapData
+        self.mapData.gold = self.gameData.gold
+
         self.player = PlayerPlatform(self.mapData.spawmPointPlayerx, self.mapData.spawmPointPlayery, self.mapData)
 
         self.setPlayerUpgrade()
@@ -52,13 +54,16 @@ class PlatformScreen:
             self.checkNewMap(self.logicHandler.newMapData)
             self.drawer.draw(self.screen, self.mapData.camera, self.mapData.spritesHUD, self.player)
 
+        # Update gold before you leave
+        self.gameData.gold = self.mapData.gold
+
     def checkNewMap(self, newMapData):
         if newMapData is not None:
             # we got to change
             self.sceneRunning = False
             self.nextScene = SHOP_SCREEN
             self.gameData.typeScene = SHOP_SCREEN
-            self.gameData.mapData = newMapData
+            self.gameData.mapData = None
 
     def updateShowItem(self):
         self.showItem.weapon = self.player.inventory.itemList[self.player.currentItem].name
@@ -73,6 +78,7 @@ class PlatformScreen:
     def backToMain(self):
         self.nextScene = TITLE_SCREEN
         self.gameData.typeScene = TITLE_SCREEN
+        self.gameData.gold = self.mapData.gold
 
         self.close()
 

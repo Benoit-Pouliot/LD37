@@ -98,5 +98,5 @@ class LogicHandlerPlatformScreen:
         if player.isAlive == False:
             pygame.display.flip()
             pygame.time.wait(2000)
-            self.newMapData = MapData('WorldMap', 'StartPointWorld')
+            self.newMapData = True
             self.sceneRunning = False

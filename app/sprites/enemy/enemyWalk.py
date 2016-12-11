@@ -63,6 +63,8 @@ class EnemyWalk(EnemyCollision):
         self.lifeBar.rect.x = self.rect.x
         self.lifeBar.rect.bottom = self.rect.top - 3
 
+        self.bounty = 10
+
 
     def applyAI(self):
 

@@ -33,6 +33,10 @@ class Enemy(pygame.sprite.Sprite):
         self.attackDMG = 0
         self.friendly = False
 
+        self.mapData = None
+
+        self.bounty = 0
+
     def setMapData(self, mapData):
         self.mapData = mapData
 
@@ -51,6 +55,10 @@ class Enemy(pygame.sprite.Sprite):
         pass
 
     def dead(self):
+        if self.mapData != None:
+            self.mapData.gold += self.bounty
+            print(self.mapData.gold)
+
         self.kill()
 
     def notify(self, event):
