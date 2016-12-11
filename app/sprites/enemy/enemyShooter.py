@@ -5,7 +5,7 @@ import math
 from app.sprites.enemy.enemyCollision import EnemyCollision
 from app.sprites.bullet import Shuriken
 from app.tools.animation import Animation
-from app.tools.imageBox import *
+from app.tools.imageBox import rectSurface
 from app.AI.steeringAI import SteeringAI
 from app.sprites.collisionMask import CollisionMask
 

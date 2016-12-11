@@ -1,6 +1,6 @@
-w__author__ = 'Bobsleigh'
 import pygame
 from app.settings import *
+from app.tools.imageBox import rectSurface
 
 
 class LifeBar (pygame.sprite.Sprite):
@@ -8,8 +8,11 @@ class LifeBar (pygame.sprite.Sprite):
         super().__init__()
         self.width = width
         self.height = height
-        self.image = pygame.Surface([self.width, self.height])
-        self.image.fill(GREEN)
+        # self.image = pygame.Surface([self.width, self.height])
+        # self.image.fill(GREEN)
+        self.sizeBorder = 1
+        self.image = rectSurface((self.width, self.height), GREEN, self.sizeBorder)
+
         self.rect = self.image.get_rect()
         self.rect.x = 300
         self.rect.y = 300
@@ -34,7 +37,10 @@ class LifeBar (pygame.sprite.Sprite):
 
     def update(self):
         dmg = self.healthMax-self.healthCurrent
-        self.widthRed = self.width*(dmg)/self.healthMax
+        self.widthRed = int((self.width-2*self.sizeBorder)*(dmg)/self.healthMax)
         if dmg > 0:
-            dmgBar = pygame.Rect(self.width-self.widthRed, 0, self.widthRed+1, self.height)
+            dmgBar = pygame.Rect((self.width-2*self.sizeBorder)-self.widthRed+self.sizeBorder,
+                                 self.sizeBorder,
+                                 self.widthRed,
+                                 self.height-2*self.sizeBorder)
             pygame.draw.rect(self.image, RED, dmgBar)
