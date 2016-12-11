@@ -40,12 +40,14 @@ class Barricade(pygame.sprite.Sprite):
         self.lifeBar.rect.x = self.rect.x
         self.lifeBar.rect.bottom = self.rect.top - 3
 
+        self.friendly = True
+
 
     def update(self):
         if self.animation is not None :
            next(self.animation)
 
-    def onCollision(self, collidedWith, sideOfCollision):
+    def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
             self.destroy()
 
@@ -55,9 +57,6 @@ class Barricade(pygame.sprite.Sprite):
 
     def hurt(self,damage=1):
         self.lifeBar.healthCurrent -= damage
-
-        if TAG_MARIE == 1:
-            print('heath: ' + str(self.lifeBar.healthCurrent))
 
         self.checkIfIsAlive()
 

@@ -1,20 +1,17 @@
 import pygame
+from app.sprites.enemy.enemy import Enemy
 from app.sprites.collisionMask import CollisionMask
-from app.tools.animation import Animation
+from app.settings import *
 
 
-class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        super().__init__()
+class EnemyAttack(Enemy):
+    def __init__(self, x, y, size=(1,1), attackDMG=0):
+        super().__init__(x,y)
 
-        self.name = "enemy"
+        self.name = "enemyAttack"
 
-        self.imageEnemy = pygame.Surface((1, 1))
-        self.imageEnemy.set_alpha(0)
-        self.image = self.imageEnemy
-
-        self.frames = [self.imageEnemy]
-        self.animation = Animation(self, self.frames, 100)
+        self.image = pygame.Surface(size)
+        self.image.set_alpha(0)
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -29,14 +26,22 @@ class Enemy(pygame.sprite.Sprite):
 
         self.dictProperties = {}
 
-        self.attackDMG = 0
+        self.attackDMG = attackDMG
         self.friendly = False
+
+        if TAG_BP == 1:
+            # self.image.fill(WHITE)
+            pass
+
 
     def setMapData(self, mapData):
         self.mapData = mapData
+        self.mapData.camera.add(self)
+        self.mapData.allSprites.add(self)
+        self.mapData.attackGroup.add(self)
 
     def update(self):
-        self.animation.update(self)
+        # self.animation.update(self)
         self.updateCollisionMask()
 
     def updateCollisionMask(self):

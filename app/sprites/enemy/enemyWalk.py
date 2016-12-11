@@ -1,7 +1,9 @@
 import pygame
 import os
+import math
 
 from app.sprites.enemy.enemy import Enemy
+from app.sprites.enemy.enemyAttack import EnemyAttack
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
 from app.sprites.collisionMask import CollisionMask
@@ -9,15 +11,17 @@ from app.sprites.collisionMask import CollisionMask
 from app.settings import *
 
 class EnemyWalk(Enemy):
-    def __init__(self, x, y, mapData):  # ?
+    def __init__(self, x, y, mapData=None):  # ?
         super().__init__(x, y)
 
         self.name = "enemyWalk"
 
         self.imageEnemy = pygame.image.load(os.path.join('img', 'walking_enemy.png'))
+        self.attackingEnemy = pygame.image.load(os.path.join('img', 'shooting_enemy.png'))
 
-        self.frames = [self.imageEnemy]
-        self.animation = Animation(self,self.frames,100)
+        self.enemyFrames = [self.imageEnemy]
+        self.attackingFrames = [self.attackingEnemy]
+        self.animation = Animation(self, self.enemyFrames, 100)
 
         self.rect = self.imageEnemy.get_rect()
         self.rect.x = x
@@ -41,22 +45,73 @@ class EnemyWalk(Enemy):
         self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
-        self.attack = 1
+        self.attackDMG = 1
+
+        self.mode = WALKING
+        self.timerAttack = 0
+        self.timeToAttack = 60
+        self.timeInAttack = 5
+        self.distanceToAttack = 25
+        self.attackSprite = None
+        self.factorAttack = 1.5
 
     def applyAI(self):
-        steeringX, steeringY = self.AI.getAction()
 
-        self.speedx += steeringX
-        self.speedy += steeringY
+        if self.mode == IN_ATTACK:
+            if self.timerAttack == 0:
+                self.timerAttack += 1
+
+                # create an invisible sprite that damage player
+                valueX = float(self.image.get_width())*self.factorAttack
+                valueY = float(self.image.get_height())*self.factorAttack
+                positionX = float(self.rect.x)-(valueX-self.image.get_width())/2
+                positionY = float(self.rect.y)-(valueY-self.image.get_height())/2
+                self.attackSprite = EnemyAttack(positionX, positionY, (valueX, valueY), self.attackDMG)
+                self.attackSprite.setMapData(self.mapData)
+
+                # do an animation
+                self.animation = Animation(self, self.attackingFrames, 100)
+
+            elif self.timerAttack < self.timeInAttack:
+                self.timerAttack += 1
+            else:
+                self.timerAttack = 0
+                self.mode = WALKING
+                self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+                self.attackSprite.kill()
+                self.animation = Animation(self, self.enemyFrames, 100)
+
+        elif self.mode == PREPARE_ATTACK:
+            if self.timerAttack < self.timeToAttack:
+                self.timerAttack += 1
+            else:
+                self.timerAttack = 0
+                self.mode = IN_ATTACK
+
+        else:
+            # if player is close : stop and init timer to attack
+            distX = self.mapData.player.rect.x-self.rect.x
+            distY = self.mapData.player.rect.y-self.rect.y
+            if math.sqrt(distX**2 + distY**2) < self.distanceToAttack:
+                self.mode = PREPARE_ATTACK
+                self.timerAttack = 0
+                self.speedx = 0
+                self.speedy = 0
+            else:
+                steeringX, steeringY = self.AI.getAction()
+
+                self.speedx += steeringX
+                self.speedy += steeringY
 
     def update(self):
-        super().update()
         self.capSpeed()
 
         self.x += self.speedx
         self.y += self.speedy
         self.rect.x = self.x
         self.rect.y = self.y
+
+        super().update()
 
     def capSpeed(self):
         if self.speedx > self.maxSpeedx:
@@ -72,7 +127,7 @@ class EnemyWalk(Enemy):
         self.soundDead.play()
         super().dead()
 
-    def onCollision(self, collidedWith, sideOfCollision,objectSize=0):
+    def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
             if sideOfCollision == RIGHT:
                 # On colle la sprite sur le mur à droite
@@ -110,11 +165,9 @@ class EnemyWalk(Enemy):
             self.dead()
 
         if collidedWith == OBSTACLE:
-
-
             if sideOfCollision == RIGHT:
                 if TAG_MARIE == 1:
-                    print(objectSize)
+                    print(limit)
                 #On colle le player à gauche de l'obstacle
                 self.speedx = 0
                 self.rect.right += -2

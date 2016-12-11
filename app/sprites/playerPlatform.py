@@ -273,7 +273,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         return speedx, speedy
 
     def createBarricade(self):
-        self.stop()
+        #self.stop()
 
         if TAG_MARIE == 1:
             print('You created a barricade.')
@@ -304,7 +304,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 print('cannot put down')
             barricade.destroy()
 
-    def onCollision(self, collidedWith, sideOfCollision,objectSize=0):
+    def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
             if sideOfCollision == RIGHT:
                 #On colle le player sur le mur à droite
@@ -332,21 +332,20 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if collidedWith == OBSTACLE:
             if sideOfCollision == RIGHT:
                 if TAG_MARIE == 1:
-                    print(objectSize)
+                    print()
                 #On colle le player à gauche de l'obstacle
                 self.speedx = 0
-                self.rect.right += -2
-
+                self.rect.right = limit
             if sideOfCollision == LEFT:
                 self.speedx = 0
-                self.rect.left += 2
+                self.rect.left = limit
             if sideOfCollision == DOWN:
                 self.speedy = 0
-                self.rect.bottom += -2
+                self.rect.bottom = limit
 
             if sideOfCollision == UP:
                 self.speedy = 0
-                self.rect.top += 2
+                self.rect.top = limit
 
     def nextItem(self):
         self.currentItem += 1

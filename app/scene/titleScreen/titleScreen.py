@@ -26,7 +26,7 @@ class TitleScreen:
         self.menu = Menu(pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 12 / 16, SCREEN_WIDTH / 3, SCREEN_HEIGHT * 0.25))
 
         if TAG_MARIE == 1:
-            self.menu.addOption('Wat Marie wants to test', self.goToTheShop)
+            self.menu.addOption('Wat Marie wants to test', self.startGame)
 
         self.menu.addOption('Start', self.startGame)
         self.menu.addOption('Shop', self.goToTheShop)

@@ -26,6 +26,7 @@ class MapData:
 
         self.allSprites = pygame.sprite.Group()
         self.enemyGroup = pygame.sprite.Group()
+        self.attackGroup = pygame.sprite.Group()
         self.obstacleGroup = pygame.sprite.Group()
         self.mineGroup = pygame.sprite.Group()
         self.itemGroup = pygame.sprite.Group()
@@ -61,9 +62,7 @@ class MapData:
         # FOR DEBUG
         self.enemyGenListData.addData(120,[1],3,120)
         if TAG_BP == 1:
-            self.enemyGenListData.addData(60,[1],3,60)
-            self.enemyGenListData.addData(10,[1],20,1)
-            self.enemyGenListData.addData(5,[1],2,1)
+            self.enemyGenListData.addData(120,[1],3,120)
         if TAG_ANIKA == 1:
             self.enemyGenListData.addData(120,[2],1,120)
 
