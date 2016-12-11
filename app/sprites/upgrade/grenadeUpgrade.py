@@ -6,11 +6,11 @@ from app.settings import *
 from app.sprites.collisionMask import CollisionMask
 
 
-class Gun(Upgrade):
+class GrenadeUpgrade(Upgrade):
     def __init__(self):
         super().__init__()
 
-        self.name = 'gun'
+        self.name = 'grenade'
 
         self.icon = pygame.image.load(os.path.join('img', 'biere1.png'))
 

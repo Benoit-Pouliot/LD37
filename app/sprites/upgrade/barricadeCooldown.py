@@ -6,13 +6,13 @@ from app.settings import *
 from app.sprites.collisionMask import CollisionMask
 
 
-class Gun(Upgrade):
+class BarricadeCooldown(Upgrade):
     def __init__(self):
         super().__init__()
 
-        self.name = 'gun'
+        self.name = 'barricadeCooldown'
 
-        self.icon = pygame.image.load(os.path.join('img', 'biere1.png'))
+        self.icon = pygame.image.load(os.path.join('img', 'barricade.png'))
 
         # self.image = pygame.transform.scale(pygame.image.load(image), (TILEDIMX, TILEDIMY))
 

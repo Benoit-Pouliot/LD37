@@ -15,8 +15,15 @@ class GameData:
         self.upgrade["barricade"] = ['Level',0,50,1,1.1]
         self.upgrade["grenade"] = ['Level',0,400,1,1.1]
         self.upgrade["mine"] = ['Level',0,900,1,1.1]
+        self.upgrade["gunCooldown"] = ['Cooldown', 1, 1, 1, 1.1]
+        self.upgrade["barricadeCooldown"] = ['Cooldown', 2, 2, 2, 1.2]
+        self.upgrade["grenadeCooldown"] = ['Cooldown', 3, 3, 3, 1.3]
+        self.upgrade["mineCooldown"] = ['Cooldown', 4, 4, 4, 1.4]
 
         self.gold = 50
+
+        if TAG_MARIE == 1:
+            self.gold = 50000
 
         self.maxItemOfAType = 99
 

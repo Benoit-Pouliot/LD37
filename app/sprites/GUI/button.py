@@ -22,7 +22,7 @@ class Button(pygame.sprite.Sprite):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
 
-        self.borderButton = 10
+        self.borderButton = 5
 
         self.interior = pygame.Rect(self.borderButton, self.borderButton, self.width - 2 * self.borderButton,
                                     self.height - 2 * self.borderButton)

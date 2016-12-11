@@ -12,6 +12,10 @@ from app.sprites.upgrade.barricadeUp import BarricadeUp
 from app.sprites.upgrade.grenadeUpgrade import GrenadeUpgrade
 from app.sprites.upgrade.mineUpgrade import MineUpgrade
 from app.sprites.upgrade.gun import Gun
+from app.sprites.upgrade.barricadeCooldown import BarricadeCooldown
+from app.sprites.upgrade.grenadeCooldown import GrenadeCooldown
+from app.sprites.upgrade.mineCooldown import MineCooldown
+from app.sprites.upgrade.gunCooldown import GunCooldown
 from app.scene.shopScreen.logicHandlerShopScreen import LogicHandlerShopScreen
 from app.settings import *
 from app.scene.drawer import Drawer
@@ -37,8 +41,13 @@ class ShopScreen:
         self.addUpgrade('grenade', (5*SCREEN_WIDTH/10, 80))
         self.addUpgrade('mine', (7*SCREEN_WIDTH/10, 80))
 
+        self.addUpgrade('gunCooldown', (1 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
+        self.addUpgrade('barricadeCooldown', (3 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
+        self.addUpgrade('grenadeCooldown', (5 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
+        self.addUpgrade('mineCooldown', (7 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
 
-        self.startGameButton = Button((600,500),(100,80),'Fight!',self.nextLevel)
+
+        self.startGameButton = Button((560,510),(150,60),'Fight!',self.nextLevel)
         self.shopScreenData.allSprites.add(self.startGameButton)
         self.shopScreenData.notifySet.add(self.startGameButton)
 
@@ -78,6 +87,18 @@ class ShopScreen:
         elif name == 'mine':
              self.upgradeList[name] = MineUpgrade()
              self.upgradeList[name].method = self.buyMineUpgrade
+        elif name == 'gunCooldown':
+            self.upgradeList[name] = GunCooldown()
+            self.upgradeList[name].method = self.buyGunCooldown
+        elif name == 'barricadeCooldown':
+             self.upgradeList[name] = BarricadeCooldown()
+             self.upgradeList[name].method = self.buyBarricadeCooldown
+        elif name == 'grenadeCooldown':
+             self.upgradeList[name] = GrenadeCooldown()
+             self.upgradeList[name].method = self.buyGrenadeCooldown
+        elif name == 'mineCooldown':
+             self.upgradeList[name] = MineCooldown()
+             self.upgradeList[name].method = self.buyMineCooldown
 
         item = self.upgradeList[name]
         item.attributeName = self.gameData.upgrade[item.name][0]
@@ -119,6 +140,22 @@ class ShopScreen:
     def buyMineUpgrade(self):
         self.pay(self.gameData.upgrade['mine'][2])
         self.buy('mine')
+
+    def buyGunCooldown(self):
+        self.pay(self.gameData.upgrade['gunCooldown'][2])
+        self.buy('gunCooldown')
+
+    def buyBarricadeCooldown(self):
+        self.pay(self.gameData.upgrade['barricadeCooldown'][2])
+        self.buy('barricadeCooldown')
+
+    def buyGrenadeCooldown(self):
+        self.pay(self.gameData.upgrade['grenadeCooldown'][2])
+        self.buy('grenadeCooldown')
+
+    def buyMineCooldown(self):
+        self.pay(self.gameData.upgrade['mineCooldown'][2])
+        self.buy('mineCooldown')
 
     def recreateButton(self,item):
         item.attribute = self.gameData.upgrade[item.name][1]
