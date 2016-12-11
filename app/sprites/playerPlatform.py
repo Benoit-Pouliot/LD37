@@ -67,6 +67,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.leftPressed = False
         self.upPressed = False
         self.downPressed = False
+        self.leftMousePressed = False
 
         self.mapData = mapData
         self.mapData.player = self
@@ -76,7 +77,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.grenadeCooldown = Cooldown(100)
         self.mineCooldown = Cooldown(40)
-        self.gunCooldown = Cooldown(10)
+        self.gunCooldown = Cooldown(20)
 
         self.isAlive = True
 
@@ -412,8 +413,11 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             self.inventory.itemList[self.currentItem].useItem()
+            self.leftMousePressed = True
             if TAG_MARIE == 1 :
                 print("You pressed the left mouse button") # event.pos
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == LEFT:
+            self.leftMousePressed = False
 
     def updatePressedKeys(self):
         if self.rightPressed:
@@ -424,3 +428,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.updateSpeedUp()
         if self.downPressed:
             self.updateSpeedDown()
+        if self.leftMousePressed:
+            if self.currentItem == 0:
+                self.inventory.itemList[self.currentItem].useItem()

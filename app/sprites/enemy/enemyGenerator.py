@@ -8,7 +8,7 @@ class EnemyGenerator(Enemy):
 
         self.name = "enemyGenerator"
 
-        self.factorRandom = 50
+        self.factorRandom = 10
 
     def spawnEnemy(self, typeEnemy):
 
