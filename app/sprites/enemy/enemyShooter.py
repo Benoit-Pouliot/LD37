@@ -79,7 +79,7 @@ class EnemyShooter(EnemyCollision):
 
         self.speedx += steeringX
         self.speedy += steeringY
-        
+
     def update(self):
         super().update()
 

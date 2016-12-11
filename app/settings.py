@@ -114,7 +114,12 @@ COLOR_MENU_2 = BLACK
 COLOR_MENU_SELECT_1 = (150,150,150)
 COLOR_MENU_SELECT_2 = BLUE
 COLOR_MENU_FONT_SELECT = WHITE
+
 HUD_FONT_COLOR = WHITE
+HUD_FONT_SIZE = 24
+HUD_HEIGHT = 60
+HUD_COLOR_1 = WHITE
+HUD_COLOR_2 = BLACK
 
 # If you add a Tag for debugging, you MUST set it here at 0 for everyone
 # You can turn your tag on in your own settings_local.py for personal use

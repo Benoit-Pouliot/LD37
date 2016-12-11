@@ -80,7 +80,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.isAlive = True
 
-        self.barricadeMaxHeath = 100
+        self.barricadeMaxHealth = 10
 
         self.currentItem = 0
 
@@ -289,7 +289,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         barricadePosx = BARRICADE_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
         barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
 
-        barricade = Barricade(barricadePosx, barricadePosy,self.barricadeMaxHeath)
+        barricade = Barricade(barricadePosx, barricadePosy,self.barricadeMaxHealth)
 
         occupied = pygame.sprite.spritecollideany(barricade, self.mapData.enemyGroup)
         if occupied is None:
@@ -330,13 +330,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 self.collisionMask.rect.bottom += 1  # Redescendre de 1 pour sortir du plafond
                 self.speedy = 0
 
-        if collidedWith == SPIKE:
-            self.dead()
-
         if collidedWith == OBSTACLE:
             if sideOfCollision == RIGHT:
-                if TAG_MARIE == 1:
-                    print()
                 #On colle le player à gauche de l'obstacle
                 self.speedx = 0
                 self.rect.right = limit
