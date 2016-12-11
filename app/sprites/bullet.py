@@ -3,8 +3,7 @@ import pygame
 
 from app.sprites.enemy.enemy import Enemy
 from app.scene.platformScreen.collisionPlayerPlatform import *
-# from app.tool.animation import Animation
-
+from app.tools.animation import Animation
 
 class Bullet(Enemy):
     def __init__(self, x, y, speedx, speedy, friendly=True):
@@ -110,30 +109,39 @@ class BeerBullet(Bullet):
 
 class Shuriken(Bullet):
     def __init__(self, x, y, bullet_speedx, bullet_speedy, friendly=False):
-        super().__init__(x, y,0,0)
+        super().__init__(x,y,0,0)
 
         self.name = "bullet"
 
-        self.image = pygame.image.load(os.path.join('img', 'shuriken.png'))
+        self.shurikenFrames = [pygame.image.load(os.path.join('img', 'shuriken.png'))]
+        self.image = self.shurikenFrames[0]
+        for k in range(1, 5):
+            self.shurikenFrames.append(pygame.transform.rotate(self.shurikenFrames[k-1], k*360/6))
+        self.animation = Animation(self, self.shurikenFrames, 5)
 
-        self.rect = self.image.get_rect()
-        self.rect.y = y - self.rect.height / 2
+        self.x = x
+        self.y = y - self.rect.height / 2
 
         self.speedx = bullet_speedx
         self.speedy = bullet_speedy
-        self.rect.x = x  # starting point of the bullet
+
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
 
         self.friendly = friendly
 
         self.lifetime_counter = 0
 
     def update(self):
-
+        self.animation.update(self)
         self.lifetime_counter += 1
 
         if self.lifetime_counter < 30:
-            self.rect.x += self.speedx
-            self.rect.y += self.speedy
+            self.x += self.speedx
+            self.y += self.speedy
+            self.rect.x = self.x
+            self.rect.y = self.y
             self.updateCollisionMask()
         else:
             self.kill()
