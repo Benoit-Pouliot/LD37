@@ -123,7 +123,8 @@ class ShopScreen:
             self.sold = False
             self.recreateButton(self.upgradeList[item])
         else:
-            print('Not enough money')
+            if TAG_MARIE == 1:
+                print('Not enough money')
 
     def buyGun(self):
         self.pay(self.gameData.upgrade['gun'][2])

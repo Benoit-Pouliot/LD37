@@ -1,15 +1,26 @@
 import pygame
-from sys import exit
+from app.tools.functionTools import *
+
 
 class EventHandlerTitleScreen():
-    def __init__(self, menu):
-        self.menu = menu
+    def __init__(self):
+        self.menuPause = None
 
-    def eventHandle(self,optionList,selector):
-        self.optionList = optionList
-        self.selector = selector
+    def eventHandle(self,notifySet):
+        self.notifySet = notifySet
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                exit()
+                quitGame()
 
-            self.menu.notify(event)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    pass
+                    #self.menuPause.mainLoop()
+                # elif event.key == pygame.K_ESCAPE:
+                #     self.menuPause.mainLoop()
+
+            for obj in self.notifySet:
+                obj.notify(event)
+
+
+
