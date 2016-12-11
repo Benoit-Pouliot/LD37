@@ -8,6 +8,7 @@ import pygame
 from app.sprites.GUI.button import Button
 from app.sprites.GUI.menu.menu import Menu
 from app.scene.shopScreen.eventHandlerShopScreen import EventHandlerShopScreen
+from app.sprites.upgrade.barricadeUp import BarricadeUp
 from app.sprites.upgrade.gun import Gun
 from app.scene.shopScreen.logicHandlerShopScreen import LogicHandlerShopScreen
 from app.settings import *
@@ -25,7 +26,9 @@ class ShopScreen:
         titleImage = pygame.image.load(os.path.join('img', 'menu.png'))
         self.screen.blit(titleImage, (0, 0))
 
-        self.addUpgrade((50,200))
+        self.upgradeList = {}
+
+        self.addUpgrade('gun',(50,200))
 
         self.eventHandler = EventHandlerShopScreen(self.gameData)
         self.logicHandler = LogicHandlerShopScreen(self.screen, self.gameData)
@@ -37,6 +40,7 @@ class ShopScreen:
         self.iconWidth = 100
         self.iconHeight = 100
 
+
     def mainLoop(self):
         self.sceneRunning = True
         while self.sceneRunning:
@@ -45,18 +49,35 @@ class ShopScreen:
             self.drawer.draw(self.screen, None, self.shopScreenData.allSprites, None)  # Drawer in THIS file, below
 
 
-    def addUpgrade(self,pos):
-        item = Gun()
-        item.method = self.buyGun
+    def addUpgrade(self,name,pos):
+        if name == 'gun':
+            self.upgradeList[name] = Gun()
+            self.upgradeList[name].method = self.buyGun
+        # elif name == 'barricadeUp':
+        #     self.upgradeList[name] = BarricadeUp()
+        #     self.upgradeList[name].method = self.buyGun
+
+        item = self.upgradeList[name]
+        item.attributeName = self.gameData.upgrade[item.name][0]
+        item.attribute = self.gameData.upgrade[item.name][1]
+        item.cost = self.gameData.upgrade[item.name][2]
+
+        print(self.gameData.upgrade[item.name][0])
         self.shopScreenData.allSprites.add(item)
         self.shopScreenData.notifySet.add(item)
 
         item.rect.x = pos[0]
         item.rect.y = pos[0]
 
-
     def buyGun(self):
         print('You bought a gun')
+        self.gameData.upgrade['gun'][1] += self.gameData.upgrade['gun'][3]
+        self.gameData.upgrade['gun'][2] = int(round(self.gameData.upgrade['gun'][4]*self.gameData.upgrade['gun'][2]))
+        self.recreateButton(self.upgradeList['gun'])
+
+    def recreateButton(self,item):
+        item.attribute = self.gameData.upgrade[item.name][1]
+        item.cost = self.gameData.upgrade[item.name][2]
 
     def doNothing(self):
         print('You did nothing')
