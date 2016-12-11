@@ -1,9 +1,10 @@
-__author__ = 'Bobsleigh'
+w__author__ = 'Bobsleigh'
 import pygame
 from app.settings import *
 
+
 class LifeBar (pygame.sprite.Sprite):
-    def __init__(self, healthMax,width=32,height=5):
+    def __init__(self, healthMax, width=32, height=5):
         super().__init__()
         self.width = width
         self.height = height
