@@ -15,9 +15,12 @@ import weakref
 # from app.sprites.player import *
 
 class MapData:
-    def __init__(self, mapName="WorldMap", nameInZone="StartPointWorld", screenSize=(SCREEN_WIDTH, SCREEN_HEIGHT)):
+    def __init__(self, mapName="LevelRoom", nameInZone="StartPointWorld", screenSize=(SCREEN_WIDTH, SCREEN_HEIGHT)):
 
         self.nameMap = mapName
+
+        self.currentLevel = 1
+        self.levelEndTime = None
 
         self.tmxData = pytmx.util_pygame.load_pygame(self.reqImageName(self.nameMap))
         self.tiledMapData = pyscroll.data.TiledMapData(self.tmxData)
@@ -44,7 +47,6 @@ class MapData:
         self.internalMapTime = 0
         # EnemySupervisor
         self.enemyGeneratorSupervisor = EnemySupervisor(self)
-
 
         eFactory = EnemyFactory()
 
@@ -74,9 +76,7 @@ class MapData:
             self.enemyGenListData.addData(120, [2], 1, 120)
             self.enemyGenListData.addData(120, [3], 1, 120)
         if TAG_PHIL == 1:
-            self.enemyGenListData.addData(120, [2], 3, 120)
-
-
+            self.enemyGenData(self.currentLevel)
 
         # Put camera in mapData
         self.camera = pyscroll.PyscrollGroup(map_layer=self.cameraPlayer, default_layer=SPRITE_LAYER)
@@ -101,3 +101,16 @@ class MapData:
 
     def reqImageName(self, nameMap):
         return os.path.join('tiles_map', nameMap + ".tmx")
+
+    def enemyGenData(self, currentLevel):
+        if currentLevel == 1:
+            self.enemyGenListData.addData(400, [1], 1, 0)
+            # self.enemyGenListData.addData(800, [1], 2, 0)
+            # self.enemyGenListData.addData(1800, [1], 4, 0)
+            # self.enemyGenListData.addData(2800, [1], 4, 0)
+            self.levelEndTime = 402
+
+            # self.levelEndTime = 2800
+
+        if currentLevel == 2:
+            self.enemyGenListData.addData(400, [1], 50, 0)

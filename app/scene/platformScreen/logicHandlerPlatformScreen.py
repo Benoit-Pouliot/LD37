@@ -28,6 +28,7 @@ class LogicHandlerPlatformScreen:
         self.gameOverCondition(player)
         self.mapData.allSprites.update()
         self.mapData.spritesHUD.update()
+        self.endLevelCondition(gameData)
 
     def handleZoneCollision(self, player):
         for obj in self.mapData.tmxData.objects:
@@ -100,3 +101,10 @@ class LogicHandlerPlatformScreen:
             pygame.time.wait(2000)
             self.newMapData = True
             self.sceneRunning = False
+
+    def endLevelCondition(self, gameData):
+        if self.mapData.internalMapTime > self.mapData.levelEndTime:
+            if len(self.mapData.enemyGroup.sprites()) == 0:
+                gameData.currentLevel += 1
+                self.newMapData = True
+                self.sceneRunning = False

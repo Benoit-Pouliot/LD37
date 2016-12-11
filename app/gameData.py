@@ -16,7 +16,7 @@ class GameData:
         self.upgrade["grenade"] = ['Level',0,400,1,1.1]
         self.upgrade["mine"] = ['Level',0,900,1,1.1]
 
-        self.gold = 500
+        self.gold = 50
 
         self.maxItemOfAType = 99
 
@@ -24,3 +24,5 @@ class GameData:
 
         self.mapData = None
         self.shopScreenData = None
+
+        self.currentLevel = 1
