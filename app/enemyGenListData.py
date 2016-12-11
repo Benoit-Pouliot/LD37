@@ -26,8 +26,9 @@ class EnemyGenListData():
         # For now, the game is slow at 120
         self.limitNumberEnemy = 80
 
-        if TAG_MARIE == 1:
-            self.limitNumberEnemy = 3
+        # To change enemy spawn number
+        # if TAG_MARIE == 1:
+        #     self.limitNumberEnemy = 3
 
         # The link between numeration and the enemy
         self.dictListEnemiesValues = {1: EnemyWalk,
