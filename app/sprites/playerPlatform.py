@@ -96,7 +96,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.inventory = Inventory()
         self.inventory.addItem('gun', self.shootBullet)
-        self.inventory.addItem('barricade', self.createBarricade)
         self.inventory.addItem('grenade', self.shootGrenade)
         self.inventory.addItem('mine', self.shootMine)
 
@@ -445,9 +444,14 @@ class PlayerPlatform(pygame.sprite.Sprite):
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 self.downPressed = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
-            self.inventory.itemList[self.currentItem].useItem()
-            self.leftMousePressed = True
+        if event.type == pygame.MOUSEBUTTONDOWN :
+            if event.button == LEFT:
+                self.inventory.itemList[self.currentItem].useItem()
+                self.leftMousePressed = True
+
+            if event.button == RIGHT:
+                self.inventory.itemList[self.currentItem].useItem()
+                self.leftMousePressed = True
 
         elif event.type == pygame.MOUSEBUTTONUP and event.button == LEFT:
             self.leftMousePressed = False
@@ -464,3 +468,5 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if self.leftMousePressed:
             if self.currentItem == 0:
                 self.inventory.itemList[self.currentItem].useItem()
+        if self.rightMousePressed:
+            self.createBarricade()
