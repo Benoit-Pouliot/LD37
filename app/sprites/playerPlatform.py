@@ -378,8 +378,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.destroy()
 
     def destroy(self):
-        self.imageBase = pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20, 20))
-        self.setShapeImage()
         if TAG_ANIKA == 1:
             print('player is dead')
         self.dead()

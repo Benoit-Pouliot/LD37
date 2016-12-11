@@ -108,7 +108,7 @@ class BeerBullet(Bullet):
 
 
 class Shuriken(Bullet):
-    def __init__(self, x, y, bullet_speedx, bullet_speedy, friendly=True):
+    def __init__(self, x, y, bullet_speedx, bullet_speedy, friendly=False):
         super().__init__(x, y,0,0)
 
         self.name = "bullet"
