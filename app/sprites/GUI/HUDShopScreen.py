@@ -29,7 +29,7 @@ class HUDShopScreeen(pygame.sprite.Sprite):
         self.fontSize = HUD_FONT_SIZE
         self.HUDFont = pygame.font.SysFont(FONT_NAME, self.fontSize)
 
-        self.goldAmount = StatDisplay(self.image,(SCREEN_WIDTH* 0.8, 5),self.HUDFont,self.gameData.gold,'Gold')
+        self.goldAmount = StatDisplay(self.image,(SCREEN_WIDTH* 0.8, 5),self.HUDFont, 'Gold')
 
     def update(self):
         self.image.fill(self.color2)
@@ -38,5 +38,5 @@ class HUDShopScreeen(pygame.sprite.Sprite):
         self.updateGoldAmount()
 
     def updateGoldAmount(self):
-        self.goldAmount.stat = self.gameData.gold
+        self.goldAmount.stat = str(self.gameData.gold)
         self.goldAmount.printText()
