@@ -88,7 +88,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.currentItem = 0
 
         if TAG_MARIE == 1:
-            self.currentItem = 1
+            self.currentItem = 0
 
         self.inventory = Inventory()
         self.inventory.addItem('gun', self.shootBullet)
@@ -425,8 +425,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             self.inventory.itemList[self.currentItem].useItem()
             self.leftMousePressed = True
-            if TAG_MARIE == 1 :
-                print("You pressed the left mouse button") # event.pos
+
         elif event.type == pygame.MOUSEBUTTONUP and event.button == LEFT:
             self.leftMousePressed = False
 

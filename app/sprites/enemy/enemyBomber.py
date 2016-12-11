@@ -64,6 +64,8 @@ class EnemyBomber(EnemyCollision):
         self.lifeBar.rect.x = self.rect.x
         self.lifeBar.rect.bottom = self.rect.top - 3
 
+        self.bounty = 12
+
 
     def applyAI(self):
 

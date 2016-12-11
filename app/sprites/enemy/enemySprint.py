@@ -51,6 +51,8 @@ class EnemySprint(EnemyCollision):
         self.distanceToSprint = 25
         self.SprintSprite = None
 
+        self.bounty = 20
+
     def applyAI(self):
 
         if self.mode == SPRINT:
