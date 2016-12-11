@@ -64,6 +64,9 @@ class EnemySprint(EnemyCollision):
         self.speedAttackX = 0
         self.speedAttackY = 0
 
+        self.maxHealth = 5
+        super().generateLifeBar(self.maxHealth)
+
         self.bounty = 20
 
     def applyAI(self):
@@ -113,7 +116,6 @@ class EnemySprint(EnemyCollision):
 
     def update(self):
         self.capSpeed()
-
         self.x += self.speedx
         self.y += self.speedy
         self.rect.x = self.x
@@ -130,10 +132,6 @@ class EnemySprint(EnemyCollision):
             self.speedy = self.maxSpeedy
         if self.speedy < -self.maxSpeedy:
             self.speedy = -self.maxSpeedy
-
-    def dead(self):
-        self.soundDead.play()
-        super().dead()
 
     def prepareAttack(self):
         self.mode = PREPARE_ATTACK

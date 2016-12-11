@@ -42,9 +42,14 @@ class EnemyShooter(EnemyCollision):
         # self.imageIterShoot = random.randint(10, (self.imageWaitNextShoot - 10))  # To shoot bullets at random pace
         self.imageIterShoot = 0
 
+        self.maxHealth = 5
+        super().generateLifeBar(self.maxHealth)
+
         self.dictProperties = {'direction': self.setDirection}
 
         self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+
+        self.bounty = 14
 
     def setDirection(self, direction):
         if direction is "Right":
@@ -80,15 +85,12 @@ class EnemyShooter(EnemyCollision):
         self.speedx += steeringX
         self.speedy += steeringY
 
-        self.bounty = 14
-
     def update(self):
-        super().update()
-
         self.capSpeed()
-
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+
+        super().update()
 
     def capSpeed(self):
         if self.speedx > self.maxSpeedx:
@@ -99,7 +101,3 @@ class EnemyShooter(EnemyCollision):
             self.speedy = self.maxSpeedy
         if self.speedy < -self.maxSpeedy:
             self.speedy = -self.maxSpeedy
-
-    def dead(self):
-        self.soundDead.play()
-        super().dead(self)

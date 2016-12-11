@@ -1,19 +1,46 @@
 import pygame
 import os
 import math
-
 from app.sprites.enemy.enemy import Enemy
-from app.sprites.enemy.enemyAttack import EnemyAttack
-from app.tools.animation import Animation
-from app.AI.steeringAI import SteeringAI
-from app.sprites.collisionMask import CollisionMask
 from app.sprites.GUI.lifeBar import LifeBar
 
 from app.settings import *
 
 class EnemyCollision(Enemy):
-    def __init__(self, x, y):  # ?
+    def __init__(self, x, y):
         super().__init__(x, y)
+
+        self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
+        self.soundDead.set_volume(1)
+
+    def update(self):
+        self.updateLifeBar()
+        self.checkIfIsAlive()
+        super().update()
+
+    def generateLifeBar(self, health=1):
+        self.maxHealth = health
+        self.lifeBar = LifeBar(health, self.rect.width)
+        self.mapData.allSprites.add(self.lifeBar)
+        self.mapData.camera.add(self.lifeBar, layer=CAMERA_HUD_LAYER)
+        self.lifeBar.rect.x = self.rect.x
+        self.lifeBar.rect.bottom = self.rect.top - 3
+
+    def updateLifeBar(self):
+        self.lifeBar.rect.x = self.rect.x
+        self.lifeBar.rect.bottom = self.rect.top - 3
+
+    def isHit(self, dmg):
+        self.lifeBar.healthCurrent -= dmg
+
+    def checkIfIsAlive(self):
+        if self.lifeBar.healthCurrent <= 0:
+            self.dead()
+
+    def dead(self):
+        self.soundDead.play()
+        self.lifeBar.kill()
+        super().dead()
 
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):

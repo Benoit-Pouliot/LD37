@@ -40,8 +40,8 @@ class EnemyWalk(EnemyCollision):
         self.isPhysicsApplied = True
         self.isCollisionApplied = True
 
-        self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
-        self.soundDead.set_volume(1)
+        # self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
+        # self.soundDead.set_volume(1)
 
         self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
@@ -57,11 +57,7 @@ class EnemyWalk(EnemyCollision):
         self.factorAttack = 1.5
 
         self.maxHealth = 5
-        self.lifeBar = LifeBar(5, self.rect.width)
-        self.mapData.allSprites.add(self.lifeBar)
-        self.mapData.camera.add(self.lifeBar, layer=CAMERA_HUD_LAYER)
-        self.lifeBar.rect.x = self.rect.x
-        self.lifeBar.rect.bottom = self.rect.top - 3
+        super().generateLifeBar(self.maxHealth)
 
         self.bounty = 10
 
@@ -113,16 +109,10 @@ class EnemyWalk(EnemyCollision):
 
     def update(self):
         self.capSpeed()
-
         self.x += self.speedx
         self.y += self.speedy
         self.rect.x = self.x
         self.rect.y = self.y
-
-        self.lifeBar.rect.x = self.rect.x
-        self.lifeBar.rect.bottom = self.rect.top - 3
-
-        self.checkIfIsAlive()
 
         super().update()
 
@@ -135,18 +125,6 @@ class EnemyWalk(EnemyCollision):
             self.speedy = self.maxSpeedy
         if self.speedy < -self.maxSpeedy:
             self.speedy = -self.maxSpeedy
-
-    def isHit(self, dmg):
-        self.lifeBar.healthCurrent -= dmg
-
-    def checkIfIsAlive(self):
-        if self.lifeBar.healthCurrent <= 0:
-            self.dead()
-
-    def dead(self):
-        self.soundDead.play()
-        self.lifeBar.kill()
-        super().dead()
 
     def prepareAttack(self):
         self.mode = PREPARE_ATTACK

@@ -58,11 +58,7 @@ class EnemyBomber(EnemyCollision):
         self.attackSprite = None
 
         self.maxHealth = 3
-        self.lifeBar = LifeBar(5, self.rect.width)
-        self.mapData.allSprites.add(self.lifeBar)
-        self.mapData.camera.add(self.lifeBar, layer=CAMERA_HUD_LAYER)
-        self.lifeBar.rect.x = self.rect.x
-        self.lifeBar.rect.bottom = self.rect.top - 3
+        super().generateLifeBar(self.maxHealth)
 
         self.bounty = 12
 
@@ -95,16 +91,10 @@ class EnemyBomber(EnemyCollision):
 
     def update(self):
         self.capSpeed()
-
         self.x += self.speedx
         self.y += self.speedy
         self.rect.x = self.x
         self.rect.y = self.y
-
-        self.lifeBar.rect.x = self.rect.x
-        self.lifeBar.rect.bottom = self.rect.top - 3
-
-        self.checkIfIsAlive()
 
         super().update()
 
@@ -118,17 +108,8 @@ class EnemyBomber(EnemyCollision):
         if self.speedy < -self.maxSpeedy:
             self.speedy = -self.maxSpeedy
 
-    def isHit(self, dmg):
-        self.lifeBar.healthCurrent -= dmg
-
-    def checkIfIsAlive(self):
-        if self.lifeBar.healthCurrent <= 0:
-            self.dead()
-
     def dead(self):
         self.detonate()
-        self.soundDead.play()
-        self.lifeBar.kill()
         super().dead()
 
     def detonate(self):
