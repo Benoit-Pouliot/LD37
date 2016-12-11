@@ -1,5 +1,6 @@
 import pygame
 import os
+import math
 
 from app.sprites.enemy.enemyCollision import EnemyCollision
 from app.sprites.bullet import Shuriken
@@ -11,7 +12,7 @@ import random
 
 
 class EnemyShooter(EnemyCollision):
-    def __init__(self, x, y, theMap=None, direction="Right"):
+    def __init__(self, x, y, mapData=None):
         super().__init__(x, y)
 
         self.name = "enemyShooter"
@@ -24,71 +25,62 @@ class EnemyShooter(EnemyCollision):
         self.rect = self.imageEnemy.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.x = x
+        self.y = y
 
         self.speedx = 0
         self.speedy = 0
         self.maxSpeedx = 2
         self.maxSpeedy = 2
 
-        self.mapData = theMap
-
-        self.setDirection(direction)
+        self.setMapData(mapData)
 
         self.isGravityApplied = True
         self.isCollisionApplied = True
 
+        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+
         self.imageWaitNextShoot = 30
+        self.distanceToAttack = 200
+        self.speedShuriken = 8
 
         # self.imageIterShoot = random.randint(10, (self.imageWaitNextShoot - 10))  # To shoot bullets at random pace
-        self.imageIterShoot = 0
+        self.imageIterShoot = self.imageWaitNextShoot + 1
 
         self.maxHealth = 5
         super().generateLifeBar(self.maxHealth)
 
-        self.dictProperties = {'direction': self.setDirection}
-
-        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
-
         self.bounty = 14
 
-    def setDirection(self, direction):
-        if direction is "Right":
-            self.direction = "Right"
-        else:
-            self.direction = "Left"
 
-    def setTheMap(self, theMap):
-        self.mapData = theMap
 
     def applyAI(self):
         steeringX, steeringY = self.AI.getAction()
-
-        distx = self.mapData.player.rect.x - self.rect.x
-        disty = self.mapData.player.rect.y - self.rect.y
-
-        distance = distx + disty
-
         self.imageIterShoot += 1
 
-        if distance < 100:
-            if self.imageIterShoot > self.imageWaitNextShoot:
-                speedx_bullet = self.speedx * 2 + steeringX
-                speedy_bullet = self.speedy * 2 + steeringY
-                bullet = Shuriken(self.rect.centerx, self.rect.centery, speedx_bullet, speedy_bullet, False)
+        diffX = self.mapData.player.rect.centerx - self.rect.centerx
+        diffY = self.mapData.player.rect.centery - self.rect.centery
 
-                self.mapData.camera.add(bullet)
-                self.mapData.allSprites.add(bullet)
-                self.mapData.enemyBullet.add(bullet)
+        if self.imageIterShoot > self.imageWaitNextShoot and math.sqrt(diffX**2 + diffY**2) < self.distanceToAttack:
+            norm = math.sqrt(diffX**2+diffY**2+EPS)
+            speedx_bullet = diffX/norm*self.speedShuriken
+            speedy_bullet = diffY/norm*self.speedShuriken
+            bullet = Shuriken(self.rect.centerx, self.rect.centery, speedx_bullet, speedy_bullet, False)
 
-                self.imageIterShoot = 0
+            self.mapData.camera.add(bullet)
+            self.mapData.allSprites.add(bullet)
+            self.mapData.enemyBullet.add(bullet)
+            self.imageIterShoot = 0
 
         self.speedx += steeringX
         self.speedy += steeringY
 
     def update(self):
         self.capSpeed()
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        self.x += self.speedx
+        self.y += self.speedy
+        self.rect.x = self.x
+        self.rect.y = self.y
 
         super().update()
 

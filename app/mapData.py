@@ -67,9 +67,9 @@ class MapData:
         # FOR DEBUG
         # self.enemyGenListData.addData(120,[1],3,120)
         if TAG_MARIE == 1:
-            self.enemyGenListData.addData(120, [1], 3, 120)
+            self.enemyGenListData.addData(120, [1], 20, 120)
         if TAG_BP == 1:
-            self.enemyGenListData.addData(120, [1,2,3,4], 3, 120)
+            self.enemyGenListData.addData(120, [2], 1, 120)
         if TAG_ANIKA == 1:
             self.enemyGenListData.addData(120, [2], 1, 120)
             self.enemyGenListData.addData(120, [3], 1, 120)

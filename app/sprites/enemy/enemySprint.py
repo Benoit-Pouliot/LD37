@@ -106,7 +106,7 @@ class EnemySprint(EnemyCollision):
             # if player is close : stop and init timer to sprint
             distX = self.mapData.player.rect.centerx-self.rect.centerx
             distY = self.mapData.player.rect.centery-self.rect.centery
-            if math.sqrt(distX**2 + distY**2+EPS) < self.distanceToSprint:
+            if math.sqrt(distX**2 + distY**2) < self.distanceToSprint:
                 self.prepareAttack()
             else:
                 steeringX, steeringY = self.AI.getAction()
