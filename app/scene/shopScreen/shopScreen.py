@@ -49,6 +49,8 @@ class ShopScreen:
         self.iconWidth = 100
         self.iconHeight = 100
 
+        self.sold = False
+
 
     def mainLoop(self):
         self.sceneRunning = True
