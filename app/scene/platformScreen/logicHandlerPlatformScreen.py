@@ -86,6 +86,8 @@ class LogicHandlerPlatformScreen:
 
     def handleAttacks(self, mapData, player):
         collisionAttackPlayer(mapData, player)
+        for barricade in mapData.obstacleGroup:
+            collisionBarricadePlayer(mapData, barricade)
 
     def gameOverCondition(self,player):
         if player.isAlive == False:

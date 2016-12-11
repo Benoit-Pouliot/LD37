@@ -13,6 +13,7 @@ class EnemySupervisor():
 
         for listData in self.mapData.enemyGenListData.listData:
             if listData[0] < self.mapData.internalMapTime:
+                # print(len(self.mapData.enemyGroup.sprites()))
                 if self.mapData.enemyGenListData.limitNumberEnemy > len(self.mapData.enemyGroup.sprites()):
                     for k in range(listData[2]):
 

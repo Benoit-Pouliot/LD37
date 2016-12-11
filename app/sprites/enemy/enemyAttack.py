@@ -29,11 +29,6 @@ class EnemyAttack(Enemy):
         self.attackDMG = attackDMG
         self.friendly = False
 
-        if TAG_BP == 1:
-            # self.image.fill(WHITE)
-            pass
-
-
     def setMapData(self, mapData):
         self.mapData = mapData
         self.mapData.camera.add(self)

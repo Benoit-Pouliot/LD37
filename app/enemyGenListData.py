@@ -20,7 +20,8 @@ class EnemyGenListData():
         self.listData = []
         self.mapData = mapData
 
-        self.limitNumberEnemy = 500
+        # For now, the game is slow at 120
+        self.limitNumberEnemy = 80
 
         if TAG_MARIE == 1:
             self.limitNumberEnemy = 3
