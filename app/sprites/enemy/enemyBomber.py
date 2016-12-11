@@ -6,6 +6,7 @@ from app.sprites.enemy.enemyCollision import EnemyCollision
 from app.sprites.explosion import Explosion
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
+from app.tools.imageBox import *
 from app.sprites.collisionMask import CollisionMask
 from app.sprites.GUI.lifeBar import LifeBar
 
@@ -17,11 +18,8 @@ class EnemyBomber(EnemyCollision):
 
         self.name = "enemyBomber"
 
-        self.imageEnemy = pygame.Surface((ENEMY_DIMX, ENEMY_DIMY))
-        self.imageEnemy.fill(ORANGE)
-
-        self.attackingEnemy = pygame.Surface((ENEMY_DIMX, ENEMY_DIMY))
-        self.attackingEnemy.fill(RED)
+        self.imageEnemy = rectSurface((ENEMY_DIMX, ENEMY_DIMY), ORANGE, 2)
+        self.attackingEnemy = rectSurface((ENEMY_DIMX, ENEMY_DIMY), RED, 2)
 
         self.enemyFrames = [self.imageEnemy]
         self.attackingFrames = [self.attackingEnemy, self.imageEnemy]
@@ -43,10 +41,7 @@ class EnemyBomber(EnemyCollision):
         self.isPhysicsApplied = True
         self.isCollisionApplied = True
 
-        self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
-        self.soundDead.set_volume(1)
-
-        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+        self.AI = SteeringAI(self.mapData, self.rect, self.maxSpeedx, self.maxSpeedy)
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
         self.attackDMG = 1
@@ -85,7 +80,6 @@ class EnemyBomber(EnemyCollision):
 
         # Move even if he want to blow
         steeringX, steeringY = self.AI.getAction()
-
         self.speedx += steeringX
         self.speedy += steeringY
 
@@ -121,6 +115,3 @@ class EnemyBomber(EnemyCollision):
     def prepareAttack(self):
         self.mode = PREPARE_ATTACK
         self.timerAttack = 0
-
-    def attackOnCollision(self):
-        pass

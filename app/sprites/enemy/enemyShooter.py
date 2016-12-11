@@ -5,7 +5,9 @@ import math
 from app.sprites.enemy.enemyCollision import EnemyCollision
 from app.sprites.bullet import Shuriken
 from app.tools.animation import Animation
+from app.tools.imageBox import *
 from app.AI.steeringAI import SteeringAI
+from app.sprites.collisionMask import CollisionMask
 
 from app.settings import *
 import random
@@ -17,10 +19,10 @@ class EnemyShooter(EnemyCollision):
 
         self.name = "enemyShooter"
 
-        self.imageEnemy = pygame.image.load(os.path.join('img', 'shooting_enemy.png'))
+        self.imageEnemy = rectSurface((ENEMY_DIMX, ENEMY_DIMY), RED, 2)
 
         self.frames = [self.imageEnemy]
-        self.animation = Animation(self,self.frames,20)
+        self.animation = Animation(self, self.frames, 100)
 
         self.rect = self.imageEnemy.get_rect()
         self.rect.x = x
@@ -38,7 +40,8 @@ class EnemyShooter(EnemyCollision):
         self.isGravityApplied = True
         self.isCollisionApplied = True
 
-        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+        self.AI = SteeringAI(self.mapData, self.rect, self.maxSpeedx, self.maxSpeedy)
+        self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
         self.imageWaitNextShoot = 30
         self.distanceToAttack = 200
@@ -55,25 +58,27 @@ class EnemyShooter(EnemyCollision):
 
 
     def applyAI(self):
-        steeringX, steeringY = self.AI.getAction()
         self.imageIterShoot += 1
 
         diffX = self.mapData.player.rect.centerx - self.rect.centerx
         diffY = self.mapData.player.rect.centery - self.rect.centery
+        if math.sqrt(diffX**2 + diffY**2) <= self.distanceToAttack:
+            self.speedx = 0
+            self.speedy = 0
+            if self.imageIterShoot > self.imageWaitNextShoot:
+                norm = math.sqrt(diffX**2+diffY**2+EPS)
+                speedx_bullet = diffX/norm*self.speedShuriken
+                speedy_bullet = diffY/norm*self.speedShuriken
+                bullet = Shuriken(self.rect.centerx, self.rect.centery, speedx_bullet, speedy_bullet, False)
 
-        if self.imageIterShoot > self.imageWaitNextShoot and math.sqrt(diffX**2 + diffY**2) < self.distanceToAttack:
-            norm = math.sqrt(diffX**2+diffY**2+EPS)
-            speedx_bullet = diffX/norm*self.speedShuriken
-            speedy_bullet = diffY/norm*self.speedShuriken
-            bullet = Shuriken(self.rect.centerx, self.rect.centery, speedx_bullet, speedy_bullet, False)
-
-            self.mapData.camera.add(bullet)
-            self.mapData.allSprites.add(bullet)
-            self.mapData.enemyBullet.add(bullet)
-            self.imageIterShoot = 0
-
-        self.speedx += steeringX
-        self.speedy += steeringY
+                self.mapData.camera.add(bullet)
+                self.mapData.allSprites.add(bullet)
+                self.mapData.enemyBullet.add(bullet)
+                self.imageIterShoot = 0
+        else:
+            steeringX, steeringY = self.AI.getAction()
+            self.speedx += steeringX
+            self.speedy += steeringY
 
     def update(self):
         self.capSpeed()

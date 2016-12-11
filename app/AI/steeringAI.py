@@ -2,28 +2,25 @@ import math
 from app.settings import *
 
 class SteeringAI:
-    def __init__(self, mapData, userRect, userSpeedx, userSpeedy):
+    def __init__(self, mapData, userRect, userMaxSpeedx, userMaxSpeedy):
         self.mapData = mapData
-        self.steeringAmount = 10
         self.rect = userRect
-        self.userSpeedx = userSpeedx
-        self.userSpeedy = userSpeedy
+        self.userSpeedx = userMaxSpeedx
+        self.userSpeedy = userMaxSpeedy
 
     def getAction(self):
-        angleSpeed = math.atan2(self.mapData.player.speedy, self.mapData.player.speedx)
-        angleToTarget = math.atan2(self.mapData.player.rect.y - self.rect.y, self.mapData.player.rect.x - self.rect.x)
+        norm = self.vectorNorm(self.mapData.player.rect.x - self.rect.x, self.mapData.player.rect.y - self.rect.y)
+        desiredSpdX = (self.mapData.player.rect.x - self.rect.x)/norm * self.userSpeedx
+        desiredSpdY = (self.mapData.player.rect.y - self.rect.y)/norm * self.userSpeedy
 
-        desiredSpdX = (self.mapData.player.rect.x - self.rect.x)/self.vectorNorm(self.mapData.player.rect.x - self.rect.x, self.mapData.player.rect.y - self.rect.y) * self.mapData.player.maxSpeedx
-        desiredSpdY = (self.mapData.player.rect.y - self.rect.y)/self.vectorNorm(self.mapData.player.rect.x - self.rect.x, self.mapData.player.rect.y - self.rect.y) * self.mapData.player.maxSpeedy
-
-        steeringX = desiredSpdX - self.userSpeedx
-        steeringY = desiredSpdY - self.userSpeedy
+        steeringX = desiredSpdX
+        steeringY = desiredSpdY
 
         return steeringX, steeringY
 
 
     def vectorNorm(self,x,y):
-        result = math.sqrt(x**2+y**2+EPS)
+        result = math.sqrt(x**2+y**2)
         if result == 0:
             return 1
 

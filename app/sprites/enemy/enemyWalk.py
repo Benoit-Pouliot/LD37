@@ -7,6 +7,7 @@ from app.sprites.enemy.enemyAttack import EnemyAttack
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
 from app.sprites.collisionMask import CollisionMask
+from app.tools.imageBox import *
 from app.sprites.GUI.lifeBar import LifeBar
 
 from app.settings import *
@@ -17,8 +18,8 @@ class EnemyWalk(EnemyCollision):
 
         self.name = "enemyWalk"
 
-        self.imageEnemy = pygame.image.load(os.path.join('img', 'walking_enemy.png'))
-        self.attackingEnemy = pygame.image.load(os.path.join('img', 'shooting_enemy.png'))
+        self.imageEnemy = rectSurface((ENEMY_DIMX, ENEMY_DIMY), PURPLE, 2)
+        self.attackingEnemy = rectSurface((ENEMY_DIMX, ENEMY_DIMY), RED, 2)
 
         self.enemyFrames = [self.imageEnemy]
         self.attackingFrames = [self.attackingEnemy]
@@ -43,7 +44,7 @@ class EnemyWalk(EnemyCollision):
         # self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
         # self.soundDead.set_volume(1)
 
-        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+        self.AI = SteeringAI(self.mapData, self.rect, self.maxSpeedx, self.maxSpeedy)
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
         self.attackDMG = 1
@@ -84,7 +85,7 @@ class EnemyWalk(EnemyCollision):
             else:
                 self.timerAttack = 0
                 self.mode = WALKING
-                self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+                self.AI = SteeringAI(self.mapData, self.rect, self.maxSpeedx, self.maxSpeedy)
                 self.attackSprite.kill()
                 self.animation = Animation(self, self.enemyFrames, 100)
 
