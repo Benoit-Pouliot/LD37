@@ -26,7 +26,10 @@ class CollisionPlayerPlatform:
 
                 self.collisionWithEnemy(player, mapData.enemyGroup)
                 self.collisionWithObstacle(sprite, mapData.obstacleGroup)
+                self.collisionWithMine(sprite, mapData.mineGroup)
                 self.pickUpItem(player, mapData.itemGroup, gameData)
+
+
 
 
     def rightCollision(self,sprite, map):
@@ -239,6 +242,13 @@ class CollisionPlayerPlatform:
         #Reset Sprite.... this IS hardcoded...
         sprite.rect.x = posx
         sprite.rect.y = posy
+
+
+    def collisionWithMine(self, sprite, mineGroup):
+        collisionList = pygame.sprite.spritecollide(sprite, mineGroup, False)
+
+        for mine in collisionList:
+            mine.detonate()
 
 
     def pickUpItem(self, player, itemGroup, gameMemory):

@@ -7,35 +7,31 @@ from app.scene.platformScreen.collisionPlayerPlatform import *
 
 
 class Bullet(Enemy):
-    def __init__(self, x, y, direction=RIGHT, friendly=True):
+    def __init__(self, x, y, speedx, speedy, friendly=True):
         super().__init__(x, y)
 
         self.name = "bullet"
 
-        self.imageBulletRight = list()
-        self.imageBulletRight.append(pygame.image.load(os.path.join('img', 'Bullet.png')))
-
-        self.imageBulletLeft = list()
-        self.imageBulletLeft.append(pygame.image.load(os.path.join('img', 'Bullet.png')))
-
-        self.image = self.imageBulletRight[0]
-
-        self.direction = direction
+        self.image = pygame.image.load(os.path.join('img', 'Bullet.png'))
 
         self.rect = self.image.get_rect()
-        self.rect.y = y - self.rect.height/2
+        self.rect.x = x
+        self.rect.y = y
+        self.x = x
+        self.y = y
 
-        if direction == RIGHT:
-            self.speedx = 10
-            self.image = self.imageBulletRight[0]
-            self.imageBulletList = self.imageBulletRight
-            self.rect.x = x
-        elif direction == LEFT:
-            self.speedx = -10
-            self.image = self.imageBulletLeft[0]
-            self.imageBulletList = self.imageBulletLeft
-            self.rect.x = x - self.rect.width
-        self.speedy = 0
+        # if direction == RIGHT:
+        #     self.speedx = 10
+        #     self.image = self.imageBulletRight[0]
+        #     self.imageBulletList = self.imageBulletRight
+        #     self.rect.x = x
+        # elif direction == LEFT:
+        #     self.speedx = -10
+        #     self.image = self.imageBulletLeft[0]
+        #     self.imageBulletList = self.imageBulletLeft
+        #     self.rect.x = x - self.rect.width
+        self.speedx = speedx
+        self.speedy = speedy
 
         self.animation = None
 
@@ -43,7 +39,13 @@ class Bullet(Enemy):
         self.isCollisionApplied = True
 
     def update(self):
-        self.rect.x += self.speedx
+
+        self.x += self.speedx
+        self.y += self.speedy
+
+        self.rect.x = self.x
+        self.rect.y = self.y
+
         if self.animation is not None :
            next(self.animation)
         self.updateCollisionMask()
