@@ -81,6 +81,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.isAlive = True
 
+        self.barricadeMaxHeath = 100
+
         self.currentItem = 0
 
         if TAG_MARIE == 1:
@@ -288,7 +290,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         barricadePosx = BARRICADE_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
         barricadePosy = BARRICADE_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
 
-        barricade = Barricade(barricadePosx, barricadePosy)
+        barricade = Barricade(barricadePosx, barricadePosy,self.barricadeMaxHeath)
 
         occupied = pygame.sprite.spritecollideany(barricade, self.mapData.enemyGroup)
         if occupied is None:

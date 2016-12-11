@@ -19,6 +19,8 @@ class PlatformScreen:
         self.mapData = self.gameData.mapData
         self.player = PlayerPlatform(self.mapData.spawmPointPlayerx, self.mapData.spawmPointPlayery, self.mapData)
 
+        self.setPlayerUpgrade()
+
         self.mapData.allSprites.add(self.player)
         self.mapData.camera.add(self.player)
         self.mapData.notifySet.add(self.player)
@@ -56,6 +58,9 @@ class PlatformScreen:
     def updateShowItem(self):
         self.showItem.weapon = self.player.inventory.itemList[self.player.currentItem].name
         self.showItem.update()
+
+    def setPlayerUpgrade(self):
+        self.player.barricadeMaxHeath = self.gameData.upgrade['barricade'][1]
 
     def close(self):
         self.sceneRunning = False

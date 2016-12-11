@@ -24,11 +24,14 @@ class TitleScreen:
         titleImage = pygame.image.load(os.path.join('img', 'menu.png'))
         self.screen.blit(titleImage, (0, 0))
 
-        # Define MainMenu
-        self.menu = Menu(pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 12 / 16, SCREEN_WIDTH / 3, SCREEN_HEIGHT * 0.25))
-
         if TAG_MARIE == 1:
+            self.menu = Menu(
+                pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.2, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.5))
             self.menu.addOption('What Marie wants to test', self.goToTheShop)
+        else:
+            # Define MainMenu
+            self.menu = Menu(
+                pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 12 / 16, SCREEN_WIDTH / 3, SCREEN_HEIGHT * 0.25))
 
         self.menu.addOption('Start', self.startGame)
         self.menu.addOption('Shop', self.goToTheShop)

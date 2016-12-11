@@ -12,4 +12,13 @@ class LogicHandlerShopScreen:
         self.winningCondition = None
 
     def handle(self):
+        self.checkHighlight()
         self.shopScreenData.allSprites.update()
+
+    def checkHighlight(self):
+        mousePos = pygame.mouse.get_pos()
+        for obj in self.gameData.shopScreenData.notifySet:
+            if obj.rect.collidepoint(mousePos):
+                obj.isSelected = True
+            else:
+                obj.isSelected = False

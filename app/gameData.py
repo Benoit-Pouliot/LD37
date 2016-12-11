@@ -10,11 +10,9 @@ class GameData:
     def __init__(self, scene=None):
 
         #Was map unlocked?
-        self.mapUnlock = {}
-        self.mapUnlock["map1"] = True
-        self.mapUnlock["map2"] = False
-        self.mapUnlock["map3"] = False
-        self.mapUnlock["map4"] = False
+        self.upgrade = {} #Give [attributeName,attributeNumber,cost,attributeUpper,costUpper]
+        self.upgrade["gun"] = ['Level',1,500,1,1.1]
+        self.upgrade["barricade"] = ['Level',1,400,1,1.1]
 
         self.maxItemOfAType = 99
 
