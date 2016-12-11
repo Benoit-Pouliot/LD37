@@ -7,6 +7,7 @@ from app.sprites.GUI.showItem import ShowItem
 from app.sprites.playerPlatform import PlayerPlatform
 from app.scene.musicFactory import MusicFactory
 from app.sprites.GUI.showBarricadeCharges import ShowBarricadeCharges
+from app.sprites.GUI.HUDPlatformScreen import HUDPlatformScreen
 
 from app.mapData import MapData
 
@@ -41,6 +42,8 @@ class PlatformScreen:
         self.showBarricadeCharges = ShowBarricadeCharges(self.mapData)
         self.mapData.spritesHUD.add(self.showBarricadeCharges)
 
+        self.addHUD()
+
         MusicFactory(PLATFORM_SCREEN, self.mapData.nameMap)
 
     def mainLoop(self):
@@ -71,6 +74,10 @@ class PlatformScreen:
 
     def setPlayerUpgrade(self):
         self.player.barricadeMaxHealth = self.gameData.upgrade['barricade'][1]*50
+
+    def addHUD(self):
+        self.HUD = HUDPlatformScreen(self.gameData)
+        self.mapData.spritesHUD.add(self.HUD)
 
     def close(self):
         self.sceneRunning = False

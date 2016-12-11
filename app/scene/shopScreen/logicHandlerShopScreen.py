@@ -14,6 +14,7 @@ class LogicHandlerShopScreen:
     def handle(self):
         self.checkHighlight()
         self.shopScreenData.allSprites.update()
+        self.shopScreenData.spritesHUD.update()
 
     def checkHighlight(self):
         mousePos = pygame.mouse.get_pos()

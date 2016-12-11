@@ -28,7 +28,7 @@ class TitleScreen:
             self.gameData.shopScreenData = ShopScreenData()
             self.menu = Menu(
                 pygame.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.2, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.5))
-            self.menu.addOption('What Marie wants to test', self.startGame)
+            self.menu.addOption('What Marie wants to test', self.goToTheShop)
         else:
             # Define MainMenu
             self.menu = Menu(

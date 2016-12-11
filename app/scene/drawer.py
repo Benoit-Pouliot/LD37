@@ -6,13 +6,14 @@ class Drawer:
         self.clock = pygame.time.Clock()
         self.FPS = FPS
 
-    def draw(self, screen, camera, spritesHUD, player):
+    def draw(self, screen, camera, spritesHUD, player,otherSprite=None):
 
         if camera != None:
             camera.center(player.rect.center)
             camera.draw(screen)
 
-        
+        if otherSprite != None:
+            otherSprite.draw(screen)
 
         spritesHUD.draw(screen)
         pygame.display.flip()

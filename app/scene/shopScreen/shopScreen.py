@@ -55,7 +55,7 @@ class ShopScreen:
         while self.sceneRunning:
             self.eventHandler.eventHandle()
             self.logicHandler.handle()
-            self.drawer.draw(self.screen, None, self.shopScreenData.allSprites, None)  # Drawer in THIS file, below
+            self.drawer.draw(self.screen, None, self.shopScreenData.spritesHUD, None,self.shopScreenData.allSprites)  # Drawer in THIS file, below
 
 
     def addUpgrade(self,name,pos):
@@ -115,5 +115,5 @@ class ShopScreen:
 
     def addHUD(self):
         self.HUD = HUDShopScreeen(self.gameData)
-        self.shopScreenData.allSprites.add(self.HUD)
+        self.shopScreenData.spritesHUD.add(self.HUD)
 
