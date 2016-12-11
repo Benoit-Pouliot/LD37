@@ -11,6 +11,7 @@ class EnemyAttack(Enemy):
         self.name = "enemyAttack"
 
         self.image = pygame.Surface(size)
+        self.image.set_alpha(0)
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -29,7 +30,8 @@ class EnemyAttack(Enemy):
         self.friendly = False
 
         if TAG_BP == 1:
-            self.image.fill(BLACK)
+            # self.image.fill(WHITE)
+            pass
 
 
     def setMapData(self, mapData):

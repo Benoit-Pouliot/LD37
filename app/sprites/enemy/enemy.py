@@ -10,6 +10,7 @@ class Enemy(pygame.sprite.Sprite):
         self.name = "enemy"
 
         self.imageEnemy = pygame.Surface((1, 1))
+        self.imageEnemy.set_alpha(0)
         self.image = self.imageEnemy
 
         self.frames = [self.imageEnemy]

@@ -16,9 +16,11 @@ class EnemyWalk(Enemy):
         self.name = "enemyWalk"
 
         self.imageEnemy = pygame.image.load(os.path.join('img', 'walking_enemy.png'))
+        self.attackingEnemy = pygame.image.load(os.path.join('img', 'shooting_enemy.png'))
 
-        self.frames = [self.imageEnemy]
-        self.animation = Animation(self,self.frames,100)
+        self.enemyFrames = [self.imageEnemy]
+        self.attackingFrames = [self.attackingEnemy]
+        self.animation = Animation(self, self.enemyFrames, 100)
 
         self.rect = self.imageEnemy.get_rect()
         self.rect.x = x
@@ -49,6 +51,7 @@ class EnemyWalk(Enemy):
         self.timeInAttack = 5
         self.distanceToAttack = 25
         self.attackSprite = None
+        self.factorAttack = 1.5
 
     def applyAI(self):
 
@@ -57,20 +60,24 @@ class EnemyWalk(Enemy):
                 self.timerAttack += 1
 
                 # create an invisible sprite that damage player
-                self.attackSprite = EnemyAttack(self.rect.x, self.rect.y, (self.image.get_width(), self.image.get_height()), self.attackDMG)
+                valueX = float(self.image.get_width())*self.factorAttack
+                valueY = float(self.image.get_height())*self.factorAttack
+                positionX = float(self.rect.x)-(valueX-self.image.get_width())/2
+                positionY = float(self.rect.y)-(valueY-self.image.get_height())/2
+                self.attackSprite = EnemyAttack(positionX, positionY, (valueX, valueY), self.attackDMG)
                 self.attackSprite.setMapData(self.mapData)
 
-                # do an animation? TODO
-
-                # self.soundAttack.play()
+                # do an animation
+                self.animation = Animation(self, self.attackingFrames, 100)
 
             elif self.timerAttack < self.timeInAttack:
-                    self.timerAttack +=1
+                self.timerAttack += 1
             else:
                 self.timerAttack = 0
                 self.mode = WALKING
                 self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
                 self.attackSprite.kill()
+                self.animation = Animation(self, self.enemyFrames, 100)
 
         elif self.mode == PREPARE_ATTACK:
             if self.timerAttack < self.timeToAttack:

@@ -20,7 +20,7 @@ class EnemyGenListData():
         self.listData = []
         self.mapData = mapData
 
-        self.limitNumberEnemy = 500
+        self.limitNumberEnemy = 5
 
         if TAG_MARIE == 1:
             self.limitNumberEnemy = 3
