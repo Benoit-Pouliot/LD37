@@ -36,7 +36,7 @@ class GameData:
         self.currentLevel = 1
 
         if TAG_PHIL == 1:
-            self.initLevel(2)
+            self.initLevel(3)
 
 
     def initLevel(self, level):
@@ -45,5 +45,7 @@ class GameData:
             self.gold = 50
         elif level == 2:
             self.gold = 160
+        elif level == 3:
+            self.gold = 370
 
         self.currentLevel = level

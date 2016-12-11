@@ -43,9 +43,9 @@ class EnemyShooter(EnemyCollision):
         self.AI = SteeringAI(self.mapData, self.rect, self.maxSpeedx, self.maxSpeedy)
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
-        self.imageWaitNextShoot = 30
+        self.imageWaitNextShoot = 60
         self.distanceToAttack = 200
-        self.speedShuriken = 8
+        self.speedShuriken = 2
 
         # self.imageIterShoot = random.randint(10, (self.imageWaitNextShoot - 10))  # To shoot bullets at random pace
         self.imageIterShoot = self.imageWaitNextShoot + 1
@@ -54,7 +54,6 @@ class EnemyShooter(EnemyCollision):
         super().generateLifeBar(self.maxHealth)
 
         self.bounty = 14
-
 
 
     def applyAI(self):

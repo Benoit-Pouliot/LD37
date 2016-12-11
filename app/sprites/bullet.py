@@ -144,7 +144,7 @@ class Shuriken(Bullet):
         self.animation.update(self)
         self.lifetime_counter += 1
 
-        if self.lifetime_counter < 30:
+        if self.lifetime_counter < 120:
             self.x += self.speedx
             self.y += self.speedy
             self.rect.x = self.x
