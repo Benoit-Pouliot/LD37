@@ -152,6 +152,9 @@ class EnemyWalk(Enemy):
         self.speedx = 0
         self.speedy = 0
 
+    def attackOnCollision(self):
+        self.prepareAttack()
+
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
             if sideOfCollision == RIGHT:

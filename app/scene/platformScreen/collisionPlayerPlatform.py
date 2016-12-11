@@ -205,7 +205,7 @@ class CollisionPlayerPlatform:
 
             if sideOfCollision is not None and sprite.speedx == 0 and sprite.speedy == 0 and sprite.friendly is False:
                 # An obstacle? We hit with an attack!
-                sprite.prepareAttack()
+                sprite.attackOnCollision()
 
         #Test for vertical move
         # sprite.rect.y += sprite.speedy

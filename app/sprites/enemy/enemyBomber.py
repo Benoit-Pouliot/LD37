@@ -139,6 +139,9 @@ class EnemyBomber(Enemy):
         self.mode = PREPARE_ATTACK
         self.timerAttack = 0
 
+    def attackOnCollision(self):
+        pass
+
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
             if sideOfCollision == RIGHT:

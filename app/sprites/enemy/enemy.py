@@ -56,6 +56,6 @@ class Enemy(pygame.sprite.Sprite):
     def notify(self, event):
         pass
 
-    def prepareAttack(self):
+    def attackOnCollision(self):
         pass
 
