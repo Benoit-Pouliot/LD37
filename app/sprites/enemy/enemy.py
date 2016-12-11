@@ -8,6 +8,7 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
 
         self.name = "enemy"
+        self.type = "enemy"
 
         self.imageEnemy = pygame.Surface((1, 1))
         self.imageEnemy.set_alpha(0)
@@ -38,6 +39,9 @@ class Enemy(pygame.sprite.Sprite):
     def update(self):
         self.animation.update(self)
         self.updateCollisionMask()
+
+    def applyAI(self):
+        pass
 
     def updateCollisionMask(self):
         self.collisionMask.rect.x = self.rect.x

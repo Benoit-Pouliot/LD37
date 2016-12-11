@@ -25,6 +25,9 @@ if __name__ == '__main__':
     #pygame.display.set_icon(icon)
     pygame.display.set_caption("LD37")
 
+    # Hide the mouse
+    pygame.mouse.set_visible(False)
+
     # Setup with gameData and the first scene
     sceneHandler = SceneHandler(screen)
     titleScene = TitleScreen(screen, sceneHandler.gameData)

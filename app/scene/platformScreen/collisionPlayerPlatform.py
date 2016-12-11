@@ -1,4 +1,5 @@
 from app.settings import *
+from app.tools.functionTools import *
 from app.tools.circle import Circle
 import pygame
 import copy
@@ -16,7 +17,7 @@ class CollisionPlayerPlatform:
     def collisionAllSprites(self, player, mapData, gameData):
         for sprite in mapData.allSprites:
             if sprite.isPhysicsApplied == True or sprite.isCollisionApplied == True:
-                if sprite.name == "enemyWalk":
+                if seekAtt(sprite, "type") == "enemy":
                     sprite.applyAI()
 
                 self.rightCollision(sprite, mapData)

@@ -3,6 +3,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+ORANGE = (255, 128, 0)
 BLUE = (0, 0, 255)
 YELLOW = (160, 160, 0)
 GREY = (100, 100, 100)
@@ -97,6 +98,10 @@ RATIO = 5
 # Dimension tile base for icon
 TILEDIMX = 32
 TILEDIMY = 32
+
+# Dimension tile base for enemy
+ENEMY_DIMX = 20
+ENEMY_DIMY = 20
 
 #GUI settings
 DIALOG_TEXT_SIZE = 20
