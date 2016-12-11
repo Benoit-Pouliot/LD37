@@ -5,6 +5,7 @@ import math
 from app.sprites.enemy.enemyCollision import EnemyCollision
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
+from app.tools.imageBox import *
 from app.sprites.collisionMask import CollisionMask
 
 from app.settings import *
@@ -15,11 +16,8 @@ class EnemySprint(EnemyCollision):
 
         self.name = "enemySprint"
 
-        self.imageEnemy = pygame.Surface((ENEMY_DIMX, ENEMY_DIMY))
-        self.imageEnemy.fill(YELLOW)
-
-        self.attackingEnemy = pygame.Surface((ENEMY_DIMX, ENEMY_DIMY))
-        self.attackingEnemy.fill(RED)
+        self.imageEnemy = rectSurface((ENEMY_DIMX, ENEMY_DIMY), YELLOW, 2)
+        self.attackingEnemy = rectSurface((ENEMY_DIMX, ENEMY_DIMY), RED, 2)
 
         self.enemyFrames = [self.imageEnemy]
         self.prepareAttackingFrames = [self.attackingEnemy, self.imageEnemy]
@@ -45,10 +43,7 @@ class EnemySprint(EnemyCollision):
         self.isPhysicsApplied = True
         self.isCollisionApplied = True
 
-        self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
-        self.soundDead.set_volume(1)
-
-        self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+        self.AI = SteeringAI(self.mapData, self.rect, self.maxSpeedx, self.maxSpeedy)
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
         self.sprintDMG = 1

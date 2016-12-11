@@ -10,10 +10,10 @@
 
 block_cipher = None
 
-addedFiles = [ ('tiles_map', 'tiles_map'), ('music_pcm','music_pcm'), ('img', 'img'), ('fonts', 'fonts') ]
+addedFiles = [ ('tiles_map', 'tiles_map'), ('music_pcm','music_pcm'), ('img', 'img') ]
 
 a = Analysis(['main.py'],
-             pathex=['LD35'],
+             pathex=['LD37'],
              binaries=None,
              datas=addedFiles,
              hiddenimports=[],

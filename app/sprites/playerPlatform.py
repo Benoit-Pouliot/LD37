@@ -10,6 +10,7 @@ from app.sprites.inventory import Inventory
 from app.sprites.target import Target
 from app.sprites.grenade import Grenade
 from app.tools.cooldown import Cooldown
+from app.tools.imageBox import *
 from app.sprites.mine import Mine
 from app.sprites.GUI.lifeBar import LifeBar
 
@@ -20,7 +21,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.name = "player"
 
-        self.imageBase = pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20, 20))
+        self.imageBase = rectSurface((ENEMY_DIMX, ENEMY_DIMY), BLUE, 3)
+        self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
         self.imageShapeRight = None
@@ -28,9 +30,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.setShapeImage()
         self.image = self.imageShapeRight
 
-        # self.imageTransparent = pygame.Surface((1,1))
-        # self.imageTransparent.set_colorkey(BLACK)
-        self.imageTransparent = pygame.transform.scale(pygame.image.load(os.path.join('img', 'biere1.png')), (20, 20))
+        self.imageTransparent = rectSurface((ENEMY_DIMX, ENEMY_DIMY), WHITE, 3)
+        self.imageTransparent.set_colorkey(COLORKEY)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -265,7 +266,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.imageBase = self.imageTransparent
             self.image = self.imageTransparent
         elif self.invincibleFrameCounter[0] == 15:
-            self.imageBase = pygame.transform.scale(pygame.image.load(os.path.join('img', 'joueur_droite.png')), (20, 20))
+            self.imageBase = rectSurface((ENEMY_DIMX, ENEMY_DIMY), BLUE, 3)
+            self.imageBase.set_colorkey(COLORKEY)
             self.setShapeImage()
 
     def shootBullet(self):
