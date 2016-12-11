@@ -9,6 +9,7 @@ from app.sprites.inventory import Inventory
 from app.sprites.target import Target
 from app.sprites.grenade import Grenade
 from app.tools.cooldown import Cooldown
+from app.sprites.mine import Mine
 
 
 class PlayerPlatform(pygame.sprite.Sprite):
@@ -65,6 +66,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.mapData.camera.add(self.target)
 
         self.grenadeCooldown = Cooldown(100)
+        self.mineCooldown = Cooldown(40)
 
         self.isAlive = True
 
@@ -77,6 +79,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.inventory.addItem('gun',self.shootBullet)
         self.inventory.addItem('barricade',self.createBarricade)
         self.inventory.addItem('grenade', self.shootGrenade)
+        self.inventory.addItem('mine', self.shootMine)
 
         #Link your own sounds here
         #self.soundSpring = pygame.mixer.Sound(os.path.join('music_pcm', 'LvlUpFail.wav'))
@@ -139,6 +142,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def updateCooldowns(self):
         self.grenadeCooldown.update()
+        self.mineCooldown.update()
 
     def updateTarget(self):
         mousePos = pygame.mouse.get_pos()
@@ -240,6 +244,17 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.mapData.friendlyBullet.add(grenade)
 
             self.grenadeCooldown.start()
+
+    def shootMine(self):
+        if self.mineCooldown.isZero:
+            mine = Mine(self.rect.centerx, self.rect.centery, self.mapData)
+
+            self.mapData.camera.add(mine)
+            self.mapData.allSprites.add(mine)
+            self.mapData.mineGroup.add(mine)
+
+            self.mineCooldown.start()
+
 
     def power2speed(self, rawPowerValue):
 

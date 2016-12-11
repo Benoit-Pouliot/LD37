@@ -27,6 +27,7 @@ class MapData:
         self.allSprites = pygame.sprite.Group()
         self.enemyGroup = pygame.sprite.Group()
         self.obstacleGroup = pygame.sprite.Group()
+        self.mineGroup = pygame.sprite.Group()
         self.itemGroup = pygame.sprite.Group()
         self.friendlyBullet = pygame.sprite.Group()
         self.friendlyExplosion = pygame.sprite.Group()

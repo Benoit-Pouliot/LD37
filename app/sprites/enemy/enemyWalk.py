@@ -4,6 +4,7 @@ import os
 from app.sprites.enemy.enemy import Enemy
 from app.tools.animation import Animation
 from app.AI.steeringAI import SteeringAI
+from app.sprites.collisionMask import CollisionMask
 
 from app.settings import *
 
@@ -38,6 +39,7 @@ class EnemyWalk(Enemy):
         self.soundDead.set_volume(1)
 
         self.AI = SteeringAI(self.mapData, self.rect, self.speedx, self.speedy)
+        self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
         self.attack = 1
 
@@ -79,9 +81,16 @@ class EnemyWalk(Enemy):
                 self.collisionMask.rect.right % self.mapData.tmxData.tilewidth) - 1
             elif sideOfCollision == LEFT:
                 self.speedx = 0
-                self.collisionMask.rect.left -= (
-                self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle la sprite sur le mur à gauche
+                self.collisionMask.rect.left -= (self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle la sprite sur le mur à gauche
             elif sideOfCollision == DOWN:
+                while self.mapData.tmxData.get_tile_gid(
+                                (self.collisionMask.rect.left + 1) / self.mapData.tmxData.tilewidth,
+                                (self.collisionMask.rect.bottom) / self.mapData.tmxData.tileheight,
+                                COLLISION_LAYER) != SOLID and self.mapData.tmxData.get_tile_gid(
+                            self.collisionMask.rect.right / self.mapData.tmxData.tilewidth,
+                            (self.collisionMask.rect.bottom) / self.mapData.tmxData.tileheight, COLLISION_LAYER) != SOLID:
+                    self.collisionMask.rect.top += 1
+                self.collisionMask.rect.top -= 1  # Redescendre de 1 pour sortir du plafond
                 self.speedy = 0
 
             elif sideOfCollision == UP:
