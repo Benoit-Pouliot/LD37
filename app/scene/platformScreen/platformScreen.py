@@ -1,3 +1,4 @@
+import pygame
 
 from app.scene.platformScreen.eventHandlerPlatformScreen import EventHandlerPlatformScreen
 from app.scene.platformScreen.logicHandlerPlatformScreen import LogicHandlerPlatformScreen
@@ -48,6 +49,24 @@ class PlatformScreen:
         # Update gold before you leave
         self.gameData.gold = self.mapData.gold
 
+        # To say something before you die
+        fontScreen = pygame.font.SysFont(FONT_NAME, 40)
+
+        if self.logicHandler.endingLevelCondition == PLAYER_DEAD:
+            message = fontScreen.render('You died! Get your revenge on those creeps!', True, WHITE)
+            messagePos = [(SCREEN_WIDTH - message.get_width()) / 2,
+                          (SCREEN_HEIGHT )/ 2]
+        elif self.logicHandler.endingLevelCondition == LEVEL_WON:
+            message = fontScreen.render('You won! Get ready for the next level!', True, WHITE)
+            messagePos = [(SCREEN_WIDTH - message.get_width()) / 2,
+                          (SCREEN_HEIGHT )/ 2]
+
+        self.screen.blit(message, messagePos)
+
+        pygame.display.flip()
+        pygame.time.wait(2000)
+
+
     def checkNewMap(self, newMapData):
         if newMapData is not None:
             # we got to change
@@ -61,13 +80,4 @@ class PlatformScreen:
         self.HUD = HUDPlatformScreen(self.gameData,self.player)
         self.mapData.spritesHUD.add(self.HUD)
 
-    def close(self):
-        self.sceneRunning = False
-
-    def backToMain(self):
-        self.nextScene = TITLE_SCREEN
-        self.gameData.typeScene = TITLE_SCREEN
-        self.gameData.gold = self.mapData.gold
-
-        self.close()
 

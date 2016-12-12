@@ -105,6 +105,10 @@ ENEMY_DIMY = 20
 PLAYER_DIMX = 21
 PLAYER_DIMY = 21
 
+# End level condition
+PLAYER_DEAD = 0
+LEVEL_WON = 1
+
 #GUI settings
 DIALOG_TEXT_SIZE = 20
 INPUT_BOX_FONT = "Arial"

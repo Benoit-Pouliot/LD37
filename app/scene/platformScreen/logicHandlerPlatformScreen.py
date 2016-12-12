@@ -14,6 +14,8 @@ class LogicHandlerPlatformScreen:
         self.newMapData = None
         self.mapData = mapData
 
+        self.endingLevelCondition = None
+
         self.screen = screen
 
     def handle(self, player, gameData):
@@ -97,8 +99,7 @@ class LogicHandlerPlatformScreen:
 
     def gameOverCondition(self,player):
         if player.isAlive == False:
-            pygame.display.flip()
-            pygame.time.wait(500)
+            self.endingLevelCondition = PLAYER_DEAD
             self.newMapData = True
             self.sceneRunning = False
 
@@ -108,6 +109,7 @@ class LogicHandlerPlatformScreen:
                 gameData.currentLevel += 1
                 self.newMapData = True
                 self.sceneRunning = False
+                self.endingLevelCondition = LEVEL_WON
 
         # if TAG_PHIL ==1:
         #     print(self.mapData.internalMapTime)
