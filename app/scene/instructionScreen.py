@@ -79,7 +79,7 @@ class InstructionScreen:
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height)
         self.textGoal.textList.append('Survive to win.')
-        self.textGoal.textList.append('Kill any spirits who dares enter your home.')
+        self.textGoal.textList.append('Kill anything that dares enter.')
         self.textGoal.textList.append('Buy upgrade to get stronger weapons.')
 
 
