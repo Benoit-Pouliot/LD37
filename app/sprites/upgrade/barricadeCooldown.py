@@ -13,8 +13,11 @@ class BarricadeCooldown(Upgrade):
         self.name = 'barricadeCooldown'
 
         self.icon = pygame.image.load(os.path.join('img', 'barricade.png'))
+        self.icon2 = pygame.image.load(os.path.join('img', 'clock.png'))
 
         self.resizeIcon()
+
+        self.icon2Pos = []
 
         self.type = type
 

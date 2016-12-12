@@ -13,6 +13,7 @@ class MineCooldown(Upgrade):
         self.name = 'mineCooldown'
 
         self.icon = pygame.image.load(os.path.join('img', 'mine1.png'))
+        self.icon2 = pygame.image.load(os.path.join('img', 'clock.png'))
 
         self.resizeIcon()
 

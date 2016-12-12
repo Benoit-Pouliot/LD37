@@ -13,6 +13,7 @@ class GrenadeCooldown(Upgrade):
         self.name = 'grenadeCooldown'
 
         self.icon = pygame.image.load(os.path.join('img', 'grenade.png'))
+        self.icon2 = pygame.image.load(os.path.join('img', 'clock.png'))
 
         self.resizeIcon()
 
