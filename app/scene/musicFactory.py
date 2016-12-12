@@ -17,7 +17,8 @@ class MusicFactory:
 
         if self.nameMusic is not None:
             if self.nameMusic == 'TheLoomingBattle':
-                pygame.mixer.music.load(os.path.join('music_pcm', self.nameMusic + '.ogg'))
+                pass
+                #pygame.mixer.music.load(os.path.join('music_pcm', self.nameMusic + '.ogg'))
             else:
                 pygame.mixer.music.load(os.path.join('music_pcm', self.nameMusic + '.wav'))
             pygame.mixer.music.set_volume(1.0)

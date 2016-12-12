@@ -34,9 +34,9 @@ class GameData:
         self.shopScreenData = None
 
         self.currentLevel = 1
-
-        if TAG_PHIL == 1:
-            self.initLevel(5)
+        #
+        # if TAG_PHIL == 1:
+        #     self.initLevel(1)
 
     def initLevel(self, level):
 

@@ -109,5 +109,5 @@ class LogicHandlerPlatformScreen:
                 self.newMapData = True
                 self.sceneRunning = False
 
-        if TAG_PHIL ==1:
-            print(self.mapData.internalMapTime)
+        # if TAG_PHIL ==1:
+        #     print(self.mapData.internalMapTime)
