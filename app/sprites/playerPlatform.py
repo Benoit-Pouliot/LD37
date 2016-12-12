@@ -104,9 +104,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if TAG_BP == 2:
             self.spriteRED = None
 
-        if TAG_MARIE == 1:
-            self.currentItem = 0
-
         self.inventory = Inventory()
         self.inventory.addItem('gun', self.shootBullet)
         self.inventory.addItem('grenade', self.shootGrenade)
@@ -362,8 +359,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
                     self.barricadeCooldown.start()
 
             else:
-                if TAG_MARIE == 1:
-                    print('cannot put down')
                 barricade.destroy()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):

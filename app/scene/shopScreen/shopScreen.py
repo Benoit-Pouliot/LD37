@@ -162,8 +162,7 @@ class ShopScreen:
             self.sold = False
             self.recreateButton(self.upgradeList['gunCooldown'])
         else:
-            if TAG_MARIE == 1:
-                print('Not enough money')
+            self.soundNotEM.play()
 
     def buyBarricadeCooldown(self):
         self.pay(self.gameData.upgrade['barricadeCooldown'][2])
@@ -173,8 +172,7 @@ class ShopScreen:
             self.sold = False
             self.recreateButton(self.upgradeList['barricadeCooldown'])
         else:
-            if TAG_MARIE == 1:
-                print('Not enough money')
+            self.soundNotEM.play()
 
     def buyGrenadeCooldown(self):
         self.pay(self.gameData.upgrade['grenadeCooldown'][2])
@@ -184,8 +182,7 @@ class ShopScreen:
             self.sold = False
             self.recreateButton(self.upgradeList['grenadeCooldown'])
         else:
-            if TAG_MARIE == 1:
-                print('Not enough money')
+            self.soundNotEM.play()
 
     def buyMineCooldown(self):
         self.pay(self.gameData.upgrade['mineCooldown'][2])
@@ -195,8 +192,7 @@ class ShopScreen:
             self.sold = False
             self.recreateButton(self.upgradeList['mineCooldown'])
         else:
-            if TAG_MARIE == 1:
-                print('Not enough money')
+            self.soundNotEM.play()
 
     def recreateButton(self,item):
         item.attribute = self.gameData.upgrade[item.name][1]

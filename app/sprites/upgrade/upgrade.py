@@ -88,7 +88,7 @@ class Upgrade(pygame.sprite.Sprite):
         self.textCostPos = [(self.image.get_width()-self.printedCost.get_width())/2,self.interior.bottom-1.5*self.fontSize]
 
         self.iconPos = [(self.image.get_width()-self.icon.get_width())/2, (self.image.get_height()*0.6 - self.icon.get_height()) * 0.5]
-        self.icon2Pos = [self.iconPos[0]+self.icon.get_width()-16, self.iconPos[1]+self.icon.get_height()-16]
+        self.icon2Pos = [self.iconPos[0]+self.icon.get_width()-32, self.iconPos[1]+self.icon.get_height()-32]
 
     def notify(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -101,3 +101,8 @@ class Upgrade(pygame.sprite.Sprite):
         imageSizeY = self.icon.get_height() * resizeSizeX / self.icon.get_width()
 
         self.icon = pygame.transform.scale(self.icon, (int(resizeSizeX), int(imageSizeY)))
+
+        if self.icon2 is not None:
+            resizeSizeX = 48
+            imageSizeY = self.icon2.get_height() * resizeSizeX / self.icon2.get_width()
+            self.icon2 = pygame.transform.scale(self.icon2, (int(resizeSizeX), int(imageSizeY)))

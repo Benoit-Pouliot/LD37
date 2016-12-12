@@ -58,8 +58,6 @@ class Enemy(pygame.sprite.Sprite):
     def dead(self):
         if self.mapData != None:
             self.mapData.gold += self.bounty
-            if TAG_MARIE == 1:
-                print('Gold : ' + str(self.mapData.gold))
 
         self.kill()
 
