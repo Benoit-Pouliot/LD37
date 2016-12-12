@@ -19,6 +19,7 @@ from app.sprites.upgrade.gunCooldown import GunCooldown
 from app.scene.shopScreen.logicHandlerShopScreen import LogicHandlerShopScreen
 from app.settings import *
 from app.scene.drawer import Drawer
+from app.scene.musicFactory import MusicFactory
 
 
 class ShopScreen:
@@ -57,7 +58,7 @@ class ShopScreen:
         self.logicHandler = LogicHandlerShopScreen(self.screen, self.gameData)
         self.drawer = Drawer()
 
-        self.type = TITLE_SCREEN
+        # self.type = SHOP_SCREEN
         self.nextScene = None
 
         self.iconWidth = 100
@@ -71,6 +72,8 @@ class ShopScreen:
         self.soundNotEM.set_volume(.75)
         self.menuSelect = pygame.mixer.Sound(os.path.join('music_pcm', 'menu_select.wav'))
         self.menuSelect.set_volume(.5)
+
+        MusicFactory(SHOP_SCREEN)
 
 
     def mainLoop(self):
