@@ -1,10 +1,9 @@
 # To generate .exe and .app
 #
 # To generate, do :
-#    Windows : pyinstaller --onefile main_local.spec
+#    Windows : pyinstaller --onefile main.spec
 #
 # Other options : --windowed
-#          pyinstaller --onefile --windowed main_local.spec
 #
 # Check pyinstaller for full documentation
 #
@@ -37,4 +36,4 @@ exe = EXE(pyz,
           debug=False,
           strip=False,
           upx=True,
-          console=True )
+          console=False )
