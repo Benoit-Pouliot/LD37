@@ -3,6 +3,7 @@ from pygame.locals import *
 from app.sprites.GUI.Box import Box
 from app.settings import *
 import pygame
+import os
 
 class InputBox(pygame.sprite.Sprite):
     def __init__(self, pos, size):

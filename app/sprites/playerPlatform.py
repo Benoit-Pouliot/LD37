@@ -54,6 +54,9 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.maxHealth = max_health
         self.lifeBar = LifeBar(max_health)
 
+        self.hurtSound = pygame.mixer.Sound(os.path.join('music_pcm', 'Hit_Hurt.wav'))
+        self.hurtSound.set_volume(.75)
+
         self.life = 1
         self.lifeMax = 1
         self.lifeMaxCap = 5
@@ -402,6 +405,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if not self.isInvincible:
 
             self.lifeBar.healthCurrent -= damage
+            self.hurtSound.play()
 
             if TAG_ANIKA == 1:
                 print('player health :', self.lifeBar.healthCurrent)

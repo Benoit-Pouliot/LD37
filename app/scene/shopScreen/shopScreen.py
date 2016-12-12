@@ -29,7 +29,7 @@ class ShopScreen:
         self.shopScreenData = self.gameData.shopScreenData
 
         self.screen.fill((0, 0, 0))
-        titleImage = pygame.image.load(os.path.join('img', 'menu.png'))
+        titleImage = pygame.image.load(os.path.join('img', 'ShopScreen.png'))
         self.screen.blit(titleImage, (0, 0))
 
         self.upgradeList = {}
@@ -64,6 +64,13 @@ class ShopScreen:
         self.iconHeight = 100
 
         self.sold = False
+
+        self.soundPaid = pygame.mixer.Sound(os.path.join('music_pcm', 'paidMoney.wav'))
+        self.soundPaid.set_volume(.75)
+        self.soundNotEM = pygame.mixer.Sound(os.path.join('music_pcm', 'notEnoughMoney.wav'))
+        self.soundNotEM.set_volume(.75)
+        self.menuSelect = pygame.mixer.Sound(os.path.join('music_pcm', 'menu_select.wav'))
+        self.menuSelect.set_volume(.5)
 
 
     def mainLoop(self):
@@ -122,9 +129,11 @@ class ShopScreen:
             self.gameData.upgrade[item][2] *= 2 #Increase cost
             self.sold = False
             self.recreateButton(self.upgradeList[item])
+            self.soundPaid.play()
         else:
             if TAG_MARIE == 1:
                 print('Not enough money')
+            self.soundNotEM.play()
 
     def buyGun(self):
         self.pay(self.gameData.upgrade['gun'][2])
@@ -191,9 +200,11 @@ class ShopScreen:
         item.cost = self.gameData.upgrade[item.name][2]
 
     def doNothing(self):
-        print('You did nothing')
+        pass
+        # print('You did nothing')
 
     def nextLevel(self):
+        self.menuSelect.play()
         self.sceneRunning = False
         self.nextScene = PLATFORM_SCREEN
         self.gameData.typeScene = PLATFORM_SCREEN

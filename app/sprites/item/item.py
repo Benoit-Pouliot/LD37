@@ -6,7 +6,7 @@ from app.sprites.collisionMask import CollisionMask
 
 
 class Item(pygame.sprite.Sprite):
-    def __init__(self,name,method, type=None,image=os.path.join('img', 'biere1.png')):
+    def __init__(self,name,method, type=None,image=os.path.join('img', 'mine1.png')):
         super().__init__()
 
         self.name = name

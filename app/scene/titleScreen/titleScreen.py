@@ -44,6 +44,9 @@ class TitleScreen:
 
         MusicFactory(TITLE_SCREEN)
 
+        self.menuSelect = pygame.mixer.Sound(os.path.join('music_pcm', 'menu_select.wav'))
+        self.menuSelect.set_volume(.5)
+
 
     def mainLoop(self):
         self.sceneRunning = True
@@ -66,12 +69,14 @@ class TitleScreen:
 
 
     def startGame(self):
+        self.menuSelect.play()
         self.nextScene = PLATFORM_SCREEN
         self.sceneRunning = False
         self.gameData.typeScene = PLATFORM_SCREEN
         self.gameData.mapData = MapData("LevelRoom", "StartPointWorld")
 
     def goToTheShop(self):
+        self.menuSelect.play()
         self.nextScene = SHOP_SCREEN
         self.sceneRunning = False
         self.gameData.typeScene = SHOP_SCREEN

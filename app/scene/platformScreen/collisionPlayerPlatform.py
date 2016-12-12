@@ -269,6 +269,7 @@ def collisionBarricadePlayer(map, barricade):
     collisionList = pygame.sprite.spritecollide(barricade, map.attackGroup, False)
     for attack in collisionList:
         barricade.isHit(attack.attackDMG)
+        attack.kill()
 
 def collisionBulletPlayer(map, player):
     collisionList = pygame.sprite.spritecollide(player, map.enemyBullet, False)

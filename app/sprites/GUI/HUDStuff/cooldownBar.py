@@ -9,7 +9,7 @@ class CooldownBar (pygame.sprite.Sprite):
         self.width = width
         self.height = height
         self.sizeBorder = 1
-        self.image = rectSurface((self.width, self.height), BLUE, self.sizeBorder)
+        self.image = rectSurface((self.width, self.height), FULL_LOAD_COLOR, self.sizeBorder)
 
         self.rect = self.image.get_rect()
         self.rect.x = 300
@@ -23,9 +23,9 @@ class CooldownBar (pygame.sprite.Sprite):
 
         self.widthReload = (self.width-2*self.sizeBorder)*self.statCurrent/self.statMax
         if self.statCurrent < self.statMax:
-            self.image = rectSurface((self.width, self.height), YELLOW, self.sizeBorder)
+            self.image = rectSurface((self.width, self.height), LOADING_COLOR, self.sizeBorder)
 
             reloadBar = pygame.Rect(self.sizeBorder, self.sizeBorder, self.widthReload, self.height-2*self.sizeBorder)
-            pygame.draw.rect(self.image, BLUE, reloadBar)
+            pygame.draw.rect(self.image, FULL_LOAD_COLOR, reloadBar)
         else:
-            self.image = rectSurface((self.width, self.height), BLUE, self.sizeBorder)
+            self.image = rectSurface((self.width, self.height), FULL_LOAD_COLOR, self.sizeBorder)
