@@ -78,6 +78,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.leftPressed = False
         self.upPressed = False
         self.downPressed = False
+        self.leftShiftPressed = False
+        self.spacePressed = False
         self.leftMousePressed = False
         self.rightMousePressed = False
 
@@ -453,7 +455,13 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 self.updateSpeedDown()
                 self.downPressed = True
             elif event.key == pygame.K_SPACE:
-                self.nextItem()
+                #self.nextItem()
+                self.shootGrenade()
+                self.spacePressed = True
+            elif event.key == pygame.K_LSHIFT:
+                self.shootMine()
+                self.leftShiftPressed = True
+
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
@@ -464,6 +472,10 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 self.upPressed = False
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 self.downPressed = False
+            elif event.key == pygame.K_LSHIFT:
+                self.leftShiftPressed = False
+            elif event.key == pygame.K_SPACE:
+                self.spacePressed = False
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == MOUSE_LEFT:
@@ -487,9 +499,13 @@ class PlayerPlatform(pygame.sprite.Sprite):
         if self.downPressed:
             self.updateSpeedDown()
         if self.leftMousePressed:
-            self.inventory.itemList[self.currentItem].useItem()
+            self.inventory.itemList[0].useItem()
         if self.rightMousePressed:
             self.createBarricade()
+        if self.leftShiftPressed:
+            self.shootMine()
+        if self.spacePressed:
+            self.shootGrenade()
 
     # Suppose to work, but dont
     # Need to understand why the camera is OK, with a simple rotation?
