@@ -77,6 +77,7 @@ class Upgrade(pygame.sprite.Sprite):
         self.image.blit(self.printedAttribute,self.textAttributePos)
         self.image.blit(self.printedCost,self.textCostPos)
 
+ #blabla
 
     def setUpgradeSpec(self):
         self.textAttribute = self.attributeName + ' : ' + str(self.attribute)
