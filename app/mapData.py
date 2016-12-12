@@ -119,7 +119,7 @@ class MapData:
             self.enemyGenListData.addData(2500, [1], 8, 0)
             self.levelEndTime = 3001
 
-        if currentLevel == 3:
+        if currentLevel == 3: #510
             self.enemyGenListData.addData(400, [1], 4, 0)
             self.enemyGenListData.addData(500, [1], 3, 0)
             self.enemyGenListData.addData(500, [2], 2, 0)
@@ -136,7 +136,7 @@ class MapData:
             self.enemyGenListData.addData(4300, [1], 5, 0)
             self.levelEndTime = 4301
 
-        if currentLevel == 4:
+        if currentLevel == 4: #910
             self.enemyGenListData.addData(400, [1], 4, 0)
             self.enemyGenListData.addData(500, [1], 3, 0)
             self.enemyGenListData.addData(500, [2], 2, 0)
@@ -162,7 +162,7 @@ class MapData:
             self.enemyGenListData.addData(7000, [1], 6, 0)
             self.levelEndTime = 7001
 
-        if currentLevel == 5:
+        if currentLevel == 5: #1120
             self.enemyGenListData.addData(400, [1], 4, 0)
             self.enemyGenListData.addData(500, [1], 3, 0)
             self.enemyGenListData.addData(500, [4], 3, 0)
@@ -171,28 +171,36 @@ class MapData:
             self.enemyGenListData.addData(800, [4], 2, 0)
             self.enemyGenListData.addData(1000, [1], 4, 0)
             self.enemyGenListData.addData(1200, [4], 2, 0)
-            self.enemyGenListData.addData(1600, [2], 4, 0)
+            self.enemyGenListData.addData(1200, [1], 4, 0)
+            self.enemyGenListData.addData(1600, [2], 1, 0)
+            self.enemyGenListData.addData(1600, [1], 4, 0)
+            self.enemyGenListData.addData(1600, [4], 2, 0)
+            self.enemyGenListData.addData(1800, [1], 4, 0)
             self.enemyGenListData.addData(2000, [4], 1, 0)
             self.enemyGenListData.addData(2100, [4], 1, 0)
+            self.enemyGenListData.addData(2100, [1], 4, 0)
             self.enemyGenListData.addData(2200, [4], 1, 0)
+            self.enemyGenListData.addData(2300, [1], 4, 0)
             self.enemyGenListData.addData(2300, [4], 1, 0)
             self.enemyGenListData.addData(2500, [1], 4, 0)
+            self.enemyGenListData.addData(2500, [2], 1, 0)
             self.enemyGenListData.addData(2600, [1], 4, 0)
             self.enemyGenListData.addData(2600, [4], 2, 0)
             self.enemyGenListData.addData(2800, [1], 4, 0)
             self.enemyGenListData.addData(3000, [1], 4, 0)
             self.enemyGenListData.addData(3200, [1], 4, 0)
             self.enemyGenListData.addData(3400, [4], 2, 0)
-            self.enemyGenListData.addData(3400, [1], 5, 0)
-            self.enemyGenListData.addData(3600, [1], 6, 0)
+            self.enemyGenListData.addData(3400, [1], 4, 0)
+            self.enemyGenListData.addData(3600, [1], 4, 0)
             self.enemyGenListData.addData(3800, [1], 5, 0)
             self.enemyGenListData.addData(4300, [1], 5, 0)
-            self.enemyGenListData.addData(5000, [1], 6, 0)
-            self.enemyGenListData.addData(5000, [4], 4, 0)
-            self.enemyGenListData.addData(5800, [1], 6, 0)
-            self.enemyGenListData.addData(6000, [1], 6, 0)
-            self.enemyGenListData.addData(6200, [1], 6, 0)
-            self.enemyGenListData.addData(7000, [1], 6, 0)
+            self.enemyGenListData.addData(4500, [2], 1, 0)
+            self.enemyGenListData.addData(4800, [1], 4, 0)
+            self.enemyGenListData.addData(4800, [4], 4, 0)
+            self.enemyGenListData.addData(5200, [1], 4, 0)
+            self.enemyGenListData.addData(5300, [1], 4, 0)
+            self.enemyGenListData.addData(5400, [1], 6, 0)
+            self.enemyGenListData.addData(5500, [1], 6, 0)
             self.levelEndTime = 7001
 
         if currentLevel == 6:

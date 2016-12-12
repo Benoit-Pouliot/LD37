@@ -33,7 +33,7 @@ class Barricade(pygame.sprite.Sprite):
         self.isCollisionApplied = True
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
-        self.maxHealth = gameData.upgrade['barricade'][1]*50
+        self.maxHealth = gameData.upgrade['barricade'][1]*20
 
         self.lifeBar = LifeBar(self.maxHealth)
 
@@ -53,6 +53,10 @@ class Barricade(pygame.sprite.Sprite):
         if collidedWith == SOLID:
             self.destroy()
 
+    def kill(self):
+        self.lifeBar.kill()
+        super().kill()
+
     def isHit(self,damage=0):
         self.hurtSound.play()
         # Should be different depending on which ennemy....
@@ -69,4 +73,3 @@ class Barricade(pygame.sprite.Sprite):
 
     def destroy(self):
         self.kill()
-        self.lifeBar.kill()

@@ -461,7 +461,8 @@ class PlayerPlatform(pygame.sprite.Sprite):
             elif event.key == pygame.K_LSHIFT:
                 self.shootMine()
                 self.leftShiftPressed = True
-
+            elif event.key == pygame.K_ESCAPE:
+                self.destroyAllBarricades()
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
@@ -514,3 +515,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         rot_image = pygame.transform.rotate(image, angle)
         self.rect = rot_image.get_rect(center=self.rect.center)
         return rot_image
+
+    def destroyAllBarricades(self):
+        for barricade in self.mapData.obstacleGroup:
+            barricade.kill()
