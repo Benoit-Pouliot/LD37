@@ -76,10 +76,10 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.target = Target(0, 0)
         self.mapData.camera.add(self.target)
 
-        self.grenadeCooldown = Cooldown(100)
-        self.mineCooldown = Cooldown(40)
-        self.gunCooldown = Cooldown(40)
-        self.barricadeCooldown = Cooldown(300)
+        self.grenadeCooldown = Cooldown(self.gameData.upgrade['grenadeCooldown'][1])
+        self.mineCooldown = Cooldown(self.gameData.upgrade['mineCooldown'][1])
+        self.gunCooldown = Cooldown(self.gameData.upgrade['gunCooldown'][1])
+        self.barricadeCooldown = Cooldown(self.gameData.upgrade['barricadeCooldown'][1])
 
         self.isAlive = True
 
@@ -284,26 +284,28 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.gunCooldown.start()
 
     def shootGrenade(self):
-        if self.grenadeCooldown.isZero:
-            speedx, speedy = self.power2speed(8)
+        if self.gameData.upgrade['grenade'][1] > 0:
+            if self.grenadeCooldown.isZero:
+                speedx, speedy = self.power2speed(8)
 
-            grenade = Grenade(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
+                grenade = Grenade(self.rect.centerx, self.rect.centery, speedx, speedy, self.gameData)
 
-            self.mapData.camera.add(grenade)
-            self.mapData.allSprites.add(grenade)
-            self.mapData.friendlyBullet.add(grenade)
+                self.mapData.camera.add(grenade)
+                self.mapData.allSprites.add(grenade)
+                self.mapData.friendlyBullet.add(grenade)
 
-            self.grenadeCooldown.start()
+                self.grenadeCooldown.start()
 
     def shootMine(self):
-        if self.mineCooldown.isZero:
-            mine = Mine(self.rect.centerx, self.rect.centery, self.mapData)
+        if self.gameData.upgrade['mine'][1] > 0:
+            if self.mineCooldown.isZero:
+                mine = Mine(self.rect.centerx, self.rect.centery, self.gameData)
 
-            self.mapData.camera.add(mine)
-            self.mapData.allSprites.add(mine)
-            self.mapData.mineGroup.add(mine)
+                self.mapData.camera.add(mine)
+                self.mapData.allSprites.add(mine)
+                self.mapData.mineGroup.add(mine)
 
-            self.mineCooldown.start()
+                self.mineCooldown.start()
 
 
     def power2speed(self, rawPowerValue):
@@ -458,7 +460,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 self.leftMousePressed = False
             elif event.button == MOUSE_RIGHT:
                 self.rightMousePressed = False
-
 
     def updatePressedKeys(self):
         if self.rightPressed:

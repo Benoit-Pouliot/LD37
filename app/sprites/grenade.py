@@ -6,7 +6,7 @@ from app.tools.cooldown import Cooldown
 from app.tools.animation import Animation
 
 class Grenade(pygame.sprite.Sprite):
-    def __init__(self, x, y, speedx, speedy, mapData):
+    def __init__(self, x, y, speedx, speedy, gameData):
         super().__init__()
 
         self.name = "Grenade"
@@ -32,10 +32,11 @@ class Grenade(pygame.sprite.Sprite):
         self.isCollisionApplied = True
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
 
-        self.mapData = mapData
+        self.mapData = gameData.mapData
 
         self.detonationTimer = Cooldown(60)
         self.detonationTimer.start()
+        self.attackDMG = 5 + gameData.upgrade['grenade'][1]
 
     def update(self):
         self.applyFriction()
@@ -62,7 +63,7 @@ class Grenade(pygame.sprite.Sprite):
         self.speedy = self.speedy * (finalNorm/(initialNorm+EPS))
 
     def detonate(self):
-        explosion = Explosion(self.rect.midbottom[0], self.rect.midbottom[1])
+        explosion = Explosion(self.rect.midbottom[0], self.rect.midbottom[1], self.attackDMG)
 
         self.mapData.camera.add(explosion)
         self.mapData.allSprites.add(explosion)

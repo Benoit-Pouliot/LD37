@@ -6,7 +6,7 @@ from app.tools.cooldown import Cooldown
 from app.tools.animation import Animation
 
 class Mine(pygame.sprite.Sprite):
-    def __init__(self, x, y, mapData):
+    def __init__(self, x, y, gameData):
         super().__init__()
 
         self.name = "Mine"
@@ -26,10 +26,12 @@ class Mine(pygame.sprite.Sprite):
         self.isCollisionApplied = False
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width*1.2, self.rect.height*1.2)
 
-        self.mapData = mapData
-        self.armCooldown = Cooldown(100)
+        self.mapData = gameData.mapData
+        self.armCooldown = Cooldown(80)
         self.mineArmed = False
         self.armCooldown.start()
+
+        self.attackDMG = 5 + gameData.upgrade['mine'][1]
 
     def update(self):
         self.armCooldown.update()
@@ -40,7 +42,7 @@ class Mine(pygame.sprite.Sprite):
 
     def detonate(self):
         if self.armCooldown.isZero:
-            explosion = Explosion(self.rect.midbottom[0], self.rect.midbottom[1])
+            explosion = Explosion(self.rect.midbottom[0], self.rect.midbottom[1], self.attackDMG)
 
             self.mapData.camera.add(explosion)
             self.mapData.allSprites.add(explosion)

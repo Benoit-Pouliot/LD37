@@ -8,7 +8,7 @@ from app.sprites.collisionMask import CollisionMask
 from app.tools.animation import Animation
 
 class Explosion(pygame.sprite.Sprite):
-    def __init__(self, x, y, friendly=True):
+    def __init__(self, x, y, dmg=5, friendly=True):
         super().__init__()
 
         self.name = "explosion"
@@ -43,7 +43,7 @@ class Explosion(pygame.sprite.Sprite):
         self.counter = Counter()
         self.duration = 25  #In frames
 
-        self.attackDMG = 5
+        self.attackDMG = dmg
 
     def update(self):
         self.counter.count()

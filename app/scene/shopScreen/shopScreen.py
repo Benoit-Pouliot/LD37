@@ -144,19 +144,47 @@ class ShopScreen:
 
     def buyGunCooldown(self):
         self.pay(self.gameData.upgrade['gunCooldown'][2])
-        self.buy('gunCooldown')
+        if self.sold == True:
+            self.gameData.upgrade['gunCooldown'][1] = int(self.gameData.upgrade['gunCooldown'][1] * self.gameData.upgrade['gunCooldown'][3]) #Increase lvl
+            self.gameData.upgrade['gunCooldown'][2] *= 2 #Increase cost
+            self.sold = False
+            self.recreateButton(self.upgradeList['gunCooldown'])
+        else:
+            if TAG_MARIE == 1:
+                print('Not enough money')
 
     def buyBarricadeCooldown(self):
         self.pay(self.gameData.upgrade['barricadeCooldown'][2])
-        self.buy('barricadeCooldown')
+        if self.sold == True:
+            self.gameData.upgrade['barricadeCooldown'][1] = int(self.gameData.upgrade['barricadeCooldown'][1] * self.gameData.upgrade['gunCooldown'][3]) #Increase lvl
+            self.gameData.upgrade['barricadeCooldown'][2] *= 2 #Increase cost
+            self.sold = False
+            self.recreateButton(self.upgradeList['barricadeCooldown'])
+        else:
+            if TAG_MARIE == 1:
+                print('Not enough money')
 
     def buyGrenadeCooldown(self):
         self.pay(self.gameData.upgrade['grenadeCooldown'][2])
-        self.buy('grenadeCooldown')
+        if self.sold == True:
+            self.gameData.upgrade['grenadeCooldown'][1] = int(self.gameData.upgrade['grenadeCooldown'][1] * self.gameData.upgrade['grenadeCooldown'][3]) #Increase lvl
+            self.gameData.upgrade['grenadeCooldown'][2] *= 2 #Increase cost
+            self.sold = False
+            self.recreateButton(self.upgradeList['grenadeCooldown'])
+        else:
+            if TAG_MARIE == 1:
+                print('Not enough money')
 
     def buyMineCooldown(self):
         self.pay(self.gameData.upgrade['mineCooldown'][2])
-        self.buy('mineCooldown')
+        if self.sold == True:
+            self.gameData.upgrade['mineCooldown'][1] = int(self.gameData.upgrade['mineCooldown'][1] * self.gameData.upgrade['mineCooldown'][3]) #Increase lvl
+            self.gameData.upgrade['mineCooldown'][2] *= 2 #Increase cost
+            self.sold = False
+            self.recreateButton(self.upgradeList['mineCooldown'])
+        else:
+            if TAG_MARIE == 1:
+                print('Not enough money')
 
     def recreateButton(self,item):
         item.attribute = self.gameData.upgrade[item.name][1]
