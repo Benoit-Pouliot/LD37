@@ -86,8 +86,9 @@ class InstructionScreen:
         self.textGoal.textList.append('')
         self.textGoal.textList.append('Move: WASD')
         self.textGoal.textList.append('Shoot: Left mouse button')
-        self.textGoal.textList.append('Change weapon: Space bar')
-        self.textGoal.textList.append('Put down barricade: Right mouse button')
+        self.textGoal.textList.append('Put down barricade (buy): Right mouse button')
+        self.textGoal.textList.append('Throw grenade (buy): Space bar')
+        self.textGoal.textList.append('Put down mine (buy): Left Shift')
 
         self.allSprites.add(self.textGoal)  # Add sprite
 
