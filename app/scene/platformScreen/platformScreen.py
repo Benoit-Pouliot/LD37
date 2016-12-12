@@ -10,6 +10,8 @@ from app.scene.musicFactory import MusicFactory
 from app.sprites.GUI.showBarricadeCharges import ShowBarricadeCharges
 from app.sprites.GUI.HUDPlatformScreen import HUDPlatformScreen
 from app.shopScreenData import ShopScreenData
+from app.tools.counter import Counter
+from app.tools.messageBox.messageBox import MessageBox
 
 from app.mapData import MapData
 
@@ -36,6 +38,11 @@ class PlatformScreen:
 
         self.addHUD()
 
+        message = 'Level '+str(self.gameData.currentLevel)
+        self.createLevelBox(SCREEN_WIDTH/2-150, SCREEN_HEIGHT/2-250, 300, 50, message)
+        self.counter = Counter()
+        self.duration = 120  #In frames
+
         MusicFactory(PLATFORM_SCREEN, self.mapData.currentLevel)
 
     def mainLoop(self):
@@ -45,12 +52,17 @@ class PlatformScreen:
             self.eventHandler.eventHandle()
             self.logicHandler.handle(self.player, self.gameData)
             self.checkNewMap(self.logicHandler.newMapData)
+
+            self.counter.count()
+            if self.counter.value == self.duration:
+                self.textLevel.kill()
+
             self.drawer.draw(self.screen, self.mapData.camera, self.mapData.spritesHUD, self.player)
 
         # Update gold before you leave
         self.gameData.gold = self.mapData.gold
 
-        # To say something before you die
+        # To say something
         fontScreen = pygame.font.SysFont(FONT_NAME, 40)
 
         if self.logicHandler.endingLevelCondition == PLAYER_DEAD:
@@ -81,4 +93,10 @@ class PlatformScreen:
         self.HUD = HUDPlatformScreen(self.gameData,self.player)
         self.mapData.spritesHUD.add(self.HUD)
 
+    def createLevelBox(self,x,y,width,height, message):
+        self.textLevel = MessageBox(x,y,width,height)
+        self.textLevel.textList.append(message)
+        self.textLevel.isPhysicsApplied = False
+        self.textLevel.isCollisionApplied = False
 
+        self.mapData.spritesHUD.add(self.textLevel)  # Add sprite

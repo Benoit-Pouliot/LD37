@@ -24,6 +24,8 @@ class GameData:
 
         if TAG_MARIE == 1:
             self.gold = 10000
+        if TAG_BP == 1:
+            self.gold = 100000000
 
         self.maxItemOfAType = 99
 

@@ -2,6 +2,19 @@
 
 Game for Ludum Dare 37 - 9 december 2012
 
+# Instruction
+
+Survive to win.
+Kill anything that dares enter.
+Buy upgrade to get stronger weapons.
+
+Move: WASD
+Shoot: Left mouse button
+Put down barricade (buy): Right mouse button
+Throw grenade (buy): Space bar
+Put down mine (buy): Left Shift
+Destroy ALL barricades (I'm stuck!): Escape
+        
 
 # Language
 
