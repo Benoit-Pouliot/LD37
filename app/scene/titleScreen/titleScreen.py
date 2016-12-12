@@ -32,7 +32,11 @@ class TitleScreen:
         self.spritesHUD.add(self.startGameButton)
         self.notifySet.add(self.startGameButton)
 
-        self.exitButton = Button((540, 11*SCREEN_HEIGHT/20), (150, 50), 'Exit', sys.exit)
+        self.instructionButton = Button((540, 11 * SCREEN_HEIGHT / 20), (150, 50), 'How to play', self.startInstruction)
+        self.spritesHUD.add(self.instructionButton)
+        self.notifySet.add(self.instructionButton)
+
+        self.exitButton = Button((540, 7*SCREEN_HEIGHT/10), (150, 50), 'Exit', sys.exit)
         self.spritesHUD.add(self.exitButton)
         self.notifySet.add(self.exitButton)
 
@@ -53,7 +57,7 @@ class TitleScreen:
         while self.sceneRunning:
             self.eventHandler.eventHandle(self.notifySet)
             self.handle()  # This would be in the logic
-            self.drawer.draw(self.screen, None, self.spritesHUD, None)  # Drawer in THIS file, below
+            self.drawer.draw(self.screen, None, self.spritesHUD, None)
 
     def handle(self):
         self.checkHighlight()
@@ -82,3 +86,8 @@ class TitleScreen:
         self.gameData.typeScene = SHOP_SCREEN
         self.gameData.mapData = None
         self.gameData.shopScreenData = ShopScreenData()
+
+    def startInstruction(self):
+        self.nextScene = INSTRUCTION_SCREEN
+        self.sceneRunning = False
+        self.gameData.typeScene = INSTRUCTION_SCREEN
