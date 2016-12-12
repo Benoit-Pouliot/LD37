@@ -28,7 +28,7 @@ class Upgrade(pygame.sprite.Sprite):
         self.interior = pygame.Rect(self.borderButton,self.borderButton,self.width-2*self.borderButton,self.height-2*self.borderButton)
 
 
-        self.icon = pygame.image.load(os.path.join('img', 'biere1.png'))
+        self.icon = pygame.image.load(os.path.join('img', 'mine1.png'))
         self.iconPos = [0, 0]
 
         self.attributeName = 'Peanut'
@@ -45,7 +45,8 @@ class Upgrade(pygame.sprite.Sprite):
         self.color2 = COLOR_MENU_2
 
     def doNothing(self):
-        print('You did nothing')
+        pass
+        # print('You did nothing')
 
     def update(self):
 
