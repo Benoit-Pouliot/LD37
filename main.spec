@@ -4,8 +4,11 @@
 #    Windows : pyinstaller --onefile main_local.spec
 #
 # Other options : --windowed
+#          pyinstaller --onefile --windowed main_local.spec
 #
 # Check pyinstaller for full documentation
+#
+# http://stackoverflow.com/questions/28033003/pyinstaller-with-pygame/36456473#36456473
 #
 
 block_cipher = None

@@ -98,7 +98,7 @@ class LogicHandlerPlatformScreen:
     def gameOverCondition(self,player):
         if player.isAlive == False:
             pygame.display.flip()
-            pygame.time.wait(2000)
+            pygame.time.wait(500)
             self.newMapData = True
             self.sceneRunning = False
 

@@ -45,7 +45,7 @@ class TitleScreen:
         MusicFactory(TITLE_SCREEN)
 
         self.menuSelect = pygame.mixer.Sound(os.path.join('music_pcm', 'menu_select.wav'))
-        self.menuSelect.set_volume(.5)
+        self.menuSelect.set_volume(.25)
 
 
     def mainLoop(self):

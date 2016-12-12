@@ -67,11 +67,11 @@ class ShopScreen:
         self.sold = False
 
         self.soundPaid = pygame.mixer.Sound(os.path.join('music_pcm', 'paidMoney.wav'))
-        self.soundPaid.set_volume(.75)
+        self.soundPaid.set_volume(.25)
         self.soundNotEM = pygame.mixer.Sound(os.path.join('music_pcm', 'notEnoughMoney.wav'))
-        self.soundNotEM.set_volume(.75)
+        self.soundNotEM.set_volume(.25)
         self.menuSelect = pygame.mixer.Sound(os.path.join('music_pcm', 'menu_select.wav'))
-        self.menuSelect.set_volume(.5)
+        self.menuSelect.set_volume(.25)
 
         MusicFactory(SHOP_SCREEN)
 

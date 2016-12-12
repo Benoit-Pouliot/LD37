@@ -45,8 +45,14 @@ class Explosion(pygame.sprite.Sprite):
 
         self.attackDMG = dmg
 
+        self.explosionSound = pygame.mixer.Sound(os.path.join('music_pcm', 'Explosion.wav'))
+        self.explosionSound.set_volume(.5)
+
     def update(self):
         self.counter.count()
+
+        if self.counter.value == 1:
+            self.explosionSound.play()
 
         if self.counter.value >= 2*self.duration/3 :
 

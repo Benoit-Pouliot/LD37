@@ -55,7 +55,16 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.lifeBar = LifeBar(max_health)
 
         self.hurtSound = pygame.mixer.Sound(os.path.join('music_pcm', 'Hit_Hurt.wav'))
-        self.hurtSound.set_volume(.75)
+        self.hurtSound.set_volume(.25)
+
+        self.soundShootGun = pygame.mixer.Sound(os.path.join('music_pcm', 'Laser_Shoot.wav'))
+        self.soundShootGun.set_volume(.25)
+        self.soundShootGrenade = pygame.mixer.Sound(os.path.join('music_pcm', 'Grenade_Shoot.wav'))
+        self.soundShootGrenade.set_volume(.25)
+        self.soundBarricade = pygame.mixer.Sound(os.path.join('music_pcm', 'Hit_Hurt.wav'))
+        self.soundBarricade.set_volume(.25)
+        self.soundPlaceMine = pygame.mixer.Sound(os.path.join('music_pcm', 'placeMine.wav'))
+        self.soundPlaceMine.set_volume(.15)
 
         self.life = 1
         self.lifeMax = 1
@@ -92,7 +101,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
         self.currentItem = 0
 
-        if TAG_BP == 1:
+        if TAG_BP == 2:
             self.spriteRED = None
 
         if TAG_MARIE == 1:
@@ -126,7 +135,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.rect.y = self.y
 
 
-        if TAG_BP == 1:
+        if TAG_BP == 2:
             if self.spriteRED is not None:
                 self.spriteRED.kill()
             self.spriteRED = pygame.sprite.Sprite()
@@ -277,6 +286,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
     def shootBullet(self):
         if self.gunCooldown.isZero:
+            self.soundShootGun.play()
             speedx, speedy = self.power2speed(10)
 
             bullet = PlayerBullet(self.rect.centerx, self.rect.centery, speedx, speedy, self.gameData)
@@ -289,6 +299,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
     def shootGrenade(self):
         if self.gameData.upgrade['grenade'][1] > 0:
             if self.grenadeCooldown.isZero:
+                self.soundShootGrenade.play()
                 speedx, speedy = self.power2speed(8)
 
                 grenade = Grenade(self.rect.centerx, self.rect.centery, speedx, speedy, self.gameData)
@@ -302,6 +313,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
     def shootMine(self):
         if self.gameData.upgrade['mine'][1] > 0:
             if self.mineCooldown.isZero:
+                self.soundPlaceMine.play()
                 mine = Mine(self.rect.centerx, self.rect.centery, self.gameData)
 
                 self.mapData.camera.add(mine)
@@ -336,6 +348,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
                 occupied = pygame.sprite.spritecollideany(barricade, self.mapData.obstacleGroup)
 
             if occupied is None:
+                self.soundBarricade.play()
                 self.mapData.camera.add(barricade)
                 self.mapData.allSprites.add(barricade)
                 self.mapData.obstacleGroup.add(barricade)

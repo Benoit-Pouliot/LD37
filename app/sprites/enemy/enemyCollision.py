@@ -10,8 +10,11 @@ class EnemyCollision(Enemy):
     def __init__(self, x, y):
         super().__init__(x, y)
 
+        self.soundHit = pygame.mixer.Sound(os.path.join('music_pcm', 'Hit_Hurt.wav'))
+        self.soundHit.set_volume(.15)
+
         self.soundDead = pygame.mixer.Sound(os.path.join('music_pcm', 'Punch2.wav'))
-        self.soundDead.set_volume(1)
+        self.soundDead.set_volume(.15)
 
     def update(self):
         self.updateLifeBar()
@@ -32,6 +35,7 @@ class EnemyCollision(Enemy):
 
     def isHit(self, dmg):
         self.lifeBar.healthCurrent -= dmg
+        self.soundHit.play()
 
     def checkIfIsAlive(self):
         if self.lifeBar.healthCurrent <= 0:
