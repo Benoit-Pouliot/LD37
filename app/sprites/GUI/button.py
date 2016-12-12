@@ -64,5 +64,6 @@ class Button(pygame.sprite.Sprite):
 
     def notify(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                self.method()
+            if event.button == MOUSE_LEFT:
+                if self.rect.collidepoint(event.pos):
+                    self.method()

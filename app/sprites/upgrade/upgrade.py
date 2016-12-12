@@ -31,6 +31,9 @@ class Upgrade(pygame.sprite.Sprite):
         self.icon = pygame.image.load(os.path.join('img', 'mine1.png'))
         self.iconPos = [0, 0]
 
+        self.icon2 = None
+        self.icon2Pos = (80,100)
+
         self.attributeName = 'Peanut'
         self.textAttribute = self.attributeName + ' : ' + str(self.attribute)
         self.textAttributePos = [0,0]
@@ -67,9 +70,14 @@ class Upgrade(pygame.sprite.Sprite):
         self.image.fill(self.color2)
         self.image.fill(self.color1,self.interior)
         self.image.blit(self.icon, self.iconPos)
+
+        if self.icon2 is not None:
+            self.image.blit(self.icon2, self.icon2Pos)
+
         self.image.blit(self.printedAttribute,self.textAttributePos)
         self.image.blit(self.printedCost,self.textCostPos)
 
+ #blabla
 
     def setUpgradeSpec(self):
         self.textAttribute = self.attributeName + ' : ' + str(self.attribute)
@@ -80,11 +88,13 @@ class Upgrade(pygame.sprite.Sprite):
         self.textCostPos = [(self.image.get_width()-self.printedCost.get_width())/2,self.interior.bottom-1.5*self.fontSize]
 
         self.iconPos = [(self.image.get_width()-self.icon.get_width())/2, (self.image.get_height()*0.6 - self.icon.get_height()) * 0.5]
+        self.icon2Pos = [self.iconPos[0]+self.icon.get_width()-16, self.iconPos[1]+self.icon.get_height()-16]
 
     def notify(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                self.method()
+            if event.button == MOUSE_LEFT:
+                if self.rect.collidepoint(event.pos):
+                    self.method()
 
     def resizeIcon(self):
         resizeSizeX = 64
