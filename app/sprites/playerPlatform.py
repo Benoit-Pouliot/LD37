@@ -105,9 +105,13 @@ class PlayerPlatform(pygame.sprite.Sprite):
             self.spriteRED = None
 
         self.inventory = Inventory()
-        self.inventory.addItem('gun', self.shootBullet)
-        self.inventory.addItem('grenade', self.shootGrenade)
-        self.inventory.addItem('mine', self.shootMine)
+
+        if self.gameData.upgrade['gun'][1]>0:
+            self.inventory.addItem('gun', self.shootBullet)
+        if self.gameData.upgrade['grenade'][1]>0:
+            self.inventory.addItem('grenade', self.shootGrenade)
+        if self.gameData.upgrade['mine'][1]>0:
+            self.inventory.addItem('mine', self.shootMine)
 
         # Link your own sounds here
         # self.soundSpring = pygame.mixer.Sound(os.path.join('music_pcm', 'LvlUpFail.wav'))
