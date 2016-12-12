@@ -12,7 +12,7 @@ class Gun(Upgrade):
 
         self.name = 'gun'
 
-        self.icon = pygame.image.load(os.path.join('img', 'bullet.png'))
+        self.icon = pygame.image.load(os.path.join('img', 'gun.png'))
 
         self.resizeIcon()
 
