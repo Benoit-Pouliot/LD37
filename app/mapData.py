@@ -198,3 +198,7 @@ class MapData:
             self.enemyGenListData.addData(6600, [2], 4, 0)
             self.enemyGenListData.addData(7000, [1], 6, 0)
             self.levelEndTime = 10000
+
+        if currentLevel == 6:
+            self.enemyGenListData.addData(10, [1], 1, 0)
+            self.levelEndTime = 12
