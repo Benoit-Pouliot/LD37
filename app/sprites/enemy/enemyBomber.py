@@ -33,8 +33,8 @@ class EnemyBomber(EnemyCollision):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 2.5
-        self.maxSpeedy = 2.5
+        self.maxSpeedx = 2.4
+        self.maxSpeedy = 2.4
 
         self.setMapData(mapData)
 

@@ -105,14 +105,14 @@ class MapData:
         return os.path.join('tiles_map', nameMap + ".tmx")
 
     def enemyGenData(self, currentLevel):
-        if currentLevel == 1:
+        if currentLevel == 1: # 110 gold
             self.enemyGenListData.addData(400, [1], 1, 0)
             self.enemyGenListData.addData(800, [1], 2, 0)
             self.enemyGenListData.addData(1800, [1], 4, 0)
             self.enemyGenListData.addData(2800, [1], 4, 0)
             self.levelEndTime = 2800
 
-        if currentLevel == 2:
+        if currentLevel == 2: #210 gold
             self.enemyGenListData.addData(400, [1], 4, 0)
             self.enemyGenListData.addData(800, [1], 4, 0)
             self.enemyGenListData.addData(1000, [1], 5, 0)
@@ -160,48 +160,45 @@ class MapData:
             self.enemyGenListData.addData(6200, [1], 6, 0)
             self.enemyGenListData.addData(6600, [2], 4, 0)
             self.enemyGenListData.addData(7000, [1], 6, 0)
-            self.levelEndTime = 10000
+            self.levelEndTime = 7001
 
         if currentLevel == 5:
             self.enemyGenListData.addData(400, [1], 4, 0)
             self.enemyGenListData.addData(500, [1], 3, 0)
-            self.enemyGenListData.addData(500, [2], 2, 0)
-            self.enemyGenListData.addData(500, [3], 3, 0)
             self.enemyGenListData.addData(500, [4], 3, 0)
             self.enemyGenListData.addData(600, [1], 3, 0)
-            self.enemyGenListData.addData(600, [2], 1, 0)
             self.enemyGenListData.addData(700, [1], 4, 0)
+            self.enemyGenListData.addData(800, [4], 2, 0)
             self.enemyGenListData.addData(1000, [1], 4, 0)
-            self.enemyGenListData.addData(1000, [2], 3, 0)
+            self.enemyGenListData.addData(1200, [4], 2, 0)
+            self.enemyGenListData.addData(1600, [2], 4, 0)
+            self.enemyGenListData.addData(2000, [4], 1, 0)
+            self.enemyGenListData.addData(2100, [4], 1, 0)
+            self.enemyGenListData.addData(2200, [4], 1, 0)
+            self.enemyGenListData.addData(2300, [4], 1, 0)
             self.enemyGenListData.addData(2500, [1], 4, 0)
             self.enemyGenListData.addData(2600, [1], 4, 0)
             self.enemyGenListData.addData(2600, [4], 2, 0)
-            self.enemyGenListData.addData(2600, [3], 3, 0)
-            self.enemyGenListData.addData(2600, [2], 4, 0)
             self.enemyGenListData.addData(2800, [1], 4, 0)
             self.enemyGenListData.addData(3000, [1], 4, 0)
-            self.enemyGenListData.addData(3200, [2], 3, 0)
             self.enemyGenListData.addData(3200, [1], 4, 0)
-            self.enemyGenListData.addData(3400, [3], 3, 0)
             self.enemyGenListData.addData(3400, [4], 2, 0)
             self.enemyGenListData.addData(3400, [1], 5, 0)
             self.enemyGenListData.addData(3600, [1], 6, 0)
             self.enemyGenListData.addData(3800, [1], 5, 0)
-            self.enemyGenListData.addData(3800, [2], 3, 0)
             self.enemyGenListData.addData(4300, [1], 5, 0)
             self.enemyGenListData.addData(5000, [1], 6, 0)
             self.enemyGenListData.addData(5000, [4], 4, 0)
-            self.enemyGenListData.addData(5300, [3], 3, 0)
             self.enemyGenListData.addData(5800, [1], 6, 0)
             self.enemyGenListData.addData(6000, [1], 6, 0)
             self.enemyGenListData.addData(6200, [1], 6, 0)
-            self.enemyGenListData.addData(6600, [2], 4, 0)
             self.enemyGenListData.addData(7000, [1], 6, 0)
-            self.levelEndTime = 10000
+            self.levelEndTime = 7001
 
-        # if currentLevel == 6:
-        #     self.enemyGenListData.addData(10, [1], 1, 0)
-        #     self.levelEndTime = 12
+        if currentLevel == 6:
+            self.enemyGenListData.addData(10, [4], 1, 0)
+            self.enemyGenListData.addData(200, [4], 1, 0)
+            self.levelEndTime = 10000
         #
         # if currentLevel == 7:
         #     self.enemyGenListData.addData(10, [1], 1, 0)

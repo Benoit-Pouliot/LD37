@@ -33,10 +33,15 @@ class EnemyWalk(EnemyCollision):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 1
-        self.maxSpeedy = 1
 
         self.setMapData(mapData)
+
+        if self.mapData.currentLevel >= 5:
+            self.maxSpeedx = 1.4
+            self.maxSpeedy = 1.4
+        else:
+            self.maxSpeedx = 1
+            self.maxSpeedy = 1
 
         self.isPhysicsApplied = True
         self.isCollisionApplied = True

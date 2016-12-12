@@ -15,10 +15,10 @@ class GameData:
         self.upgrade["barricade"] = ['Level',0,50,1,1.1]
         self.upgrade["grenade"] = ['Level',0,400,1,1.1]
         self.upgrade["mine"] = ['Level',0,400,1,1.1]
-        self.upgrade["gunCooldown"] = ['Cooldown', 40, 1, 0.9, 1.1]
-        self.upgrade["barricadeCooldown"] = ['Cooldown', 100, 2, 0.9, 1.2]
-        self.upgrade["grenadeCooldown"] = ['Cooldown', 100, 200, 0.9, 1.3]
-        self.upgrade["mineCooldown"] = ['Cooldown', 100, 200, 0.9, 1.4]
+        self.upgrade["gunCooldown"] = ['Cooldown', 40, 40, 0.9, 1.1]
+        self.upgrade["barricadeCooldown"] = ['Cooldown', 200, 50, 0.9, 1.2]
+        self.upgrade["grenadeCooldown"] = ['Cooldown', 100, 150, 0.9, 1.3]
+        self.upgrade["mineCooldown"] = ['Cooldown', 100, 50, 0.9, 1.4]
 
         self.gold = 50
 
@@ -34,7 +34,7 @@ class GameData:
 
         self.currentLevel = 1
 
-        # self.initLevel(6)
+        self.initLevel(5)
 
     def initLevel(self, level):
 
@@ -46,6 +46,8 @@ class GameData:
             self.gold = 370
         elif level == 4:
             self.gold = 20000
+        elif level == 5:
+            self.gold = 15000
         elif level == 6:
             self.gold = 9999999
 

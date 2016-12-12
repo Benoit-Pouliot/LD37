@@ -161,7 +161,8 @@ class CollisionPlayerPlatform:
     def collisionWithEnemy(self, player, enemyGroup):
         collisionList = pygame.sprite.spritecollide(player, enemyGroup, False)
         for enemy in collisionList:
-            player.hurt(1)
+            if not enemy.name == 'enemyBomber':
+                player.hurt(1)
             # self.soundControl.hurt()
             pass
 
@@ -299,7 +300,7 @@ def collisionExplosionEnemy(explosion, mapData):
             barricade.isHit(explosion.attackDMG)
 
     if collisionCircleRect(circle, mapData.player.rect):
-        mapData.player.isHit(explosion.attackDMG)
+        mapData.player.isHit(explosion.attackDMG/2.5) #Divided by 2 so that player is not so weak vs explosions
 
 
 def collisionCircleRect(circle, rect):
