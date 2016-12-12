@@ -34,7 +34,7 @@ class GameData:
 
         self.currentLevel = 1
 
-        #self.initLevel(4)
+        #self.initLevel(6)
 
     def initLevel(self, level):
 

@@ -7,7 +7,7 @@ class LogicHandlerShopScreen:
         self.sceneRunning = True
         self.screen = screen
         self.gameData = gameData
-        self.shopScreenData = gameData.shopScreenData
+        self.shopScreenData = gameData.mapData
 
         self.winningCondition = None
 
@@ -18,7 +18,7 @@ class LogicHandlerShopScreen:
 
     def checkHighlight(self):
         mousePos = pygame.mouse.get_pos()
-        for obj in self.gameData.shopScreenData.notifySet:
+        for obj in self.gameData.mapData.notifySet:
             if obj.rect.collidepoint(mousePos):
                 obj.isSelected = True
             else:

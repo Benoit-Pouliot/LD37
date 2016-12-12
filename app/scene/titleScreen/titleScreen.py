@@ -84,8 +84,7 @@ class TitleScreen:
         self.nextScene = SHOP_SCREEN
         self.sceneRunning = False
         self.gameData.typeScene = SHOP_SCREEN
-        self.gameData.mapData = None
-        self.gameData.shopScreenData = ShopScreenData()
+        self.gameData.mapData = ShopScreenData()
 
     def startInstruction(self):
         self.nextScene = INSTRUCTION_SCREEN

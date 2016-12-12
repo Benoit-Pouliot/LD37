@@ -20,7 +20,7 @@ class EventHandlerShopScreen():
                 # elif event.key == pygame.K_ESCAPE:
                 #     self.menuPause.mainLoop()
 
-            for obj in self.gameData.shopScreenData.notifySet:
+            for obj in self.gameData.mapData.notifySet:
                 obj.notify(event)
 
 

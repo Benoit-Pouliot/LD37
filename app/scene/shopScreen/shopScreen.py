@@ -27,7 +27,7 @@ class ShopScreen:
         self.screen = screen
 
         self.gameData = gameData
-        self.shopScreenData = self.gameData.shopScreenData
+        self.shopScreenData = self.gameData.mapData
 
         self.screen.fill((0, 0, 0))
         titleImage = pygame.image.load(os.path.join('img', 'ShopScreen.png'))

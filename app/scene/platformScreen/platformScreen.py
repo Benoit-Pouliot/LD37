@@ -9,6 +9,7 @@ from app.sprites.playerPlatform import PlayerPlatform
 from app.scene.musicFactory import MusicFactory
 from app.sprites.GUI.showBarricadeCharges import ShowBarricadeCharges
 from app.sprites.GUI.HUDPlatformScreen import HUDPlatformScreen
+from app.shopScreenData import ShopScreenData
 
 from app.mapData import MapData
 
@@ -73,7 +74,7 @@ class PlatformScreen:
             self.sceneRunning = False
             self.nextScene = SHOP_SCREEN
             self.gameData.typeScene = SHOP_SCREEN
-            self.gameData.mapData = None
+            self.gameData.mapData = ShopScreenData()
 
 
     def addHUD(self):
