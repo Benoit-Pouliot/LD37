@@ -47,6 +47,9 @@ class PlatformScreen:
 
     def mainLoop(self):
 
+        # To say something
+        fontScreen = pygame.font.SysFont(FONT_NAME, 40)
+
         self.sceneRunning = True
         while self.sceneRunning:
             self.eventHandler.eventHandle()
@@ -57,13 +60,28 @@ class PlatformScreen:
             if self.counter.value == self.duration:
                 self.textLevel.kill()
 
+            #Check if last level won...
+            if self.logicHandler.endingLevelCondition == LAST_LEVEL_WON:
+                message = fontScreen.render('YOU WON! Endless wave incoming!', True, WHITE)
+                messagePos = [(SCREEN_WIDTH - message.get_width()) / 2,
+                              (SCREEN_HEIGHT) / 2-20]
+                self.screen.blit(message, messagePos)
+
+                message2 = fontScreen.render('Try to get as much gold as you can!', True,
+                                            WHITE)
+                messagePos2 = [(SCREEN_WIDTH - message.get_width()) / 2,
+                              (SCREEN_HEIGHT) / 2+20]
+                self.screen.blit(message2, messagePos2)
+
+                pygame.display.flip()
+                pygame.time.wait(2000)
+                self.logicHandler.endingLevelCondition = None
+
             self.drawer.draw(self.screen, self.mapData.camera, self.mapData.spritesHUD, self.player)
 
         # Update gold before you leave
         self.gameData.gold = self.mapData.gold
 
-        # To say something
-        fontScreen = pygame.font.SysFont(FONT_NAME, 40)
 
         if self.logicHandler.endingLevelCondition == PLAYER_DEAD:
             message = fontScreen.render('You died! Get your revenge on those creeps!', True, WHITE)
