@@ -33,16 +33,16 @@ class HUDPlatformScreen(pygame.sprite.Sprite):
         self.fontSize = HUD_FONT_SIZE
         self.HUDFont = pygame.font.SysFont(FONT_NAME, self.fontSize)
 
-        self.showItem = StatDisplay(self.image, (5, 5), self.HUDFont, 'Item')
-        self.barricadeCharges = StatDisplay(self.image, (SCREEN_WIDTH * 0.2, 5), self.HUDFont, 'Barricades')
+        # self.showItem = StatDisplay(self.image, (5, 5), self.HUDFont, 'Item')
+        self.barricadeCharges = StatDisplay(self.image, (5, 5), self.HUDFont, 'Barricades')
 
         self.cooldownBarricades = CooldownBar(self.player.barricadeCooldown.max, width=SCREEN_WIDTH / 10,
                                               height=HUD_HEIGHT / 2)
-        self.cooldownBarricades.rect.x = 50 * (SCREEN_WIDTH - self.cooldownBarricades.width) / 100
+        self.cooldownBarricades.rect.x = 30 * (SCREEN_WIDTH - self.cooldownBarricades.width) / 100
         self.cooldownBarricades.rect.y = 5
 
         self.lifeBar = LifeBar(self.player.maxHealth,width=SCREEN_WIDTH/5,height=HUD_HEIGHT/2)
-        self.lifeBar.rect.x = 3*(SCREEN_WIDTH-self.lifeBar.width)/4
+        self.lifeBar.rect.x = (SCREEN_WIDTH-self.lifeBar.width)/2
         self.lifeBar.rect.y = 5
 
         self.goldAmount = StatDisplay(self.image, (SCREEN_WIDTH * 0.85, 5), self.HUDFont, 'Gold')
@@ -53,10 +53,12 @@ class HUDPlatformScreen(pygame.sprite.Sprite):
         self.image.fill(self.color1, self.interior)
 
         self.updateGoldAmount()
-        self.updateShowItem()
-        self.updateBarricadeCharges()
+        # self.updateShowItem()
+
+        if self.gameData.upgrade['barricade'][1]>0:
+            self.updateBarricadeCharges()
+            self.updateCooldownBarricades()
         self.updateLifeBar()
-        self.updateCooldownBarricades()
 
     def updateGoldAmount(self):
         self.goldAmount.stat = str(self.gameData.mapData.gold)
