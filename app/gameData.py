@@ -23,7 +23,7 @@ class GameData:
         self.gold = 50
 
         if TAG_MARIE == 1:
-            self.gold = 10000
+            self.gold = 50
 
         self.maxItemOfAType = 99
 
