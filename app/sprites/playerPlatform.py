@@ -58,7 +58,7 @@ class PlayerPlatform(pygame.sprite.Sprite):
         self.hurtSound.set_volume(.25)
 
         self.soundShootGun = pygame.mixer.Sound(os.path.join('music_pcm', 'Laser_Shoot.wav'))
-        self.soundShootGun.set_volume(.25)
+        self.soundShootGun.set_volume(.15)
         self.soundShootGrenade = pygame.mixer.Sound(os.path.join('music_pcm', 'Grenade_Shoot.wav'))
         self.soundShootGrenade.set_volume(.25)
         self.soundBarricade = pygame.mixer.Sound(os.path.join('music_pcm', 'Hit_Hurt.wav'))
