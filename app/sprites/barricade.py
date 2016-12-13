@@ -40,8 +40,8 @@ class Barricade(pygame.sprite.Sprite):
         self.lifeBar.rect.x = self.rect.x
         self.lifeBar.rect.bottom = self.rect.top - 3
 
-        self.hurtSound = pygame.mixer.Sound(os.path.join('music_pcm', 'Hit_Hurt.wav'))
-        self.hurtSound.set_volume(.15)
+        # self.hurtSound = pygame.mixer.Sound(os.path.join('music_pcm', 'Hit_Hurt.wav'))
+        # self.hurtSound.set_volume(.15)
 
         self.friendly = True
 
@@ -58,7 +58,7 @@ class Barricade(pygame.sprite.Sprite):
         super().kill()
 
     def isHit(self,damage=0):
-        self.hurtSound.play()
+        # self.hurtSound.play()
         # Should be different depending on which ennemy....
         self.hurt(damage)
 
