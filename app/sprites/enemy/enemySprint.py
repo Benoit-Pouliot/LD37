@@ -62,7 +62,7 @@ class EnemySprint(EnemyCollision):
         self.maxHealth = 5
         super().generateLifeBar(self.maxHealth)
 
-        self.bounty = 20
+        self.bounty = 100
 
     def applyAI(self):
 

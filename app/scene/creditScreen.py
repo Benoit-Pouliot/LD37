@@ -80,11 +80,12 @@ class CreditScreen:
         self.textGoal.textList.append('')
         self.textGoal.textList.append('Credit :')
         self.textGoal.textList.append('')
-        self.textGoal.textList.append('Game and design : Bobsleigh''s team')
-
-
+        self.textGoal.textList.append('Game and design : Bobsleigh\'s team')
         self.textGoal.textList.append('')
         self.textGoal.textList.append('Music : ')
+        self.textGoal.textList.append('')
+        self.textGoal.textList.append('Night by Paulius Jurgelevièius')
+        self.textGoal.textList.append('Inspiration by Paulius Jurgelevièius')
 
         self.allSprites.add(self.textGoal)  # Add sprite
 
