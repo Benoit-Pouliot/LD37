@@ -55,7 +55,7 @@ class EnemyBomber(EnemyCollision):
         self.maxHealth = 3
         super().generateLifeBar(self.maxHealth)
 
-        self.bounty = 50
+        self.bounty = 200
 
 
     def applyAI(self):

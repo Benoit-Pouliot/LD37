@@ -13,7 +13,7 @@ class GameData:
         self.upgrade = {} #Give [attributeName,attributeNumber,cost,attributeUpper,costUpper]
         self.upgrade["gun"] = ['Level',1,100,1,1.1]
         self.upgrade["barricade"] = ['Level',0,25,1,1.1]
-        self.upgrade["grenade"] = ['Level',0,400,1,1.1]
+        self.upgrade["grenade"] = ['Level',0,240,1,1.1]
         self.upgrade["mine"] = ['Level',0,400,1,1.1]
         self.upgrade["gunCooldown"] = ['Cooldown', 40, 40, 0.9, 1.1]
         self.upgrade["barricadeCooldown"] = ['Cooldown', 175, 25, 0.9, 1.2]
