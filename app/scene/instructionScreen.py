@@ -30,7 +30,7 @@ class InstructionScreen:
 
         self.createControlBox(60, SCREEN_HEIGHT / 10, 0.55*SCREEN_WIDTH, 4 * SCREEN_HEIGHT / 5)
 
-        self.backToTitleScreenButton = Button((540, 17 * SCREEN_HEIGHT / 20), (200, 50), 'Back to main menu', self.goToTitleScreen)
+        self.backToTitleScreenButton = Button((520, 17 * SCREEN_HEIGHT / 20), (250, 50), 'Back to main menu', self.goToTitleScreen)
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifySet.add(self.backToTitleScreenButton)
 

@@ -23,7 +23,9 @@ class GameData:
         self.gold = 50
 
         if TAG_MARIE == 1:
-            self.gold = 50
+            self.gold = 10000
+        if TAG_BP == 1:
+            self.gold = 100000000
 
         self.maxItemOfAType = 99
 
@@ -34,7 +36,7 @@ class GameData:
 
         self.currentLevel = 1
 
-        #self.initLevel(5)
+        #self.initLevel(3)
 
     def initLevel(self, level):
 
