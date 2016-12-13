@@ -363,7 +363,6 @@ class PlayerPlatform(pygame.sprite.Sprite):
 
                 if self.barricadeCooldown.isZero:
                     self.barricadeCooldown.start()
-
             else:
                 barricade.destroy()
 
