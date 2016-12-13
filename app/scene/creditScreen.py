@@ -1,10 +1,7 @@
-# Imports
 import os
-
 import pygame
 
 from app.settings import *
-from app.scene.musicFactory import MusicFactory
 from app.tools.functionTools import *
 from app.tools.messageBox.messageBox import MessageBox
 from app.scene.drawer import Drawer
@@ -13,7 +10,7 @@ from app.sprites.GUI.button import Button
 import weakref
 
 
-class InstructionScreen:
+class CreditScreen:
     def __init__(self, screen, gameData=None):
         self.screen = screen
 
@@ -36,7 +33,7 @@ class InstructionScreen:
 
 
 
-        self.type = INSTRUCTION_SCREEN
+        self.type = CREDIT_SCREEN
         self.nextScene = None
 
     def mainLoop(self):
@@ -78,18 +75,16 @@ class InstructionScreen:
 
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height)
-        self.textGoal.textList.append('Survive to win.')
-        self.textGoal.textList.append('Kill anything that dares enter.')
-        self.textGoal.textList.append('Buy upgrade to get stronger weapons.')
+        self.textGoal.textList.append('For Ludum Dare 37')
+        self.textGoal.textList.append('')
+        self.textGoal.textList.append('')
+        self.textGoal.textList.append('Credit :')
+        self.textGoal.textList.append('')
+        self.textGoal.textList.append('Game and design : Bobsleigh''s team')
 
 
         self.textGoal.textList.append('')
-        self.textGoal.textList.append('Move: WASD')
-        self.textGoal.textList.append('Shoot: Left mouse button')
-        self.textGoal.textList.append('Put down barricade (buy): Right mouse button')
-        self.textGoal.textList.append('Throw grenade (buy): Space bar')
-        self.textGoal.textList.append('Put down mine (buy): Left Shift')
-        self.textGoal.textList.append('Destroy ALL barricades (I\'m stuck!): Escape')
+        self.textGoal.textList.append('Music : ')
 
         self.allSprites.add(self.textGoal)  # Add sprite
 

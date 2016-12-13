@@ -28,15 +28,19 @@ class TitleScreen:
         self.spritesHUD = pygame.sprite.Group()
         self.notifySet = weakref.WeakSet()
 
-        self.startGameButton = Button((540, 2*SCREEN_HEIGHT/5), (150, 50), 'Start game', self.goToTheShop)
+        self.startGameButton = Button((540, 7.5*SCREEN_HEIGHT/20), (150, 50), 'Start game', self.goToTheShop)
         self.spritesHUD.add(self.startGameButton)
         self.notifySet.add(self.startGameButton)
 
-        self.instructionButton = Button((540, 11 * SCREEN_HEIGHT / 20), (150, 50), 'How to play', self.startInstruction)
+        self.instructionButton = Button((540, 10 * SCREEN_HEIGHT / 20), (150, 50), 'How to play', self.startInstruction)
         self.spritesHUD.add(self.instructionButton)
         self.notifySet.add(self.instructionButton)
 
-        self.exitButton = Button((540, 7*SCREEN_HEIGHT/10), (150, 50), 'Exit', sys.exit)
+        self.creditButton = Button((540, 12.5 * SCREEN_HEIGHT / 20), (150, 50), 'Credit', self.startCredit)
+        self.spritesHUD.add(self.creditButton)
+        self.notifySet.add(self.creditButton)
+
+        self.exitButton = Button((540, 15*SCREEN_HEIGHT/20), (150, 50), 'Exit', sys.exit)
         self.spritesHUD.add(self.exitButton)
         self.notifySet.add(self.exitButton)
 
@@ -90,3 +94,8 @@ class TitleScreen:
         self.nextScene = INSTRUCTION_SCREEN
         self.sceneRunning = False
         self.gameData.typeScene = INSTRUCTION_SCREEN
+
+    def startCredit(self):
+        self.nextScene = CREDIT_SCREEN
+        self.sceneRunning = False
+        self.gameData.typeScene = CREDIT_SCREEN
