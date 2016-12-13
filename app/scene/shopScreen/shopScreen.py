@@ -43,9 +43,13 @@ class ShopScreen:
         self.addUpgrade('mine', (7*SCREEN_WIDTH/10, 80))
 
         self.addUpgrade('gunCooldown', (1 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
-        self.addUpgrade('barricadeCooldown', (3 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
-        self.addUpgrade('grenadeCooldown', (5 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
-        self.addUpgrade('mineCooldown', (7 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
+
+        if self.gameData.upgrade['barricade'][1] > 0:
+            self.addUpgrade('barricadeCooldown', (3 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
+        if self.gameData.upgrade['grenade'][1] > 0:
+            self.addUpgrade('grenadeCooldown', (5 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
+        if self.gameData.upgrade['mine'][1] > 0:
+            self.addUpgrade('mineCooldown', (7 * SCREEN_WIDTH / 10, SCREEN_HEIGHT/2))
 
 
         self.startGameButton = Button((560,510),(150,60),'Fight!',self.nextLevel)
