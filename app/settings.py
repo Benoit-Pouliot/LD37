@@ -109,6 +109,7 @@ PLAYER_DIMY = 21
 # End level condition
 PLAYER_DEAD = 0
 LEVEL_WON = 1
+LAST_LEVEL_WON =6
 
 #GUI settings
 DIALOG_TEXT_SIZE = 20

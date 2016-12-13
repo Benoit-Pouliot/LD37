@@ -15,6 +15,7 @@ class LogicHandlerPlatformScreen:
         self.mapData = mapData
 
         self.endingLevelCondition = None
+        self.alreadyWon = False
 
         self.screen = screen
 
@@ -106,10 +107,16 @@ class LogicHandlerPlatformScreen:
     def endLevelCondition(self, gameData):
         if self.mapData.internalMapTime > self.mapData.levelEndTime:
             if len(self.mapData.enemyGroup.sprites()) == 0:
-                gameData.currentLevel += 1
-                self.newMapData = True
-                self.sceneRunning = False
-                self.endingLevelCondition = LEVEL_WON
+                if gameData.currentLevel == 6:
+                    if self.alreadyWon == False:
+                        self.endingLevelCondition = LAST_LEVEL_WON
+                        self.alreadyWon = True
+                else:
+                    gameData.currentLevel += 1
+                    self.newMapData = True
+                    self.sceneRunning = False
+                    self.endingLevelCondition = LEVEL_WON
+
 
         # if TAG_PHIL ==1:
         #     print(self.mapData.internalMapTime)

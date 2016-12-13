@@ -22,8 +22,6 @@ class GameData:
 
         self.gold = 50
 
-        if TAG_MARIE == 1:
-            self.gold = 10000
         if TAG_BP == 1:
             self.gold = 100000000
 
@@ -36,7 +34,10 @@ class GameData:
 
         self.currentLevel = 1
 
-        #self.initLevel(3)
+        if TAG_MARIE == 1:
+            self.initLevel(6)
+
+    # self.initLevel(3)
 
     def initLevel(self, level):
 
