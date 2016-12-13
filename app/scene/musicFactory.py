@@ -10,17 +10,16 @@ class MusicFactory:
         if typeScene == TITLE_SCREEN:
             self.nameMusic = 'MainTheme'
         elif typeScene == PLATFORM_SCREEN:
-            if secondOption >= 1:
-                self.nameMusic = 'TheLoomingBattle'
+            if secondOption == 1 or secondOption == 2:
+                self.nameMusic = 'Night'
+            elif secondOption >= 3:
+                self.nameMusic = 'Inspiration'
         elif typeScene == SHOP_SCREEN:
             self.nameMusic = 'MainTheme'
 
         if self.nameMusic is not None:
-            if self.nameMusic == 'TheLoomingBattle':
-                pass
-                #pygame.mixer.music.load(os.path.join('music_pcm', self.nameMusic + '.ogg'))
-            else:
-                pygame.mixer.music.load(os.path.join('music_pcm', self.nameMusic + '.wav'))
+
+            pygame.mixer.music.load(os.path.join('music_pcm', self.nameMusic + '.wav'))
             pygame.mixer.music.set_volume(1.0)
             pygame.mixer.music.play(-1)
         else:
