@@ -266,19 +266,10 @@ class MapData:
             self.enemyGenListData.addData(5400, [1], 6, 0)
             self.enemyGenListData.addData(5500, [4], 10, 0)
 
+            self.levelEndTime = 5001
+
             #FROM HERE, ITS MADNESS INFINITY!!! (End of game chaos)
-            self.enemyGenListData.addData(6000, [1], 4, 200)
-            self.enemyGenListData.addData(6300, [1], 4, 200)
-            self.enemyGenListData.addData(6500, [2], 4, 200)
-            self.enemyGenListData.addData(6700, [3], 4, 200)
-            self.enemyGenListData.addData(6900, [4], 4, 200)
-            self.enemyGenListData.addData(7000, [2], 4, 200)
-            self.enemyGenListData.addData(7200, [3], 4, 200)
-            self.enemyGenListData.addData(7400, [4], 4, 200)
-            self.enemyGenListData.addData(7500, [1], 4, 200)
-            self.enemyGenListData.addData(7650, [2], 4, 200)
-            self.enemyGenListData.addData(7750, [3], 4, 200)
-            self.enemyGenListData.addData(7850, [4], 4, 200)
+
 
         #
         # if currentLevel == 7:

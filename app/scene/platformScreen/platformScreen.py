@@ -74,7 +74,7 @@ class PlatformScreen:
                 self.screen.blit(message2, messagePos2)
 
                 pygame.display.flip()
-                pygame.time.wait(2000)
+                pygame.time.wait(4000)
                 self.logicHandler.endingLevelCondition = None
 
             self.drawer.draw(self.screen, self.mapData.camera, self.mapData.spritesHUD, self.player)

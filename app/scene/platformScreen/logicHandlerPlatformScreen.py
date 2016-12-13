@@ -111,12 +111,27 @@ class LogicHandlerPlatformScreen:
                     if self.alreadyWon == False:
                         self.endingLevelCondition = LAST_LEVEL_WON
                         self.alreadyWon = True
+                        self.lastInfiniteLevel()
                 else:
                     gameData.currentLevel += 1
                     self.newMapData = True
                     self.sceneRunning = False
                     self.endingLevelCondition = LEVEL_WON
 
+
+    def lastInfiniteLevel(self):
+            self.mapData.enemyGenListData.addData(6000, [1], 4, 200)
+            self.mapData.enemyGenListData.addData(6300, [1], 4, 200)
+            self.mapData.enemyGenListData.addData(6500, [2], 4, 200)
+            self.mapData.enemyGenListData.addData(6700, [3], 4, 200)
+            self.mapData.enemyGenListData.addData(6900, [4], 4, 200)
+            self.mapData.enemyGenListData.addData(7000, [2], 4, 200)
+            self.mapData.enemyGenListData.addData(7200, [3], 4, 200)
+            self.mapData.enemyGenListData.addData(7400, [4], 4, 200)
+            self.mapData.enemyGenListData.addData(7500, [1], 4, 200)
+            self.mapData.enemyGenListData.addData(7650, [2], 4, 200)
+            self.mapData.enemyGenListData.addData(7750, [3], 4, 200)
+            self.mapData.enemyGenListData.addData(7850, [4], 4, 200)
 
         # if TAG_PHIL ==1:
         #     print(self.mapData.internalMapTime)
