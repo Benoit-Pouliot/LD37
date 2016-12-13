@@ -60,6 +60,8 @@ class EnemySprint(EnemyCollision):
         self.speedAttackY = 0
 
         self.maxHealth = 5
+        if self.mapData.currentLevel >= 5:
+            self.maxHealth = 7
         super().generateLifeBar(self.maxHealth)
 
         self.bounty = 100

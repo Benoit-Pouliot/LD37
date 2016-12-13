@@ -63,6 +63,9 @@ class EnemyWalk(EnemyCollision):
         self.factorAttack = 1.5
 
         self.maxHealth = 5
+        if self.mapData.currentLevel >= 5:
+            self.maxHealth = 7
+
         super().generateLifeBar(self.maxHealth)
 
         self.bounty = 10

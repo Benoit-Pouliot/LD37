@@ -51,6 +51,9 @@ class EnemyShooter(EnemyCollision):
         self.imageIterShoot = self.imageWaitNextShoot + 1
 
         self.maxHealth = 5
+        if self.mapData.currentLevel >= 5:
+            self.maxHealth = 7
+
         super().generateLifeBar(self.maxHealth)
 
         self.bounty = 50
